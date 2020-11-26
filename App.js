@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 
+
 function getCurrentLocation() {
   return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -15,15 +16,17 @@ function getCurrentLocation() {
       resolve(region);
     }, reject);
   });
-}
 
-export default class App extends React.Component {
-  constructor() {
-    super();
+}
+  
+export default class App extends React.Component{
+  constructor(){
+    super()
     this.state = {
       initialRegion: null,
     };
   }
+
 
   async componentDidMount() {
     const region = await getCurrentLocation();
@@ -44,6 +47,7 @@ export default class App extends React.Component {
         {...console.log("THIS IS THE MAPVIEW: ", this.state.initalRegion)}
       />
     );
+
   }
 }
 
