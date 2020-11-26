@@ -3,21 +3,21 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
-//  async function getCurrentLocation() {
-//   await navigator.geolocation.getCurrentPosition(
-//       position => {
-//       let region = {
-//               latitude: parseFloat(position.coords.latitude),
-//               longitude: parseFloat(position.coords.longitude),
-//               latitudeDelta: 5,
-//               longitudeDelta: 5
-//           };
-//        return region
+ function getCurrentLocation() {
+   navigator.geolocation.getCurrentPosition(
+      position => {
+      let region = {
+              latitude: parseFloat(position.coords.latitude),
+              longitude: parseFloat(position.coords.longitude),
+              latitudeDelta: 2,
+             
+          };
+       return region
     
-//       }
+      }
       
-//   );
-// }
+  );
+}
   
 export default class App extends React.Component{
   constructor(){
@@ -27,24 +27,21 @@ export default class App extends React.Component{
     }
   }
 
- 
    
   render() {
-
+  
     
   return (
     <MapView
     style = {{flex : 1}}
     provider = {PROVIDER_GOOGLE}
-    showsUserLocation
-    initialRegion = {{
-      latitude: 51.5078788,
-      longitude: -0.0877321,
-      latitudeDelta: 0.009,
-      longitudeDelta: 0.009
-    }}
-    
-    />
+    showsUserLocation 
+    showsUserLocation 
+     initialRegion = {getCurrentLocation()}    
+     
+    >
+  </MapView>
+
   );
   }
 }
