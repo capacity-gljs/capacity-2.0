@@ -25,8 +25,8 @@ export default class App extends React.Component {
       initialRegion: null,
       coordinates: {
         latitude: null,
-        longitude: null
-      }
+        longitude: null,
+      },
     };
   }
 
@@ -41,12 +41,15 @@ export default class App extends React.Component {
     return (
       <SafeAreaView style={styles.safeArea}>
         <MapView
+          ref={(map) => (this.map = map)}  
           style={styles.container}
           provider={PROVIDER_GOOGLE}
           showsUserLocation
           initialRegion={this.state.initialRegion}
         >
-          {this.state.coordinates.latitude && <Marker coordinate={this.state.coordinates}/>}
+          {this.state.coordinates.latitude && (
+            <Marker coordinate={this.state.coordinates} />
+          )}
           <GooglePlacesAutocomplete
             style={styles.input}
             placeholder="search"
@@ -54,9 +57,15 @@ export default class App extends React.Component {
             fetchDetails={true}
             onPress={(data, details = null) => {
               console.log(data, details);
-              console.log('location', details.geometry.location)
+              console.log("location", details.geometry.location);
               this.setState({
                 coordinates: {
+                  latitude: details.geometry.location.lat,
+                  longitude: details.geometry.location.lng,
+                },
+              });
+              this.map.animateCamera({
+                center: {
                   latitude: details.geometry.location.lat,
                   longitude: details.geometry.location.lng
                 }
