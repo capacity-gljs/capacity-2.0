@@ -1,7 +1,9 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+
+
 
 
 function getCurrentLocation() {
@@ -33,29 +35,62 @@ export default class App extends React.Component{
     this.setState({
       initialRegion: region,
     });
-    console.log("THIS IS REGION: ", region);
-    console.log("THIS IS THE COMPONENTDIDMOUNT", this.state.initialRegion);
+  
   }
+
+
 
   render() {
     return (
-      <MapView
-        style={{ flex: 1 }}
+      
+      <SafeAreaView style = {styles.safeArea}>
+       <MapView
+        style = {styles.container}
         provider={PROVIDER_GOOGLE}
         showsUserLocation
         initialRegion={this.state.initialRegion}
-        {...console.log("THIS IS THE MAPVIEW: ", this.state.initalRegion)}
+         >
+   
+      <GooglePlacesAutocomplete  
+      style = {styles.input}
+      placeholder = 'search'
+      minLength = {2}
+      fetchDetails = {true}
+      onPress={(data, details = null) => {
+        console.log(data, details);
+      }}
+      query={{
+          key: 'AIzaSyC7wRQCQ8yH5B-DnqKoNB4PWoKuJ9AQ6fg',
+          language: 'en',
+        }}
+        nearbyPlacesAPI = 'GooglePlacesSearch'
+        debounce = {200}
+      
       />
-    );
+       
+      
+      </MapView>
+      </SafeAreaView>
+     
+     
+     );
 
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+    flex: 1
+   },
+   safeArea: {
+     flex: 1,
+     backgroundColor: 'grey'
+   },
+   input : {
+     borderRadius: 4,
+     margin: 5
+    
+   }
 });
+
+
