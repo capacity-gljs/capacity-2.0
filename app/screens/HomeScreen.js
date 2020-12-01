@@ -1,11 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, SafeAreaView, Modal, Alert, TouchableHighlight, Image} from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
-
-
-
-
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 
 
 function getCurrentLocation() {
@@ -14,12 +10,14 @@ function getCurrentLocation() {
       let region = {
         latitude: parseFloat(position.coords.latitude),
         longitude: parseFloat(position.coords.longitude),
-        latitudeDelta: .1,
-        longitudeDelta: .1,
+        latitudeDelta: 0.1,
+        longitudeDelta: 0.1,
+
       };
       resolve(region);
     }, reject);
   });
+
 
 }
 
@@ -64,9 +62,12 @@ function dollarSign(num){
 
 
   
-export default class App extends React.Component{
-  constructor(){
-    super()
+
+
+
+export default class HomeScreen extends React.Component {
+  constructor() {
+    super();
     this.state = {
       initialRegion: null,
       coordinates: {
@@ -81,12 +82,15 @@ export default class App extends React.Component{
     this.setData = this.setData.bind(this)
   }
 
+  
+
 
   async componentDidMount() {
     const region = await getCurrentLocation();
     this.setState({
       initialRegion: region,
     });
+
   
   
   }
@@ -192,9 +196,10 @@ export default class App extends React.Component{
      
      
      );
-
-  }
+   }
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -259,4 +264,5 @@ const styles = StyleSheet.create({
     fontSize: 15
   }
   
+
 });
