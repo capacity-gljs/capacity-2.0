@@ -18,8 +18,8 @@ import MapView, {
   Polygon,
 } from 'react-native-maps';
 
-// testing heatmap data
-// see line 150
+// where data will be imported
+// testing heatmap data see line 150
 import { locations } from '../../Data/Data';
 
 function getCurrentLocation() {
