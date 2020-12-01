@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import {db} from '../../firebase/config'
+
+
 
 function getCurrentLocation() {
   return new Promise(function (resolve, reject) {
@@ -83,6 +86,15 @@ export default class HomeScreen extends React.Component {
     this.setState({
       initialRegion: region,
     });
+    const places = db.collection('places')
+    const place = places.doc('ChIJrUj5NiQZBYgROOtRy0_Mnfg').collection('capacity').get().then(snap => {    snap.forEach(doc => {        console.log(doc.data());    }); })
+
+    //const place = await places.get()
+    //const foundPlace = place.forEach(doc => {
+    //doc.id, '=>', doc.data()
+    //})
+    //console.log(foundPlace)
+    
   }
 
   setModal(visible) {
@@ -103,6 +115,8 @@ export default class HomeScreen extends React.Component {
     const locData = this.state.modalData || '';
     const hours = locDescription.opening_hours || '';
     const type = locData.types || '';
+
+    
 
     return (
       <SafeAreaView style={styles.safeArea}>
@@ -175,7 +189,7 @@ export default class HomeScreen extends React.Component {
               });
             }}
             query={{
-              key: 'AIzaSyC7wRQCQ8yH5B-DnqKoNB4PWoKuJ9AQ6fg',
+              key: 'AIzaSyCukq40uCr0mkfwu4JlZaO6yQ6P0K5D7Bc',
               language: 'en',
             }}
             nearbyPlacesAPI="GooglePlacesSearch"
