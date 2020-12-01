@@ -35,7 +35,7 @@ function SinglePlaceScreen(props) {
         </Text>
       </View>
       <View>
-        <Text style={styles.subtitle}>Are you here now? Leave a review!</Text>
+        <Text style={styles.subtitle}>Are you here now?  Leave a review!</Text>
         <Button title="OK" style={styles.button} />
       </View>
     </SafeAreaView>
