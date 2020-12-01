@@ -10,17 +10,7 @@ import {
   Image,
 } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import MapView, {
-  PROVIDER_GOOGLE,
-  Marker,
-  Heatmap,
-  Circle,
-  Polygon,
-} from 'react-native-maps';
-
-// where data will be imported
-// testing heatmap data see line 150
-import { locations } from '../../Data/Data';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 function getCurrentLocation() {
   return new Promise(function (resolve, reject) {
@@ -153,21 +143,6 @@ export default class HomeScreen extends React.Component {
           showsUserLocation
           initialRegion={this.state.initialRegion}
         >
-          {locations.map((marker) => (
-            // <Polygon fillColor = {'#A3BE80'}coordinates = {locations}/>
-
-            <Circle
-              center={{
-                latitude: marker.latitude,
-                longitude: marker.longitude,
-              }}
-              radius={550}
-              fillColor={'#A3BE80'}
-            />
-          ))}
-          {/* <Heatmap 
-            points={locations}
-          /> */}
           {this.state.coordinates.latitude && (
             <Marker
               coordinate={this.state.coordinates}
