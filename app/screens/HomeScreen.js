@@ -153,18 +153,26 @@ export default class HomeScreen extends React.Component {
 
 
         <MapView
+        ref={(map) => (this.map = map)}
         style = {styles.container}
         provider={PROVIDER_GOOGLE}
         showsUserLocation
         initialRegion={this.state.initialRegion}
          >
-   
+        {this.state.coordinates.latitude && (
+        <Marker coordinate={this.state.coordinates} onPress={()=>{
+        this.props.navigation.navigate("SinglePlace", {
+        name: this.state.selectedName
+              })
+            }}/>
+            )}
       <GooglePlacesAutocomplete  
       style = {styles.input}
       placeholder = 'search'
       minLength = {2}
       fetchDetails = {true}
       onPress={(data, details = null) => {
+       
        this.setData(data, details, true)
        this.setState({
         coordinates: {
