@@ -13,7 +13,11 @@ export default class App extends React.Component {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="SinglePlace" component={SinglePlaceScreen} />
+          <Stack.Screen
+            name="SinglePlace"
+            component={SinglePlaceScreen}
+            options={{ title: "Location Details" }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
