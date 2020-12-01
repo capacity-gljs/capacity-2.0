@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, SafeAreaView, TextInput } from 'react-native';
 function SinglePlaceScreen(props) {
   return (
     <SafeAreaView>
-      <Text>{this.props.place.name}</Text>
+      <Text>{props.route.params.name}</Text>
       <Text>This location is at 77% capacity</Text>
     </SafeAreaView>
   );
