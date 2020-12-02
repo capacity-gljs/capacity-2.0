@@ -43,5 +43,4 @@ function SinglePlaceScreen(props) {
 }
 
 
-
 export default SinglePlaceScreen;

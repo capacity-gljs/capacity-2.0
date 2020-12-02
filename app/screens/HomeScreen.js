@@ -20,7 +20,7 @@ export default class HomeScreen extends React.Component {
         latitude: null,
         longitude: null,
       },
-      selectedName: '',
+      selectedName: "",
       modalVisible: false,
       modalData: null,
       modalDetails: null
@@ -33,9 +33,15 @@ export default class HomeScreen extends React.Component {
     this.setState({
       initialRegion: region,
     });
+    const places = db.collection('places')
+    const place = places.doc('ChIJrUj5NiQZBYgROOtRy0_Mnfg').collection('capacity').get().then(snap => {    snap.forEach(doc => {        console.log(doc.data());    }); })
 
-  
-  
+    //const place = await places.get()
+    //const foundPlace = place.forEach(doc => {
+    //doc.id, '=>', doc.data()
+    //})
+    //console.log(foundPlace)
+    
   }
 
   setModal(visible){
