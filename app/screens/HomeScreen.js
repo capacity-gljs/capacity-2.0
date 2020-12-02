@@ -9,7 +9,7 @@ import {getCurrentLocation,
          dollarSign}
            from './funcs'
 import { homeStyleSheet } from "./styles";
-
+import { db } from '../../firebase/config'
 
 export default class HomeScreen extends React.Component {
   constructor() {
@@ -72,11 +72,7 @@ export default class HomeScreen extends React.Component {
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        
-      
       >
-    
-    
       <View style={homeStyleSheet.modalView}>
       <Text style={homeStyleSheet.modalName}>{locDescription.name}</Text>
       <Text style={homeStyleSheet.modalText}>{locDescription.rating } ({locDescription.user_ratings_total})</Text>
@@ -96,14 +92,8 @@ export default class HomeScreen extends React.Component {
            <Text style={homeStyleSheet.textStyle}> X </Text>
              </TouchableHighlight> 
           </View> 
-
-          
        </Modal> 
-    
-
-
-
-        <MapView
+       <MapView
         ref={(map) => (this.map = map)}
         style = {homeStyleSheet.container}
         provider={PROVIDER_GOOGLE}
@@ -144,11 +134,7 @@ export default class HomeScreen extends React.Component {
         }}
         nearbyPlacesAPI = 'GooglePlacesSearch'
         debounce = {200}
-      
       />
-      
-       
-      
       </MapView> 
      </SafeAreaView> 
      
