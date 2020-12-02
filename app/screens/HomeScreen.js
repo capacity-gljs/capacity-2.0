@@ -1,5 +1,5 @@
 import React from "react";
-import {Text,View, SafeAreaView, Modal, Alert, TouchableHighlight, Image} from "react-native";
+import { Text, View, SafeAreaView, Modal, Alert, TouchableHighlight, Image} from "react-native";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import {getCurrentLocation,
@@ -72,8 +72,6 @@ export default class HomeScreen extends React.Component {
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        
-      
       >
       <View style={homeStyleSheet.modalView}>
       <Text style={homeStyleSheet.modalName}>{locDescription.name}</Text>
@@ -94,14 +92,8 @@ export default class HomeScreen extends React.Component {
            <Text style={homeStyleSheet.textStyle}> X </Text>
              </TouchableHighlight> 
           </View> 
-
-          
        </Modal> 
-    
-
-
-
-        <MapView
+       <MapView
         ref={(map) => (this.map = map)}
         style = {homeStyleSheet.container}
         provider={PROVIDER_GOOGLE}
@@ -142,11 +134,7 @@ export default class HomeScreen extends React.Component {
         }}
         nearbyPlacesAPI = 'GooglePlacesSearch'
         debounce = {200}
-      
       />
-      
-       
-      
       </MapView> 
      </SafeAreaView> 
      
