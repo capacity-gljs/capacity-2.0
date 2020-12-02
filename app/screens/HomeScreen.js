@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   Text,
+  Button,
   View,
   SafeAreaView,
   Modal,
@@ -12,8 +13,6 @@ import {
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import {db} from '../../firebase/config'
-
-
 
 function getCurrentLocation() {
   return new Promise(function (resolve, reject) {
@@ -30,37 +29,37 @@ function getCurrentLocation() {
 }
 
 function isOpen(hours) {
-  if (hours['open_now'] === true) {
-    return 'Open';
+  if (hours["open_now"] === true) {
+    return "Open";
   }
-  return 'Closed';
+  return "Closed";
 }
 
 function getColor(hours) {
-  if (hours['open_now'] === true) {
-    return 'green';
+  if (hours["open_now"] === true) {
+    return "green";
   }
-  return 'red';
+  return "red";
 }
 
 function getType(types) {
   let type = [];
 
   for (let i = 0; i < types.length; i++) {
-    type.push(types[i].split('_').join(' '));
+    type.push(types[i].split("_").join(" "));
   }
   return type[0];
 }
 
 function dollarSign(num) {
   if (num === 1) {
-    return '$';
+    return "$";
   } else if (num === 2) {
-    return '$$';
+    return "$$";
   } else if (num === 3) {
-    return '$$$';
+    return "$$$";
   } else if (num === 4) {
-    return '$$$$';
+    return "$$$$";
   }
 }
 
@@ -73,7 +72,7 @@ export default class HomeScreen extends React.Component {
         latitude: null,
         longitude: null,
       },
-      selectedName: '',
+      selectedName: "",
       modalVisible: false,
       modalData: null,
       modalDetails: null,
@@ -111,10 +110,10 @@ export default class HomeScreen extends React.Component {
 
   render() {
     const modalVisible = this.state.modalVisible;
-    const locDescription = this.state.modalDetails || '';
-    const locData = this.state.modalData || '';
-    const hours = locDescription.opening_hours || '';
-    const type = locData.types || '';
+    const locDescription = this.state.modalDetails || "";
+    const locData = this.state.modalData || "";
+    const hours = locDescription.opening_hours || "";
+    const type = locData.types || "";
 
     
 
@@ -123,7 +122,7 @@ export default class HomeScreen extends React.Component {
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.modalView}>
             <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
+              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
               onPress={() => {
                 this.setModal(!modalVisible);
               }}
@@ -135,7 +134,7 @@ export default class HomeScreen extends React.Component {
               {locDescription.rating} ({locDescription.user_ratings_total})
             </Text>
             <Text style={styles.modalType}>
-              {' '}
+              {" "}
               {getType(type)} {dollarSign(locDescription.price_level)}
             </Text>
             <Text
@@ -147,6 +146,17 @@ export default class HomeScreen extends React.Component {
             >
               {isOpen(hours)}
             </Text>
+            <Text>Capacity: 77%</Text>
+            <Button
+              title="Let's go!"
+              onPress={() => {
+                this.GooglePlacesAutocompleteRef.setAddressText("")  //clears the search bar 
+                this.setModal(!modalVisible); 
+                this.props.navigation.navigate("SinglePlace", {
+                  name: this.state.selectedName,
+                });
+              }}
+            />
           </View>
         </Modal>
 
@@ -161,13 +171,14 @@ export default class HomeScreen extends React.Component {
             <Marker
               coordinate={this.state.coordinates}
               onPress={() => {
-                this.props.navigation.navigate('SinglePlace', {
+                this.props.navigation.navigate("SinglePlace", {
                   name: this.state.selectedName,
                 });
               }}
             />
           )}
           <GooglePlacesAutocomplete
+            ref={(instance) => (this.GooglePlacesAutocompleteRef = instance)}
             style={styles.input}
             placeholder="search"
             minLength={2}
@@ -207,7 +218,7 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    backgroundColor: 'grey',
+    backgroundColor: "grey",
   },
   input: {
     borderRadius: 4,
@@ -217,13 +228,13 @@ const styles = StyleSheet.create({
     flex: 0,
     width: 400,
     height: 350,
-    alignSelf: 'center',
-    position: 'absolute',
+    alignSelf: "center",
+    position: "absolute",
     bottom: 12,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 20,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -233,16 +244,16 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   openButton: {
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
     width: 22,
     height: 22,
     borderRadius: 50,
     elevation: 2,
   },
   textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
     marginRight: 3,
     marginTop: 2,
   },
