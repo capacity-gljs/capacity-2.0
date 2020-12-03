@@ -11,6 +11,7 @@ import {
 import Modal from "react-native-modal";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+// IMPORT FUNCD
 import {
   getCurrentLocation,
   isOpen,
@@ -23,14 +24,20 @@ import { homeStyleSheet } from "./styles";
 import { db } from "../../firebase/config";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+// IMPORT FIREBASE FUNCS
+import {getCapacity} from './fbFuncs'
+
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       // grabbing places info to pass down
       id: '',
+      placeLat: null,
+      placeLng: null,
       // state for homescreen
       initialRegion: null,
+      // coordinates for getting a user's location
       coordinates: {
         latitude: null,
         longitude: null,
@@ -49,22 +56,24 @@ export default class HomeScreen extends React.Component {
     this.setState({
       initialRegion: region,
     });
-    const places = db.collection('places');
-    const rating = places
-      .doc('ChIJrUj5NiQZBYgROOtRy0_Mnfg')
-      .collection('capacity')
-      .get()
-      .then((snap) => {
-        snap.forEach((doc) => {
-          this.setState({ ratings: doc.data() });
-          console.log('RATING', doc.data());
-        });
-      });
 
-    const place = await places.get();
-    const foundPlace = place.forEach((doc) => {
-      console.log('FOUND PLACE', doc.id, '=>', doc.data());
-    });
+
+    // const places = db.collection('places');
+    // const rating = places
+    //   .doc('ChIJrUj5NiQZBYgROOtRy0_Mnfg')
+    //   .collection('capacity')
+    //   .get()
+    //   .then((snap) => {
+    //     snap.forEach((doc) => {
+    //       this.setState({ ratings: doc.data() });
+    //       console.log('RATING', doc.data());
+    //     });
+    //   });
+
+    // const place = await places.get();
+    // const foundPlace = place.forEach((doc) => {
+    //   console.log('FOUND PLACE', doc.id, '=>', doc.data());
+    // });
   }
 
   closeModal(visible) {
@@ -134,7 +143,9 @@ export default class HomeScreen extends React.Component {
                 this.props.navigation.navigate("SinglePlace", {
                   // PASS PROPS TO SINGLE PLACE HEREEEEEEEE
                   name: this.state.selectedName,
-                  id: this.state.id
+                  id: this.state.id,
+                  placeLat: this.state.placeLat,
+                  placeLng: this.state.placeLng,
                 });
               }}
             />
@@ -172,7 +183,7 @@ export default class HomeScreen extends React.Component {
             fetchDetails={true}
             onPress={(data, details = null) => {
 
-              // console.log("LOCDETAILS => " ,details.place_id)
+              // console.log("LOCDETAILS => " ,details)
 
               this.setData(data, details, true);
               this.setState({
@@ -182,13 +193,15 @@ export default class HomeScreen extends React.Component {
                 },
                 selectedName: data.description,
 
-                // SETTIN STATES FOR PASSING DOWN PROPS HERE
+                // SETTING STATES FOR PASSING DOWN PROPS HERE
                 // getting the placeId so we can pass it to SinglePlace component
-                id: details.place_id
+                id: details.place_id,
+                placeLat: details.geometry.location.lat,
+                placeLng: details.geometry.location.lng,
               });
 
               // console.log for state
-              console.log('STATE IN AUTO COMPLETE', this.state)
+              // console.log('STATE IN AUTO COMPLETE', this.state)
 
               this.map.animateCamera({
                 center: {
