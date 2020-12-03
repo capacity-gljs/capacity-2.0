@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Text,
   View,
@@ -24,18 +24,22 @@ import { db } from "../../firebase/config";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default class HomeScreen extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      // grabbing places info to pass down
+      id: '',
+      // state for homescreen
       initialRegion: null,
       coordinates: {
         latitude: null,
         longitude: null,
       },
-      selectedName: "",
+      selectedName: '',
       modalVisible: false,
       modalData: null,
       modalDetails: null,
+      ratings: {},
     };
     this.setData = this.setData.bind(this);
   }
@@ -45,22 +49,22 @@ export default class HomeScreen extends React.Component {
     this.setState({
       initialRegion: region,
     });
-    const places = db.collection("places");
-    const place = places
-      .doc("ChIJrUj5NiQZBYgROOtRy0_Mnfg")
-      .collection("capacity")
+    const places = db.collection('places');
+    const rating = places
+      .doc('ChIJrUj5NiQZBYgROOtRy0_Mnfg')
+      .collection('capacity')
       .get()
       .then((snap) => {
         snap.forEach((doc) => {
-          // console.log(doc.data());
+          this.setState({ ratings: doc.data() });
+          console.log('RATING', doc.data());
         });
       });
 
-    //const place = await places.get()
-    //const foundPlace = place.forEach(doc => {
-    //doc.id, '=>', doc.data()
-    //})
-    //console.log(foundPlace)
+    const place = await places.get();
+    const foundPlace = place.forEach((doc) => {
+      console.log('FOUND PLACE', doc.id, '=>', doc.data());
+    });
   }
 
   closeModal(visible) {
@@ -73,15 +77,16 @@ export default class HomeScreen extends React.Component {
       modalData: data,
       modalDetails: details,
     });
+    // console.log('SET DATA', this.state)
   }
 
   render() {
     const modalVisible = this.state.modalVisible;
-    const locDescription = this.state.modalDetails || "";
-    const locData = this.state.modalData || "";
-    const hours = locDescription.opening_hours || "";
-    const type = locData.types || "";
-    const state = locData.terms || "";
+    const locDescription = this.state.modalDetails || '';
+    const locData = this.state.modalData || '';
+    const hours = locDescription.opening_hours || '';
+    const type = locData.types || '';
+    const state = locData.terms || '';
 
     return (
       <SafeAreaView style={homeStyleSheet.safeArea}>
@@ -96,7 +101,7 @@ export default class HomeScreen extends React.Component {
               {locDescription.rating} ({locDescription.user_ratings_total})
             </Text>
             <Text style={homeStyleSheet.modalType}>
-              {" "}
+              {' '}
               {getType(type)} {dollarSign(locDescription.price_level)}
             </Text>
             <Text
@@ -108,10 +113,11 @@ export default class HomeScreen extends React.Component {
             >
               {isOpen(hours)}
             </Text>
+            <Text>CAPACITY FROM FIREBASE: {this.state.ratings.capacity}</Text>
             <TouchableHighlight
               style={{
                 ...homeStyleSheet.openButton,
-                backgroundColor: "#2196F3",
+                backgroundColor: '#2196F3',
               }}
               onPress={() => {
                 this.closeModal(!modalVisible);
@@ -126,7 +132,9 @@ export default class HomeScreen extends React.Component {
                 this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
                 this.closeModal(!modalVisible);
                 this.props.navigation.navigate("SinglePlace", {
+                  // PASS PROPS TO SINGLE PLACE HEREEEEEEEE
                   name: this.state.selectedName,
+                  id: this.state.id
                 });
               }}
             />
@@ -149,7 +157,7 @@ export default class HomeScreen extends React.Component {
             <Marker
               coordinate={this.state.coordinates}
               onPress={() => {
-                this.props.navigation.navigate("SinglePlace", {
+                this.props.navigation.navigate('SinglePlace', {
                   name: this.state.selectedName,
                 });
               }}
@@ -163,6 +171,9 @@ export default class HomeScreen extends React.Component {
             minLength={2}
             fetchDetails={true}
             onPress={(data, details = null) => {
+
+              // console.log("LOCDETAILS => " ,details.place_id)
+
               this.setData(data, details, true);
               this.setState({
                 coordinates: {
@@ -170,7 +181,15 @@ export default class HomeScreen extends React.Component {
                   longitude: details.geometry.location.lng,
                 },
                 selectedName: data.description,
+
+                // SETTIN STATES FOR PASSING DOWN PROPS HERE
+                // getting the placeId so we can pass it to SinglePlace component
+                id: details.place_id
               });
+
+              // console.log for state
+              console.log('STATE IN AUTO COMPLETE', this.state)
+
               this.map.animateCamera({
                 center: {
                   latitude: details.geometry.location.lat,
@@ -182,8 +201,8 @@ export default class HomeScreen extends React.Component {
               ); //shortensname in searchbar
             }}
             query={{
-              key: "AIzaSyCukq40uCr0mkfwu4JlZaO6yQ6P0K5D7Bc",
-              language: "en",
+              key: 'AIzaSyCukq40uCr0mkfwu4JlZaO6yQ6P0K5D7Bc',
+              language: 'en',
             }}
             nearbyPlacesAPI="GooglePlacesSearch"
             debounce={200}
