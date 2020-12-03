@@ -17,9 +17,12 @@ import {
   getColor,
   getType,
   dollarSign,
+  getGuidelines
 } from "./funcs";
 import { homeStyleSheet } from "./styles";
 import { db } from "../../firebase/config";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 
 export default class HomeScreen extends React.Component {
   constructor() {
@@ -50,7 +53,7 @@ export default class HomeScreen extends React.Component {
       .get()
       .then((snap) => {
         snap.forEach((doc) => {
-          console.log(doc.data());
+          // console.log(doc.data());
         });
       });
 
@@ -79,6 +82,7 @@ export default class HomeScreen extends React.Component {
     const locData = this.state.modalData || "";
     const hours = locDescription.opening_hours || "";
     const type = locData.types || "";
+    const state = locData.terms || ''
 
     return (
       <SafeAreaView style={homeStyleSheet.safeArea}>
@@ -116,15 +120,19 @@ export default class HomeScreen extends React.Component {
             <Button
               title="Let's go!"
               onPress={() => {
-                console.log("Hi from onpress")
                 //this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the search bar
-                console.log("GP", this.GooglePlacesAutocompleteRef)
                 this.setModal(!modalVisible);
                 this.props.navigation.navigate("SinglePlace", {
                   name: this.state.selectedName,
                 });
               }}
             />
+           <TouchableOpacity 
+            style = {homeStyleSheet.button}
+            onPress = {() => getGuidelines(state)}
+            >
+              <Text style = {homeStyleSheet.buttonText}>State Guidelines</Text> 
+           </TouchableOpacity>
           </View>
         </Modal>
         <MapView

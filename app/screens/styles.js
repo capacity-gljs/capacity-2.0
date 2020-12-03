@@ -61,9 +61,18 @@ export const homeStyleSheet = StyleSheet.create({
       marginLeft: -4,
       marginBottom: 5, 
       fontSize: 15
+    },
+    button: {
+      alignItems: 'center',
+      backgroundColor: "#2196F3",
+      padding: 10,
+      borderRadius: 10,
+      marginTop: 40
+    },
+    buttonText : {
+      color: 'white'
     }
-    
-  
+   
   });
 
 export const singlePlace = StyleSheet.create({
