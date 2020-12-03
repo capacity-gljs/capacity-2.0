@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+} from "react-native";
 //import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SignUp } from "./styles";
-
 
 function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -16,15 +22,11 @@ function SignUpScreen({ navigation }) {
   const onRegisterPress = () => {};
 
   return (
-    <View>
+    <SafeAreaView>
       <View
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
-        {/* <Image
-          style={styles.logo}
-          source={require("../../../assets/icon.png")}
-        /> */}
         <TextInput
           style={SignUp.input}
           placeholder="E-mail"
@@ -61,16 +63,16 @@ function SignUpScreen({ navigation }) {
           <Text>Create account</Text>
         </TouchableOpacity>
         <View>
-          <Text>
+          <Text style={SignUp.footerText}>
             Already have an account?{" "}
-            <Text onPress={onFooterLinkPress}>
+            <Text onPress={onFooterLinkPress} style={SignUp.footerLink}>
               Log in
             </Text>
           </Text>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
-export default SignUpScreen
+export default SignUpScreen;
