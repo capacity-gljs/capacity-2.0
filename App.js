@@ -4,6 +4,7 @@ import SinglePlaceScreen from "./app/screens/SinglePlaceScreen";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import SignUpScreen from "./app/screens/SignUpScreen";
 
 const Stack = createStackNavigator();
 
@@ -18,9 +19,13 @@ export default class App extends React.Component {
             component={SinglePlaceScreen}
             options={{ title: "Location Details" }}
           />
+          <Stack.Screen
+            name="SignUp"
+            component={SignUpScreen}
+            options={{ title: "Sign Up" }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
   }
 }
-

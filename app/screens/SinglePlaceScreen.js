@@ -24,6 +24,13 @@ function SinglePlaceScreen(props) {
         <Text style={singlePlace.subtitle}>
           This location is at {capacityPercent}% capacity
         </Text>
+        <Button
+          title="Sign Up"
+          onPress={() => {
+            props.navigation.navigate("SignUp");
+            //console.log("hello from onpress")
+          }}
+        />
       </View>
       <View>
         <Text>
