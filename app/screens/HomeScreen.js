@@ -123,10 +123,11 @@ export default class HomeScreen extends React.Component {
             <Button
               title="Let's go!"
               onPress={() => {
-                // NOTE: IS IT POSSIBLE TO SAY ON PRESS GO TO SINGLE PLACE COMP SO WE CAN PASS DOWN PROPS?
                 this.setModal(!modalVisible);
                 this.props.navigation.navigate('SinglePlace', {
+                  // PASS PROPS TO SINGLE PLACE HEREEEEEEEE
                   name: this.state.selectedName,
+                  id: this.state.id
                 });
               }}
             />
@@ -173,6 +174,7 @@ export default class HomeScreen extends React.Component {
                 },
                 selectedName: data.description,
 
+                // SETTIN STATES FOR PASSING DOWN PROPS HERE
                 // getting the placeId so we can pass it to SinglePlace component
                 id: details.place_id
               });
