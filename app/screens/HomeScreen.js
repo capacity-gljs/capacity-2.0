@@ -3,12 +3,12 @@ import {
   Text,
   View,
   SafeAreaView,
-  Modal,
   Alert,
   Button,
   TouchableHighlight,
   Image,
 } from "react-native";
+import Modal from "react-native-modal";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import {
@@ -17,12 +17,11 @@ import {
   getColor,
   getType,
   dollarSign,
-  getGuidelines
+  getGuidelines,
 } from "./funcs";
 import { homeStyleSheet } from "./styles";
 import { db } from "../../firebase/config";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
 
 export default class HomeScreen extends React.Component {
   constructor() {
@@ -64,7 +63,7 @@ export default class HomeScreen extends React.Component {
     //console.log(foundPlace)
   }
 
-  setModal(visible) {
+  closeModal(visible) {
     this.setState({ modalVisible: visible });
   }
 
@@ -82,11 +81,15 @@ export default class HomeScreen extends React.Component {
     const locData = this.state.modalData || "";
     const hours = locDescription.opening_hours || "";
     const type = locData.types || "";
-    const state = locData.terms || ''
+    const state = locData.terms || "";
 
     return (
       <SafeAreaView style={homeStyleSheet.safeArea}>
-        <Modal animationType="slide" transparent={true} visible={modalVisible}>
+        <Modal
+          animationType="slide"
+          visible={modalVisible}
+          onBackdropPress={() => this.closeModal(!modalVisible)}
+        >
           <View style={homeStyleSheet.modalView}>
             <Text style={homeStyleSheet.modalName}>{locDescription.name}</Text>
             <Text style={homeStyleSheet.modalText}>
@@ -111,7 +114,7 @@ export default class HomeScreen extends React.Component {
                 backgroundColor: "#2196F3",
               }}
               onPress={() => {
-                this.setModal(!modalVisible);
+                this.closeModal(!modalVisible);
               }}
             >
               <Text style={homeStyleSheet.textStyle}> X </Text>
@@ -120,19 +123,19 @@ export default class HomeScreen extends React.Component {
             <Button
               title="Let's go!"
               onPress={() => {
-             
-                this.setModal(!modalVisible);
+                this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
+                this.closeModal(!modalVisible);
                 this.props.navigation.navigate("SinglePlace", {
                   name: this.state.selectedName,
                 });
               }}
             />
-           <TouchableOpacity 
-            style = {homeStyleSheet.button}
-            onPress = {() => getGuidelines(state)}
+            <TouchableOpacity
+              style={homeStyleSheet.button}
+              onPress={() => getGuidelines(state)}
             >
-              <Text style = {homeStyleSheet.buttonText}>State Guidelines</Text> 
-           </TouchableOpacity>
+              <Text style={homeStyleSheet.buttonText}>State Guidelines</Text>
+            </TouchableOpacity>
           </View>
         </Modal>
         <MapView
@@ -152,6 +155,7 @@ export default class HomeScreen extends React.Component {
               }}
             />
           )}
+
           <GooglePlacesAutocomplete
             ref={(instance) => (this.GooglePlacesAutocompleteRef = instance)}
             style={homeStyleSheet.input}
@@ -173,7 +177,9 @@ export default class HomeScreen extends React.Component {
                   longitude: details.geometry.location.lng,
                 },
               });
-              this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the search bar
+              this.GooglePlacesAutocompleteRef.setAddressText(
+                data.terms[0].value
+              ); //shortensname in searchbar
             }}
             query={{
               key: "AIzaSyCukq40uCr0mkfwu4JlZaO6yQ6P0K5D7Bc",
