@@ -17,7 +17,7 @@ import { singlePlace } from './styles';
 import { render } from 'react-dom';
 
 // need onPress to call change to db
-// will need to reafctor into a handleChange function
+// will need to reafctor into a handleSubmit method
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
     super(props);
