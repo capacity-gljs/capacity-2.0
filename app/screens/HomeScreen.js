@@ -27,7 +27,9 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // grabbing places info to pass down
       id: '',
+      // state for homescreen
       initialRegion: null,
       coordinates: {
         latitude: null,
