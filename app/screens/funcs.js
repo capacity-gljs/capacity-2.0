@@ -1,3 +1,7 @@
+import { guidelines } from '../../data/guidelines'
+import * as Linking from 'expo-linking'
+import { Alert } from 'react-native'
+
 
 //grabs users current location
 export function getCurrentLocation() {
@@ -41,8 +45,24 @@ export const dollarSign = (num) =>{
   return(num == 1 ? '$' 
     :num == 2 ? '$$'
     :num == 3 ? '$$$'
-    :'$$$$' )
+    :num == 4 ? '$$$$'
+    :'' )
  }
+
+ export const getGuidelines = (state) =>{
+
+  if(state){
+    let currentState = state[3].value //gets short state abbrev. from googlePlaces API
+    for(let i = 0; i < guidelines.length; i++){
+      if(guidelines[i].state == currentState){
+      return Linking.openURL(guidelines[i].link)
+     }
+    }
+   Alert.alert('Site not found')
+  }
+}
+ 
+ 
 
  
  
