@@ -15,6 +15,8 @@ import RadioForm, {
 } from 'react-native-simple-radio-button';
 import { singlePlace } from './styles';
 import { render } from 'react-dom';
+import { addCapacity } from './fbFuncs';
+import App from '../../App'
 
 // need onPress to call change to db
 // will need to reafctor into a handleSubmit method
@@ -22,7 +24,7 @@ class SinglePlaceScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      capacityPercent: 77,
+      capacityPercent: 0,
       capacities: [
         { label: 'Empty', value: 0 },
         { label: 'A Few People', value: 25 },
@@ -35,13 +37,27 @@ class SinglePlaceScreen extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(capacityPercent){
-    this.setState({capacityPercent})
+  handleChange(capacityPercent) {
+    this.setState({ capacityPercent });
+    console.log('PROPS IN SINGLE COMP', this.props.id) // FIND THE PLACE ID
+    // this.props.onPlaceSelection(this.state)
+  }
+
+  // grab capacity and write to the db
+  handleSubmit() {
+    // console.log('HANDLE SUBMIT', evt); // NEED TO FIND EVENT CAPACITY
+    // this.setState({capacityPercent})
   }
 
   render() {
+    // console.log('PROPS ROUTE', this.props.route) // THIS GETS THE NAME
+    // console.log('PLACE PARAMS', this.props.route.params) // THIS GETS THE NAME
+    console.log('PROPS IN SINGLE COMP', this.props) // FIND THE PLACE ID
+    console.log('STATE IN SINGLE COMP', this.state) // FIND THE PLACE ID
+
     return (
       <SafeAreaView style={singlePlace.safeArea}>
         <View>
@@ -88,13 +104,12 @@ class SinglePlaceScreen extends React.Component {
             key={this.state.formLabel}
             radio_props={this.state.capacities}
             initial={this.state.initialRadioPos}
-            // onPress={(capacityPercent) => {this.setState({capacityPercent})}}
             onPress={this.handleChange}
             formHorizontal={true}
             labelHorizontal={false}
             style={{ textAlign: 'center' }}
           />
-          <Button title="Submit" />
+          <Button title="Submit" onPress={this.handleSubmit} />
         </View>
       </SafeAreaView>
     );

@@ -24,9 +24,10 @@ import { db } from '../../firebase/config';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class HomeScreen extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      id: '',
       initialRegion: null,
       coordinates: {
         latitude: null,
@@ -54,7 +55,7 @@ export default class HomeScreen extends React.Component {
       .then((snap) => {
         snap.forEach((doc) => {
           this.setState({ ratings: doc.data() });
-          // console.log('RATING', doc.data());
+          console.log('RATING', doc.data());
         });
       });
 
@@ -74,6 +75,7 @@ export default class HomeScreen extends React.Component {
       modalData: data,
       modalDetails: details,
     });
+    // console.log('SET DATA', this.state)
   }
 
   render() {
@@ -121,6 +123,7 @@ export default class HomeScreen extends React.Component {
             <Button
               title="Let's go!"
               onPress={() => {
+                // NOTE: IS IT POSSIBLE TO SAY ON PRESS GO TO SINGLE PLACE COMP SO WE CAN PASS DOWN PROPS?
                 this.setModal(!modalVisible);
                 this.props.navigation.navigate('SinglePlace', {
                   name: this.state.selectedName,
@@ -159,6 +162,9 @@ export default class HomeScreen extends React.Component {
             minLength={2}
             fetchDetails={true}
             onPress={(data, details = null) => {
+
+              // console.log("LOCDETAILS => " ,details.place_id)
+
               this.setData(data, details, true);
               this.setState({
                 coordinates: {
@@ -166,7 +172,14 @@ export default class HomeScreen extends React.Component {
                   longitude: details.geometry.location.lng,
                 },
                 selectedName: data.description,
+
+                // getting the placeId so we can pass it to SinglePlace component
+                id: details.place_id
               });
+
+              // console.log for state
+              console.log('STATE IN AUTO COMPLETE', this.state)
+
               this.map.animateCamera({
                 center: {
                   latitude: details.geometry.location.lat,
