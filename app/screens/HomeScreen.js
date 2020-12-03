@@ -173,9 +173,7 @@ export default class HomeScreen extends React.Component {
                   longitude: details.geometry.location.lng,
                 },
               });
-              console.log("Hi from onpress");
               this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the search bar
-              console.log("GP", this.GooglePlacesAutocompleteRef);
             }}
             query={{
               key: "AIzaSyCukq40uCr0mkfwu4JlZaO6yQ6P0K5D7Bc",
