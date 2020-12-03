@@ -15,11 +15,11 @@ import RadioForm, {
 } from 'react-native-simple-radio-button';
 import { singlePlace } from './styles';
 import { render } from 'react-dom';
-import { addCapacity } from './fbFuncs';
-import App from '../../App'
+import App from '../../App';
 
-// need onPress to call change to db
-// will need to reafctor into a handleSubmit method
+// importing fbFuncs
+import { addCapacity } from './fbFuncs';
+
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -42,21 +42,16 @@ class SinglePlaceScreen extends React.Component {
 
   handleChange(capacityPercent) {
     this.setState({ capacityPercent });
-    console.log('PROPS IN SINGLE COMP', this.props.id) // FIND THE PLACE ID
-    // this.props.onPlaceSelection(this.state)
   }
 
   // grab capacity and write to the db
-  handleSubmit() {
-    // console.log('HANDLE SUBMIT', evt); // NEED TO FIND EVENT CAPACITY
-    // this.setState({capacityPercent})
+  handleSubmit(evt) {
+    addCapacity(this.props.route.params.id , this.state.capacityPercent)
   }
 
   render() {
-    // console.log('PROPS ROUTE', this.props.route) // THIS GETS THE NAME
-    // console.log('PLACE PARAMS', this.props.route.params) // THIS GETS THE NAME
-    console.log('PROPS IN SINGLE COMP', this.props) // FIND THE PLACE ID
-    console.log('STATE IN SINGLE COMP', this.state) // FIND THE PLACE ID
+    console.log('PROPS IN SINGLE COMP', this.props); // FIND THE PLACE ID
+    console.log('STATE IN SINGLE COMP', this.state); // FIND THE PLACE ID
 
     return (
       <SafeAreaView style={singlePlace.safeArea}>
