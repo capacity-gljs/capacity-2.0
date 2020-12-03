@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,76 +6,99 @@ import {
   SafeAreaView,
   TextInput,
   Button,
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import RadioForm, {
   RadioButton,
   RadioButtonInput,
   RadioButtonLabel,
-} from "react-native-simple-radio-button";
-import { singlePlace } from "./styles";
+} from 'react-native-simple-radio-button';
+import { singlePlace } from './styles';
+import { render } from 'react-dom';
 
-function SinglePlaceScreen(props) {
-  let capacityPercent = 77;
-  return (
-    <SafeAreaView style={singlePlace.safeArea}>
-      <View>
-        <Text style={singlePlace.title}>{props.route.params.name}</Text>
-        <Text style={singlePlace.subtitle}>
-          This location is at {capacityPercent}% capacity
-        </Text>
-      </View>
-      <View>
-        <Text>
-          {Array(capacityPercent)
-            .fill()
-            .map((_, index) => (
-              <React.Fragment key={index}>
-                <Ionicons
-                  key={index}
-                  style={singlePlace.icon}
-                  name="md-person"
-                  size={32}
-                  color="black"
-                />
-                {"  "}
-              </React.Fragment>
-            ))}
-          {Array(100 - capacityPercent)
-            .fill()
-            .map((_, index) => (
-              <React.Fragment key={index}>
-                <Ionicons
-                  key={index}
-                  style={singlePlace.icon}
-                  name="md-person"
-                  size={32}
-                  color="grey"
-                />
-                {"  "}
-              </React.Fragment>
-            ))}
-        </Text>
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <Text style={singlePlace.subtitle}>How Crowded Was It?</Text>
-        <RadioForm
-          radio_props={[
-            { label: "Empty", value: 0 },
-            { label: "A Few People", value: 1 },
-            { label: "Half Full", value: 2 },
-            { label: "Full", value: 3 },
-            { label: "Crowded", value: 4 },
-          ]}
-          onPress={() => {}}
-          formHorizontal={true}
-          labelHorizontal={false}
-          style={{ textAlign: "center" }}
-        />
-        <Button title="Submit" />
-      </View>
-    </SafeAreaView>
-  );
+// need onPress to call change to db
+// will need to reafctor into a handleChange function
+class SinglePlaceScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      capacityPercent: 77,
+      capacities: [
+        { label: 'Empty', value: 0 },
+        { label: 'A Few People', value: 25 },
+        { label: 'Half Full', value: 50 },
+        { label: 'Full', value: 75 },
+        { label: 'Crowded', value: 100 },
+      ],
+      initialRadioPos: -1,
+      formLabel: 0,
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(capacityPercent){
+    this.setState({capacityPercent})
+  }
+
+  render() {
+    return (
+      <SafeAreaView style={singlePlace.safeArea}>
+        <View>
+          <Text style={singlePlace.title}>{this.props.route.params.name}</Text>
+          <Text style={singlePlace.subtitle}>
+            This location is at {this.state.capacityPercent}% capacity
+          </Text>
+        </View>
+        <View>
+          <Text>
+            {Array(this.state.capacityPercent)
+              .fill()
+              .map((_, index) => (
+                <React.Fragment key={index}>
+                  <Ionicons
+                    key={index}
+                    style={singlePlace.icon}
+                    name="md-person"
+                    size={32}
+                    color="black"
+                  />
+                  {'  '}
+                </React.Fragment>
+              ))}
+            {Array(100 - this.state.capacityPercent)
+              .fill()
+              .map((_, index) => (
+                <React.Fragment key={index}>
+                  <Ionicons
+                    key={index}
+                    style={singlePlace.icon}
+                    name="md-person"
+                    size={32}
+                    color="grey"
+                  />
+                  {'  '}
+                </React.Fragment>
+              ))}
+          </Text>
+        </View>
+        <View style={{ alignItems: 'center' }}>
+          <Text style={singlePlace.subtitle}>How Crowded Was It?</Text>
+          <RadioForm
+            key={this.state.formLabel}
+            radio_props={this.state.capacities}
+            initial={this.state.initialRadioPos}
+            // onPress={(capacityPercent) => {this.setState({capacityPercent})}}
+            onPress={this.handleChange}
+            formHorizontal={true}
+            labelHorizontal={false}
+            style={{ textAlign: 'center' }}
+          />
+          <Button title="Submit" />
+        </View>
+      </SafeAreaView>
+    );
+  }
 }
 
 export default SinglePlaceScreen;
