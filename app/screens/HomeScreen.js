@@ -120,7 +120,9 @@ export default class HomeScreen extends React.Component {
             <Button
               title="Let's go!"
               onPress={() => {
-                //this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the search bar
+                console.log("Hi from onpress");
+                this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the search bar
+                console.log("GP", this.GooglePlacesAutocompleteRef);
                 this.setModal(!modalVisible);
                 this.props.navigation.navigate("SinglePlace", {
                   name: this.state.selectedName,
@@ -153,6 +155,7 @@ export default class HomeScreen extends React.Component {
             />
           )}
           <GooglePlacesAutocomplete
+            ref={(instance) => (this.GooglePlacesAutocompleteRef = instance)}
             style={homeStyleSheet.input}
             placeholder="search"
             minLength={2}
