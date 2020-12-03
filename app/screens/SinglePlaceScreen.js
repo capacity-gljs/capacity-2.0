@@ -18,7 +18,7 @@ import { render } from "react-dom";
 import App from "../../App";
 
 // importing fbFuncs
-import { addCapacity } from "./fbFuncs";
+import { addCapacity,  } from './fbFuncs';
 
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
@@ -46,8 +46,7 @@ class SinglePlaceScreen extends React.Component {
 
   // grab capacity and write to the db
   handleSubmit(evt) {
-    addCapacity(this.props.route.params.id, this.state.capacityPercent);
-
+    addCapacity(this.props.route.params.id , this.state.capacityPercent, this.props.route.params.placeLat, this.props.route.params.placeLng)
   }
 
   render() {
