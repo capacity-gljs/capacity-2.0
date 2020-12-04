@@ -1,12 +1,6 @@
 import { db } from "../../firebase/config";
 import { uuidv1 } from "uuid";
 
-// get place
-// not needed
-// export const getPlace = () => {
-
-// }
-
 // get capacity
 // export const getCapacity = (placeId) => {
 //   const places = db.collection('places');
@@ -23,22 +17,23 @@ import { uuidv1 } from "uuid";
 // }
 
 export const getOrAddPlace = async (placeId, placeLat, placeLng, placeName) => {
-  const placeRef = db.collection('places').doc(placeId);
-  //const doc = await placeRef.get()
-  //console.log('THIS IS THE DOC', doc)
+  const placeRef = db.collection("places").doc(placeId);
 
-  await placeRef.get()
-  .then((docSnapshot) => {
-    if (!docSnapshot.exists) {
-      console.log("THE PLACE DOES NOT EXIST YET")
-      const newPlace = db.collection('places').doc(placeId).set({placeName: placeName, avgCapacity: 0, numCapacities: 0, lat: placeLat, long: placeLng})
-      console.log('HI I CREATED A NEW PLACE: ', newPlace)
-      //placeRef.set({placeName, avgCapacity: 0, numRatings: 0, placeLat, placeLng, placeName}) // create the document
-    } else {
-      ('IT THINKS THE PLACE EXISTS')
-      return
-    }
-});
+  const docSnapshot = await placeRef.get();
+  if (!docSnapshot.exists) {
+    console.log("THE PLACE DOES NOT EXIST YET");
+    const newPlace = await db.collection("places").doc(placeId).set({
+      placeName: placeName,
+      avgCapacity: 0,
+      numCapacities: 0,
+      lat: placeLat,
+      long: placeLng,
+    });
+    console.log("HI I CREATED A NEW PLACE: ", placeId);
+    //placeRef.set({placeName, avgCapacity: 0, numRatings: 0, placeLat, placeLng, placeName}) // create the document
+  } else {
+    ("IT THINKS THE PLACE EXISTS");
+  }
 
   /*if(!doc) {
     console.log('AM I RUNNING')
@@ -46,70 +41,44 @@ export const getOrAddPlace = async (placeId, placeLat, placeLng, placeName) => {
   } else {
     return
   }*/
-  
-}
+};
 // add capacity
 export const addCapacity = async (placeId, capacityPercent) => {
-  
-  const placeRef = db.collection('places').doc(placeId);
-  const capacityRef = placeRef.collection('capacity').doc();
-  console.log('THIS IS THE PLACE REF: ', placeRef)
+  const placeRef = db.collection("places").doc(placeId);
+  const capacityRef = placeRef.collection("capacity").doc();
 
-   return await db.runTransaction(async (transaction) => {
-    return await transaction.get(placeRef).then(res => {
+  try {
+    await db.runTransaction(async (transaction) => {
+      let doc;
+      try {
+        doc = await transaction.get(placeRef);
+      } catch (error) {
+        console.log("THIS IS THE ERROR", error);
+        throw error;
+      }
 
-        /*if (!res.exists) {
-          //transaction.set(placeRef, {placeName, avgCapacity: 50, numRatings: 0})
-         // console.log('I MADE IT THIS FAR')
-          throw "Document does not exist!";
-        }*/
+      if (!doc.exists) {
+        throw "Document does not exist!";
+      }
+      // Compute new number of ratings
+      const newNumCapacities = doc.data().numCapacities + 1;
+      // Compute new average rating
+      var oldCapacityTotal = doc.data().avgCapacity * doc.data().numCapacities;
+      var newAvgCapacity =
+        (oldCapacityTotal + capacityPercent) / newNumCapacities;
 
-        // Compute new number of ratings
-        const newNumCapacities = res.data().numCapacities + 1;
+      // Commit to Firestore
+      transaction.update(placeRef, {
+        numCapacities: newNumCapacities,
+        avgCapacity: newAvgCapacity,
+      });
+      transaction.set(capacityRef, { capacityPercent: capacityPercent });
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-        // Compute new average rating
-        var oldCapacityTotal = res.data().avgCapacity * res.data().numCapacities;
-        var newAvgCapacity = (oldCapacityTotal + capacityPercent) / newNumCapacities;
-
-        // Commit to Firestore
-        transaction.update(placeId, {
-          numCapacities: newNumCapacities,
-          avgCapacity: newAvgCapacity
-        });
-        transaction.set(capacityRef, { capacityPercent: capacityPercent });
-    })
-});
-
-  //db.collection('places').doc(placeId).set({placeName, avgCapacity: null, numRatings: 0})
-  //db.collection('places').doc(placeId).collection('capacity').add({capacityPercent, placeLat, placeLng})
-}
-
-
-/*function addRating(restaurantRef, rating) {
-  // Create a reference for a new rating, for use inside the transaction
-  var ratingRef = restaurantRef.collection('ratings').doc();
-
-  // In a transaction, add the new rating and update the aggregate totals
-  return db.runTransaction(transaction => {
-      return transaction.get(restaurantRef).then(res => {
-          if (!res.exists) {
-              throw "Document does not exist!";
-          }
-
-          // Compute new number of ratings
-          var newNumRatings = res.data().numRatings + 1;
-
-          // Compute new average rating
-          var oldRatingTotal = res.data().avgRating * res.data().numRatings;
-          var newAvgRating = (oldRatingTotal + rating) / newNumRatings;
-
-          // Commit to Firestore
-          transaction.update(restaurantRef, {
-              numRatings: newNumRatings,
-              avgRating: newAvgRating
-          });
-          transaction.set(ratingRef, { rating: rating });
-      })
-  });
-}
-*/
+export const addUser = (email, password) => {
+  db.collection("users").doc().collection("info").add({ email, password });
+};
