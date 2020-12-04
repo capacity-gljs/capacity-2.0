@@ -26,12 +26,12 @@ export const getOrAddPlace = async (placeId, placeLat, placeLng, placeName) => {
   //const doc = await placeRef.get()
   //console.log('THIS IS THE DOC', doc)
 
-  placeRef.get()
+  await placeRef.get()
   .then((docSnapshot) => {
     if (!docSnapshot.exists) {
       console.log("THE PLACE DOES NOT EXIST YET")
-      db.collection('places').doc(placeId).set({placeName: placeName, avgCapacity: 0, numRatings: 0, lat: placeLat, long: placeLng})
-
+      const newPlace = db.collection('places').doc(placeId).set({placeName: placeName, avgCapacity: 0, numCapacities: 0, lat: placeLat, long: placeLng})
+      console.log('HI I CREATED A NEW PLACE: ', newPlace)
       //placeRef.set({placeName, avgCapacity: 0, numRatings: 0, placeLat, placeLng, placeName}) // create the document
     } else {
       ('IT THINKS THE PLACE EXISTS')
@@ -52,15 +52,16 @@ export const addCapacity = (placeId, capacityPercent) => {
   
   const placeRef = db.collection('places').doc(placeId);
   const capacityRef = placeRef.collection('capacity').doc();
+  console.log('THIS IS THE PLACE REF: ', placeRef)
 
   return db.runTransaction(transaction => {
     return transaction.get(placeRef).then(res => {
 
-        if (!res.exists) {
+        /*if (!res.exists) {
           //transaction.set(placeRef, {placeName, avgCapacity: 50, numRatings: 0})
          // console.log('I MADE IT THIS FAR')
           throw "Document does not exist!";
-        }
+        }*/
 
         // Compute new number of ratings
         const newNumCapacities = res.data().numCapacities + 1;
