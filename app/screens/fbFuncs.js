@@ -1,5 +1,5 @@
 import { db } from "../../firebase/config";
-import { uuidv1 } from "uuid";
+//import { uuidv1 } from "uuid";
 
 // get capacity
 // export const getCapacity = (placeId) => {
