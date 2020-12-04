@@ -122,7 +122,7 @@ export default class HomeScreen extends React.Component {
             >
               {isOpen(hours)}
             </Text>
-            <Text>CAPACITY FROM FIREBASE: {this.state.ratings.capacity}</Text>
+            {/* <Text>CAPACITY FROM FIREBASE: {this.state.ratings.capacity}</Text> */}
             <TouchableHighlight
               style={{
                 ...homeStyleSheet.openButton,
