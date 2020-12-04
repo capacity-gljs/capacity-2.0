@@ -55,6 +55,7 @@ class SinglePlaceScreen extends React.Component {
       this.props.route.params.placeLng,
       this.props.route.params.name
     );
+    alert("Thanks for rating!");
   }
 
   render() {
@@ -64,11 +65,8 @@ class SinglePlaceScreen extends React.Component {
     return (
       <SafeAreaView style={singlePlace.safeArea}>
         <View>
-          <Text style={singlePlace.title}>{this.props.route.params.name}</Text>
-          <Text style={singlePlace.subtitle}>
-            This location is at {this.state.capacityPercent}% capacity
-          </Text>
-          <Ionicons
+        <Ionicons
+          style={singlePlace.starIcon}
             name={this.state.favorited ? "ios-star" : "ios-star-outline"}
             size={32}
             onPress={() => {
@@ -80,6 +78,11 @@ class SinglePlaceScreen extends React.Component {
               }
             }}
           />
+          <Text style={singlePlace.title}>{this.props.route.params.name}</Text>
+          <Text style={singlePlace.subtitle}>
+            This location is at {this.state.capacityPercent}% capacity
+          </Text>
+     
         </View>
         <View>
           <Text>

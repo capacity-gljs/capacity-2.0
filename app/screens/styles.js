@@ -86,7 +86,7 @@ export const singlePlace = StyleSheet.create({
     },
     title: {
       textAlign: "center",
-      fontSize: 30,
+      fontSize: 25,
       marginBottom: 20,
     },
     subtitle: {
@@ -98,6 +98,10 @@ export const singlePlace = StyleSheet.create({
     },
     icon: {
       textAlign: "center",
+    },
+    starIcon: {
+      textAlign: "right",
+      margin: 10
     },
   });
 
