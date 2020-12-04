@@ -1,4 +1,5 @@
-import { db } from '../../firebase/config';
+import { db } from "../../firebase/config";
+import { uuidv1 } from "uuid";
 
 // get place
 // not needed
@@ -48,14 +49,14 @@ export const getOrAddPlace = async (placeId, placeLat, placeLng, placeName) => {
   
 }
 // add capacity
-export const addCapacity = (placeId, capacityPercent) => {
+export const addCapacity = async (placeId, capacityPercent) => {
   
   const placeRef = db.collection('places').doc(placeId);
   const capacityRef = placeRef.collection('capacity').doc();
   console.log('THIS IS THE PLACE REF: ', placeRef)
 
-  return db.runTransaction(transaction => {
-    return transaction.get(placeRef).then(res => {
+   return await db.runTransaction(async (transaction) => {
+    return await transaction.get(placeRef).then(res => {
 
         /*if (!res.exists) {
           //transaction.set(placeRef, {placeName, avgCapacity: 50, numRatings: 0})
