@@ -1,4 +1,5 @@
 import { db } from '../../firebase/config';
+import { uuidv1 } from 'uuid'
 
 // get place
 // not needed
@@ -26,4 +27,6 @@ export const addCapacity = (placeId, capacityPercent, placeLat, placeLng) => {
   console.log('ADD CAP FUNC', placeLat, placeLng)
   db.collection('places').doc(placeId).collection('capacity').add({capacity: capacityPercent, latitude: placeLat, longitude: placeLng})
 }
-
+export const addUser = (email, password) => {
+  db.collection('users').doc().collection('capacity').add({email, password})
+}

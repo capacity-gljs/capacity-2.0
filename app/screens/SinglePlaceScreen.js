@@ -18,7 +18,7 @@ import { render } from "react-dom";
 import App from "../../App";
 
 // importing fbFuncs
-import { addCapacity,  } from './fbFuncs';
+import { addCapacity } from "./fbFuncs";
 
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
@@ -34,6 +34,8 @@ class SinglePlaceScreen extends React.Component {
       ],
       initialRadioPos: -1,
       formLabel: 0,
+      user: null,
+      favorited: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -46,7 +48,12 @@ class SinglePlaceScreen extends React.Component {
 
   // grab capacity and write to the db
   handleSubmit(evt) {
-    addCapacity(this.props.route.params.id , this.state.capacityPercent, this.props.route.params.placeLat, this.props.route.params.placeLng)
+    addCapacity(
+      this.props.route.params.id,
+      this.state.capacityPercent,
+      this.props.route.params.placeLat,
+      this.props.route.params.placeLng
+    );
   }
 
   render() {
@@ -60,10 +67,16 @@ class SinglePlaceScreen extends React.Component {
           <Text style={singlePlace.subtitle}>
             This location is at {this.state.capacityPercent}% capacity
           </Text>
-          <Button
-            title="Sign Up"
+          <Ionicons
+            name={this.state.favorited ? "ios-star" : "ios-star-outline"}
+            size={32}
             onPress={() => {
-              this.props.navigation.navigate("SignUp");
+              if (this.state.user) {
+                this.setState({ favorited: !this.state.favorited });
+              } else {
+                alert("create account to favorite");
+                this.props.navigation.navigate("SignUp");
+              }
             }}
           />
         </View>

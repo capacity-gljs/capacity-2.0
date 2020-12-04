@@ -9,8 +9,9 @@ import {
 } from "react-native";
 //import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SignUp } from "./styles";
+import { addUser } from "./fbFuncs";
 
-function SignUpScreen({ navigation }) {
+function SignUpScreen({ navigation, signUp }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -19,7 +20,12 @@ function SignUpScreen({ navigation }) {
     navigation.navigate("Login");
   };
 
-  const onRegisterPress = () => {};
+  const onRegisterPress = () => {
+    addUser(email, password);
+    //signUp(email, password);
+    alert("Registered Successfully");
+    navigation.navigate("Home");
+  };
 
   return (
     <SafeAreaView>
@@ -74,5 +80,9 @@ function SignUpScreen({ navigation }) {
     </SafeAreaView>
   );
 }
+
+// const mapDispatch = (dispatch) => ({
+//   signUp: (email, password) => dispatch(signUp(email, password)),
+// });
 
 export default SignUpScreen;
