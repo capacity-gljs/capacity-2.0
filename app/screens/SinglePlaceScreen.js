@@ -18,7 +18,7 @@ import { render } from "react-dom";
 import App from "../../App";
 
 // importing fbFuncs
-import { addCapacity } from "./fbFuncs";
+import { getOrAddPlace, addCapacity } from "./fbFuncs";
 
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
@@ -47,15 +47,16 @@ class SinglePlaceScreen extends React.Component {
   }
 
   // grab capacity and write to the db
-  handleSubmit(evt) {
-    addCapacity(
+  async handleSubmit(evt) {
+    await getOrAddPlace(
       this.props.route.params.id,
-      this.state.capacityPercent,
       this.props.route.params.placeLat,
       this.props.route.params.placeLng,
       this.props.route.params.name
     );
     alert("Thanks for rating!");
+    console.log("place created");
+    addCapacity(this.props.route.params.id, this.state.capacityPercent);
   }
 
   render() {
