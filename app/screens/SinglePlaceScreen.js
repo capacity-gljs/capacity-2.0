@@ -52,13 +52,14 @@ class SinglePlaceScreen extends React.Component {
       this.props.route.params.id,
       this.state.capacityPercent,
       this.props.route.params.placeLat,
-      this.props.route.params.placeLng
+      this.props.route.params.placeLng,
+      this.props.route.params.name
     );
   }
 
   render() {
-    console.log("PROPS IN SINGLE COMP", this.props); // FIND THE PLACE ID
-    console.log("STATE IN SINGLE COMP", this.state); // FIND THE PLACE ID
+    // console.log('PROPS IN SINGLE COMP', this.props); // FIND THE PLACE ID
+    // console.log('STATE IN SINGLE COMP', this.state); // FIND THE PLACE ID
 
     return (
       <SafeAreaView style={singlePlace.safeArea}>
