@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapView,{ PROVIDER_GOOGLE, Marker} from "react-native-maps";
 // IMPORT FUNCD
 import {
   getCurrentLocation,
@@ -19,6 +19,8 @@ import {
   getType,
   dollarSign,
   getGuidelines,
+  heatMapPoints,
+  heatMapWeight
 } from "./funcs";
 import { homeStyleSheet } from "./styles";
 import { db } from "../../firebase/config";
@@ -26,6 +28,10 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 // IMPORT FIREBASE FUNCS
 import {getCapacity} from './fbFuncs'
+import { Heatmap } from 'react-native-maps';
+import { locations } from '../../data/heatmap'
+
+
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -88,6 +94,7 @@ export default class HomeScreen extends React.Component {
     });
     // console.log('SET DATA', this.state)
   }
+
 
   render() {
     const modalVisible = this.state.modalVisible;
@@ -163,7 +170,17 @@ export default class HomeScreen extends React.Component {
           provider={PROVIDER_GOOGLE}
           showsUserLocation
           initialRegion={this.state.initialRegion}
+         
         >
+        <Heatmap 
+          points = {locations}
+          opacity = {1}
+          radius = {100}
+          maxIntensity = {100}
+          
+          />
+          
+          
           {this.state.coordinates.latitude && (
             <Marker
               coordinate={this.state.coordinates}
