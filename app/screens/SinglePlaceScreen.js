@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -6,19 +6,19 @@ import {
   SafeAreaView,
   TextInput,
   Button,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import RadioForm, {
   RadioButton,
   RadioButtonInput,
   RadioButtonLabel,
-} from 'react-native-simple-radio-button';
-import { singlePlace } from './styles';
-import { render } from 'react-dom';
-import App from '../../App';
+} from "react-native-simple-radio-button";
+import { singlePlace } from "./styles";
+import { render } from "react-dom";
+import App from "../../App";
 
 // importing fbFuncs
-import { addCapacity,  } from './fbFuncs';
+import { addCapacity } from "./fbFuncs";
 
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
@@ -26,14 +26,16 @@ class SinglePlaceScreen extends React.Component {
     this.state = {
       capacityPercent: 0,
       capacities: [
-        { label: 'Empty', value: 0 },
-        { label: 'A Few People', value: 25 },
-        { label: 'Half Full', value: 50 },
-        { label: 'Full', value: 75 },
-        { label: 'Crowded', value: 100 },
+        { label: "Empty", value: 0 },
+        { label: "A Few People", value: 25 },
+        { label: "Half Full", value: 50 },
+        { label: "Full", value: 75 },
+        { label: "Crowded", value: 100 },
       ],
       initialRadioPos: -1,
       formLabel: 0,
+      user: null,
+      favorited: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -46,12 +48,18 @@ class SinglePlaceScreen extends React.Component {
 
   // grab capacity and write to the db
   handleSubmit(evt) {
-    addCapacity(this.props.route.params.id , this.state.capacityPercent, this.props.route.params.placeLat, this.props.route.params.placeLng)
+    addCapacity(
+      this.props.route.params.id,
+      this.state.capacityPercent,
+      this.props.route.params.placeLat,
+      this.props.route.params.placeLng,
+      this.props.route.params.name
+    );
   }
 
   render() {
-    console.log('PROPS IN SINGLE COMP', this.props); // FIND THE PLACE ID
-    console.log('STATE IN SINGLE COMP', this.state); // FIND THE PLACE ID
+    // console.log('PROPS IN SINGLE COMP', this.props); // FIND THE PLACE ID
+    // console.log('STATE IN SINGLE COMP', this.state); // FIND THE PLACE ID
 
     return (
       <SafeAreaView style={singlePlace.safeArea}>
@@ -60,6 +68,18 @@ class SinglePlaceScreen extends React.Component {
           <Text style={singlePlace.subtitle}>
             This location is at {this.state.capacityPercent}% capacity
           </Text>
+          <Ionicons
+            name={this.state.favorited ? "ios-star" : "ios-star-outline"}
+            size={32}
+            onPress={() => {
+              if (this.state.user) {
+                this.setState({ favorited: !this.state.favorited });
+              } else {
+                alert("create account to favorite");
+                this.props.navigation.navigate("SignUp");
+              }
+            }}
+          />
         </View>
         <View>
           <Text>
@@ -74,7 +94,7 @@ class SinglePlaceScreen extends React.Component {
                     size={32}
                     color="black"
                   />
-                  {'  '}
+                  {"  "}
                 </React.Fragment>
               ))}
             {Array(100 - this.state.capacityPercent)
@@ -88,12 +108,12 @@ class SinglePlaceScreen extends React.Component {
                     size={32}
                     color="grey"
                   />
-                  {'  '}
+                  {"  "}
                 </React.Fragment>
               ))}
           </Text>
         </View>
-        <View style={{ alignItems: 'center' }}>
+        <View style={{ alignItems: "center" }}>
           <Text style={singlePlace.subtitle}>How Crowded Was It?</Text>
           <RadioForm
             key={this.state.formLabel}
@@ -102,7 +122,7 @@ class SinglePlaceScreen extends React.Component {
             onPress={this.handleChange}
             formHorizontal={true}
             labelHorizontal={false}
-            style={{ textAlign: 'center' }}
+            style={{ textAlign: "center" }}
           />
           <Button title="Submit" onPress={this.handleSubmit} />
         </View>
