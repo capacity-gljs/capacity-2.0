@@ -61,4 +61,4 @@ export const getGuidelines = (state) => {
     }
     Alert.alert("Site not found");
   }
-};
+}
