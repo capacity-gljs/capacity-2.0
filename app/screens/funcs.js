@@ -63,20 +63,4 @@ export const getGuidelines = (state) => {
     Alert.alert('Site not found');
   }
 }
-};
 
-export const heatMapPoints = () => {
-  for (let i = 0; i < locations.length; i++) {
-    let lat = locations[i].latitude;
-    let lon = locations[i].longitude;
-    let points = [lat, lon];
-    return points;
-  }
-};
-
-export const heatMapWeight = () => {
-  for (let i = 0; i < locations.length; i++) {
-    let weights = locations[i].weight;
-    return weights;
-  }
-};
