@@ -51,4 +51,3 @@ export const locations = [
     weight: 34,
   },
 ];
- 

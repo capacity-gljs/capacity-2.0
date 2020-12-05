@@ -18,7 +18,9 @@ import {
   getColor,
   getType,
   dollarSign,
-  getGuidelines
+  getGuidelines,
+  heatMapPoints,
+  heatMapWeight,
 } from "./funcs";
 import { homeStyleSheet } from "./styles";
 import { db } from "../../firebase/config";
@@ -28,7 +30,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { getCapacity } from "./fbFuncs";
 import { Heatmap } from "react-native-maps";
 import { locations } from "../../data/heatmap";
-import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -124,7 +125,7 @@ export default class HomeScreen extends React.Component {
             >
               {isOpen(hours)}
             </Text>
-            <Text>CAPACITY FROM FIREBASE: {this.state.ratings.capacity}</Text>
+            {/* <Text>CAPACITY FROM FIREBASE: {this.state.ratings.capacity}</Text> */}
             <TouchableHighlight
               style={{
                 ...homeStyleSheet.openButton,

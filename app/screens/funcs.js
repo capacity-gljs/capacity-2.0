@@ -1,4 +1,5 @@
 import { guidelines } from "../../data/guidelines";
+import { locations } from "../../data/heatmap";
 import * as Linking from "expo-linking";
 import { Alert } from "react-native";
 
