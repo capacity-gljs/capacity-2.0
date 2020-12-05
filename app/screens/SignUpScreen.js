@@ -7,9 +7,9 @@ import {
   View,
   SafeAreaView,
 } from 'react-native';
-//import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SignUp } from './styles';
-import { addUser } from './fbFuncs';
+import { connect } from 'react-redux';
+import { signUp } from '../store/user';
 
 function SignUpScreen({ navigation, signUp }) {
   const [email, setEmail] = useState('');
@@ -21,8 +21,7 @@ function SignUpScreen({ navigation, signUp }) {
   };
 
   const onRegisterPress = () => {
-    addUser(email, password);
-    //signUp(email, password);
+    signUp(email, password);
     alert('Registered Successfully');
     navigation.navigate('Home');
   };
@@ -68,21 +67,19 @@ function SignUpScreen({ navigation, signUp }) {
         >
           <Text>Create account</Text>
         </TouchableOpacity>
-        <View>
-          <Text style={SignUp.footerText}>
-            Already have an account?{' '}
-            <Text onPress={onFooterLinkPress} style={SignUp.footerLink}>
-              Log in
-            </Text>
-          </Text>
-        </View>
+        <TouchableOpacity
+          style={SignUp.button}
+          onPress={() => onFooterLinkPress()}
+        >
+          <Text>Log in</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 }
 
-// const mapDispatch = (dispatch) => ({
-//   signUp: (email, password) => dispatch(signUp(email, password)),
-// });
+const mapDispatch = (dispatch) => ({
+  signUp: (email, password) => dispatch(signUp(email, password)),
+});
 
-export default SignUpScreen;
+export default connect(null, mapDispatch)(SignUpScreen);

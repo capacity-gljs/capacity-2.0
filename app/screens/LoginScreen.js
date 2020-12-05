@@ -8,20 +8,20 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { SignUp } from './styles';
-// import { loginUser } from "./fbFuncs";
+import { connect } from 'react-redux';
+import { loginUser } from '../store/user';
 
-function LoginScreen({ navigation, login }) {
+function LoginScreen({ navigation, loginUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const onFooterLinkPress = () => {
-    navigation.navigate('Login'); // should this be 'Registration'
+    navigation.navigate('SignUp');
   };
 
   const onLoginPress = () => {
-    // addUser(email, password); // replace with function to login from fbFuncs
+    loginUser(email, password);
     alert('Login Successful');
-    // navigation.navigate("Home"); // want it to go to the singlePlace screen?
   };
 
   return (
@@ -49,17 +49,14 @@ function LoginScreen({ navigation, login }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TouchableOpacity
-          style={SignUp.button}
-          onPress={() => onLoginPress()}
-        >
+        <TouchableOpacity style={SignUp.button} onPress={() => onLoginPress()}>
           <Text>Log in</Text>
         </TouchableOpacity>
         <View>
           <Text style={SignUp.footerText}>
             No account?{' '}
             <Text onPress={onFooterLinkPress} style={SignUp.footerLink}>
-              Log in
+              Sign up!
             </Text>
           </Text>
         </View>
@@ -68,4 +65,8 @@ function LoginScreen({ navigation, login }) {
   );
 }
 
-export default LoginScreen;
+const mapDispatch = (dispatch) => ({
+  loginUser: (email, password) => dispatch(loginUser(email, password)),
+});
+
+export default connect(null, mapDispatch)(LoginScreen);

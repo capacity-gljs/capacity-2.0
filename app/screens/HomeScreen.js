@@ -11,7 +11,7 @@ import {
 import Modal from 'react-native-modal';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-// IMPORT FUNCD
+// IMPORT FUNCS
 import {
   getCurrentLocation,
   isOpen,
@@ -23,7 +23,6 @@ import {
   heatMapWeight,
 } from './funcs';
 import { homeStyleSheet } from './styles';
-import { db } from '../../firebase/config';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 // IMPORT FIREBASE FUNCS
@@ -125,7 +124,6 @@ export default class HomeScreen extends React.Component {
             >
               {isOpen(hours)}
             </Text>
-            {/* <Text>CAPACITY FROM FIREBASE: {this.state.ratings.capacity}</Text> */}
             <TouchableHighlight
               style={{
                 ...homeStyleSheet.openButton,
@@ -144,7 +142,7 @@ export default class HomeScreen extends React.Component {
                 this.GooglePlacesAutocompleteRef.setAddressText(''); //clears the searchbar
                 this.closeModal(!modalVisible);
                 this.props.navigation.navigate('SinglePlace', {
-                  // PASS PROPS TO SINGLE PLACE HEREEEEEEEE
+                  // PASS PROPS TO SINGLE PLACE HERE
                   name: this.state.selectedName,
                   id: this.state.id,
                   placeLat: this.state.placeLat,
@@ -160,6 +158,7 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
           </View>
         </Modal>
+        
         <MapView
           ref={(map) => (this.map = map)}
           style={homeStyleSheet.container}
@@ -203,7 +202,6 @@ export default class HomeScreen extends React.Component {
                 selectedName: data.description,
 
                 // SETTING STATES FOR PASSING DOWN PROPS HERE
-                // getting the placeId so we can pass it to SinglePlace component
                 id: details.place_id,
                 placeLat: details.geometry.location.lat,
                 placeLng: details.geometry.location.lng,

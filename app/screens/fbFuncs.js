@@ -1,6 +1,7 @@
+import firebase from 'firebase';
 import { db } from '../../firebase/config';
-//import { uuidv1 } from "uuid";
 
+// for reference - first successful writing to firestore
 // get capacity
 // export const getCapacity = (placeId) => {
 //   const places = db.collection('places');
@@ -77,39 +78,4 @@ export const addCapacity = async (placeId, capacityPercent) => {
   } catch (err) {
     console.log(err);
   }
-};
-
-// adding a user
-export const addUser = (email, password) => {
-  // no need for info collection on signup
-  // db.collection('users').doc().collection('info').add({ email, password });
-  db.collection('users').add({ email, password });
-};
-
-// login a user
-export const loginUser = () => {
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then((response) => {
-      const uid = response.user.uid;
-      const usersRef = firebase.firestore().collection('users');
-      usersRef
-        .doc(uid)
-        .get()
-        .then((firestoreDocument) => {
-          if (!firestoreDocument.exists) {
-            alert('User does not exist anymore.');
-            return;
-          }
-          const user = firestoreDocument.data();
-          navigation.navigate('Home', { user });
-        })
-        .catch((error) => {
-          alert(error);
-        });
-    })
-    .catch((error) => {
-      alert(error);
-    });
 };
