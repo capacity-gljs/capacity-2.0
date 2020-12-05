@@ -7,24 +7,21 @@ import {
   View,
   SafeAreaView,
 } from 'react-native';
-//import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SignUp } from './styles';
-import { addUser } from './fbFuncs';
+// import { loginUser } from "./fbFuncs";
 
-function SignUpScreen({ navigation, signUp }) {
+function LoginScreen({ navigation, login }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
   const onFooterLinkPress = () => {
-    navigation.navigate('Login');
+    navigation.navigate('Login'); // should this be 'Registration'
   };
 
-  const onRegisterPress = () => {
-    addUser(email, password);
-    //signUp(email, password);
-    alert('Registered Successfully');
-    navigation.navigate('Home');
+  const onLoginPress = () => {
+    // addUser(email, password); // replace with function to login from fbFuncs
+    alert('Login Successful');
+    // navigation.navigate("Home"); // want it to go to the singlePlace screen?
   };
 
   return (
@@ -52,25 +49,15 @@ function SignUpScreen({ navigation, signUp }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TextInput
-          style={SignUp.input}
-          placeholderTextColor="#aaaaaa"
-          secureTextEntry
-          placeholder="Confirm Password"
-          onChangeText={(text) => setConfirmPassword(text)}
-          value={confirmPassword}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
         <TouchableOpacity
           style={SignUp.button}
-          onPress={() => onRegisterPress()}
+          onPress={() => onLoginPress()}
         >
-          <Text>Create account</Text>
+          <Text>Log in</Text>
         </TouchableOpacity>
         <View>
           <Text style={SignUp.footerText}>
-            Already have an account?{' '}
+            No account?{' '}
             <Text onPress={onFooterLinkPress} style={SignUp.footerLink}>
               Log in
             </Text>
@@ -81,8 +68,4 @@ function SignUpScreen({ navigation, signUp }) {
   );
 }
 
-// const mapDispatch = (dispatch) => ({
-//   signUp: (email, password) => dispatch(signUp(email, password)),
-// });
-
-export default SignUpScreen;
+export default LoginScreen;
