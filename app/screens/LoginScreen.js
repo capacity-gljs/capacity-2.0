@@ -9,21 +9,19 @@ import {
 } from 'react-native';
 import { SignUp } from './styles';
 import { connect } from 'react-redux';
-import { signUp } from '../store/user';
+import { loginUser } from '../store/user';
 
-function SignUpScreen({ navigation, signUp }) {
+function LoginScreen({ navigation, loginUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
   const onFooterLinkPress = () => {
-    navigation.navigate('Login');
+    navigation.navigate('SignUp');
   };
 
-  const onRegisterPress = () => {
-    signUp(email, password);
-    alert('Registered Successfully');
-    navigation.navigate('Home');
+  const onLoginPress = () => {
+    loginUser(email, password);
+    alert('Login Successful');
   };
 
   return (
@@ -51,35 +49,24 @@ function SignUpScreen({ navigation, signUp }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TextInput
-          style={SignUp.input}
-          placeholderTextColor="#aaaaaa"
-          secureTextEntry
-          placeholder="Confirm Password"
-          onChangeText={(text) => setConfirmPassword(text)}
-          value={confirmPassword}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TouchableOpacity
-          style={SignUp.button}
-          onPress={() => onRegisterPress()}
-        >
-          <Text>Create account</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={SignUp.button}
-          onPress={() => onFooterLinkPress()}
-        >
+        <TouchableOpacity style={SignUp.button} onPress={() => onLoginPress()}>
           <Text>Log in</Text>
         </TouchableOpacity>
+        <View>
+          <Text style={SignUp.footerText}>
+            No account?{' '}
+            <Text onPress={onFooterLinkPress} style={SignUp.footerLink}>
+              Sign up!
+            </Text>
+          </Text>
+        </View>
       </View>
     </SafeAreaView>
   );
 }
 
 const mapDispatch = (dispatch) => ({
-  signUp: (email, password) => dispatch(signUp(email, password)),
+  loginUser: (email, password) => dispatch(loginUser(email, password)),
 });
 
-export default connect(null, mapDispatch)(SignUpScreen);
+export default connect(null, mapDispatch)(LoginScreen);
