@@ -47,7 +47,10 @@ class SinglePlaceScreen extends React.Component {
   }
 
   async componentDidMount() {
-    const favorited = await getFave(this.props.user.uid, this.props.route.params.id);
+    const favorited = await getFave(
+      this.props.user.uid,
+      this.props.route.params.id
+    );
     this.setState({ favorited });
   }
 
@@ -81,8 +84,8 @@ class SinglePlaceScreen extends React.Component {
             size={32}
             onPress={() => {
               if (this.props.user.email) {
-                if(this.state.favorited) {
-                  removeFave(this.props.user.uid, this.props.route.params.id)
+                if (this.state.favorited) {
+                  removeFave(this.props.user.uid, this.props.route.params.id);
                 } else {
                   addFave(this.props.user.uid, this.props.route.params.id);
                 }

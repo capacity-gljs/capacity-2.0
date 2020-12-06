@@ -7,7 +7,7 @@ import {
   View,
   SafeAreaView,
 } from 'react-native';
-import { SignUp } from './styles';
+import { SignUpLogin } from './styles';
 import { connect } from 'react-redux';
 import { loginUser } from '../store/user';
 
@@ -31,7 +31,7 @@ function LoginScreen({ navigation, loginUser }) {
         keyboardShouldPersistTaps="always"
       >
         <TextInput
-          style={SignUp.input}
+          style={SignUpLogin.input}
           placeholder="E-mail"
           placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setEmail(text)}
@@ -40,7 +40,7 @@ function LoginScreen({ navigation, loginUser }) {
           autoCapitalize="none"
         />
         <TextInput
-          style={SignUp.input}
+          style={SignUpLogin.input}
           placeholderTextColor="#aaaaaa"
           secureTextEntry
           placeholder="Password"
@@ -49,13 +49,13 @@ function LoginScreen({ navigation, loginUser }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TouchableOpacity style={SignUp.button} onPress={() => onLoginPress()}>
+        <TouchableOpacity style={SignUpLogin.button} onPress={() => onLoginPress()}>
           <Text>Log in</Text>
         </TouchableOpacity>
         <View>
-          <Text style={SignUp.footerText}>
+          <Text style={SignUpLogin.footerText}>
             No account?{' '}
-            <Text onPress={onFooterLinkPress} style={SignUp.footerLink}>
+            <Text onPress={onFooterLinkPress} style={SignUpLogin.footerLink}>
               Sign up!
             </Text>
           </Text>

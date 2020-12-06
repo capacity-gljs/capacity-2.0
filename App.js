@@ -5,6 +5,8 @@ import SinglePlaceScreen from './app/screens/SinglePlaceScreen';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+// option for drawer with no header
+import { createDrawerNavigator } from '@react-navigation/drawer'; 
 import { Provider } from 'react-redux';
 import SignUpScreen from './app/screens/SignUpScreen';
 import LoginScreen from './app/screens/LoginScreen';
