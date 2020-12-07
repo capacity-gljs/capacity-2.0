@@ -1,17 +1,18 @@
-import React from 'react';
-import { Button } from 'react-native';
-import HomeScreen from './app/screens/HomeScreen';
-import SinglePlaceScreen from './app/screens/SinglePlaceScreen';
-import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React from "react";
+import HomeScreen from "./app/screens/HomeScreen";
+import SinglePlaceScreen from "./app/screens/SinglePlaceScreen";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { Provider } from "react-redux";
+import SignUpScreen from "./app/screens/SignUpScreen";
+import LoginScreen from "./app/screens/LoginScreen";
+import store from "./app/store";
+import CameraScreen from "./app/screens/CameraScreen";
+import { Button } from "react-native";
 // option for drawer with no header
-import { createDrawerNavigator } from '@react-navigation/drawer'; 
-import { Provider } from 'react-redux';
-import SignUpScreen from './app/screens/SignUpScreen';
-import LoginScreen from './app/screens/LoginScreen';
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import Loader from "./app/screens/loader";
-import store from './app/store';
 
 const Stack = createStackNavigator();
 
@@ -20,26 +21,28 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <NavigationContainer>
-          <Stack.Navigator 
-            screenOptions={{
-            headerShown: false,
-          }}
-          initialRouteName="Loader"
-        >
-          <Stack.Screen name="Loader" component={Loader} />
+          <Stack.Navigator
+            screenOptions={
+              {
+                //headerShown: false,
+              }
+            }
+            initialRouteName="Loader"
+          >
+            <Stack.Screen name="Loader" component={Loader} />
             <Stack.Screen
               name="Home"
               component={HomeScreen}
               options={({ navigation, route }) => ({
                 headerRight: () => (
                   <Button
-                    onPress={() => navigation.navigate('Login')}
+                    onPress={() => navigation.navigate("Login")}
                     title="Log in"
                   />
                 ),
                 headerLeft: () => (
                   <Button
-                    onPress={() => navigation.navigate('SignUp')}
+                    onPress={() => navigation.navigate("SignUp")}
                     title="Sign up"
                   />
                 ),
@@ -49,10 +52,10 @@ export default class App extends React.Component {
               name="SinglePlace"
               component={SinglePlaceScreen}
               options={({ navigation, route }) => ({
-                title: 'Location Details',
+                title: "Location Details",
                 headerRight: () => (
                   <Button
-                    onPress={() => navigation.navigate('Login')}
+                    onPress={() => navigation.navigate("Login")}
                     title="Log in"
                   />
                 ),
@@ -67,14 +70,19 @@ export default class App extends React.Component {
               name="Login"
               component={LoginScreen}
               options={({ navigation, route }) => ({
-                title: 'Log in',
+                title: "Log in",
                 headerRight: () => (
                   <Button
-                    onPress={() => navigation.navigate('Login')}
+                    onPress={() => navigation.navigate("Login")}
                     title="Log in"
                   />
                 ),
               })}
+            />
+            <Stack.Screen
+              name="Camera"
+              component={CameraScreen}
+              options={{ title: "Add a Photo" }}
             />
           </Stack.Navigator>
         </NavigationContainer>
