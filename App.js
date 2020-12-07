@@ -7,6 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Provider } from "react-redux";
 import SignUpScreen from "./app/screens/SignUpScreen";
 import LoginScreen from "./app/screens/LoginScreen";
+import UserFeedbackScreen from "./app/screens/UserFeedbackScreen";
 import store from "./app/store";
 import CameraScreen from "./app/screens/CameraScreen";
 import { Button } from "react-native";
@@ -83,6 +84,11 @@ export default class App extends React.Component {
               name="Camera"
               component={CameraScreen}
               options={{ title: "Add a Photo" }}
+            />
+            <Stack.Screen
+              name="UserFeedback"
+              component={UserFeedbackScreen}
+              options={{ title: "Leave Feedback" }}
             />
           </Stack.Navigator>
         </NavigationContainer>
