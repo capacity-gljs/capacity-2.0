@@ -154,6 +154,18 @@ export const getFave = async (userId) => {
   }
 };
 
+//adds feedback to db
+export const addFeedback = async (placeId, experience, boostOrPromote) => {
+  try {
+    const placeRef = db.collection("places").doc(placeId);
+    const feedbackRef = placeRef.collection("feedback").doc();
+    await db.runTransaction(async (transaction) => {
+      transaction.set(feedbackRef, { experience, boostOrPromote });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 //gets all average capacities for all single places in DB
 export const getAllCaps = async () => {
   try {

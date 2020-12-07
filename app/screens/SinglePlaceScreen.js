@@ -144,7 +144,10 @@ class SinglePlaceScreen extends React.Component {
               ))}
           </Text>
         </View>
-
+        <Button
+          title="Leave Feedback"
+          onPress={() => this.props.navigation.navigate("UserFeedback", {placeId: this.props.route.params.id})}
+        />
         <View style={{ alignItems: "center" }}>
           <TouchableOpacity
             style={homeStyleSheet.button}
@@ -154,19 +157,21 @@ class SinglePlaceScreen extends React.Component {
           </TouchableOpacity>
         </View>
 
-        <View style={{ alignItems: "center" }}>
-          <Text style={singlePlace.subtitle}>How Crowded Was It?</Text>
-          <RadioForm
-            key={this.state.formLabel}
-            radio_props={this.state.capacities}
-            initial={this.state.initialRadioPos}
-            onPress={this.handleChange}
-            formHorizontal={true}
-            labelHorizontal={false}
-            style={{ textAlign: "center" }}
-          />
-          <Button title="Submit" onPress={this.handleSubmit} />
-        </View>
+        {this.props.route.params.isHere && (
+          <View style={{ alignItems: "center" }}>
+            <Text style={singlePlace.subtitle}>How Crowded Was It?</Text>
+            <RadioForm
+              key={this.state.formLabel}
+              radio_props={this.state.capacities}
+              initial={this.state.initialRadioPos}
+              onPress={this.handleChange}
+              formHorizontal={true}
+              labelHorizontal={false}
+              style={{ textAlign: "center" }}
+            />
+            <Button title="Submit" onPress={this.handleSubmit} />
+          </View>
+        )}
       </SafeAreaView>
     );
   }
