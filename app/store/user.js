@@ -1,7 +1,7 @@
-import firebase from 'firebase';
-import { db } from '../../firebase/config';
+import firebase from "firebase";
+import { db } from "../../firebase/config";
 
-const GOT_USER = 'GOT_USER';
+const GOT_USER = "GOT_USER";
 const gotUser = (user) => ({ type: GOT_USER, user });
 
 export const signUp = (email, password) => async (dispatch) => {
@@ -9,10 +9,10 @@ export const signUp = (email, password) => async (dispatch) => {
     const response = await firebase
       .auth()
       .createUserWithEmailAndPassword(email, password);
-    db.collection('users')
+    db.collection("users")
       .doc(response.user.uid)
       .set({ uid: response.user.uid, email: email });
-    console.log('SIGNUP RESPONSE', response.user);
+    //console.log('SIGNUP RESPONSE', response.user);
     dispatch(gotUser(response.user));
   } catch (error) {
     console.log(error);
@@ -25,7 +25,7 @@ export const loginUser = (email, password) => async (dispatch) => {
     const response = await firebase
       .auth()
       .signInWithEmailAndPassword(email, password);
-    console.log(response.user);
+    //console.log(response.user);
     dispatch(gotUser(response.user));
   } catch (error) {
     alert(error);

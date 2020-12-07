@@ -81,12 +81,22 @@ export const addCapacity = async (placeId, capacityPercent) => {
 };
 
 // add fave to db
-export const addFave = async (userId, placeId) => {
+export const addFave = async (
+  userId,
+  placeId,
+  placeName,
+  latitude,
+  longitude
+) => {
   try {
     const userRef = db.collection("users").doc(userId);
     const favesRef = userRef.collection("favorites").doc(placeId);
     await db.runTransaction(async (transaction) => {
-      transaction.set(favesRef, { favorited: true });
+      transaction.set(favesRef, {
+        favorited: true,
+        placeName,
+        coordinates: { latitude, longitude },
+      });
     });
   } catch (error) {
     console.error(error);
@@ -121,6 +131,24 @@ export const updateFave = async (userId, placeId) => {
       return false;
     }
     return favorited;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getFave = async (userId) => {
+  try {
+    const userRef = db.collection("users").doc(userId).collection("favorites");
+    const userFaves = await userRef.where("favorited", "==", true).get();
+    const favorites = [];
+    userFaves.forEach((doc) => {
+      favorites.push(doc.data());
+    });
+    if (userFaves.empty) {
+      console.log("No matching documents.");
+    } else {
+      console.log("THESE ARE MY FAVES: ", favorites);
+    }
   } catch (error) {
     console.error(error);
   }

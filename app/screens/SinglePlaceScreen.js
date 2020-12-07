@@ -26,6 +26,7 @@ import {
   addFave,
   updateFave,
   removeFave,
+  getFave,
 } from "./fbFuncs";
 
 class SinglePlaceScreen extends React.Component {
@@ -90,7 +91,14 @@ class SinglePlaceScreen extends React.Component {
                 if (this.state.favorited) {
                   removeFave(this.props.user.uid, this.props.route.params.id);
                 } else {
-                  addFave(this.props.user.uid, this.props.route.params.id);
+                  addFave(
+                    this.props.user.uid,
+                    this.props.route.params.id,
+                    this.props.route.params.name,
+                    this.props.route.params.placeLat,
+                    this.props.route.params.placeLng
+                  );
+                  //getFave(this.props.user.uid);
                 }
                 this.setState({ favorited: !this.state.favorited });
               } else {
