@@ -129,13 +129,15 @@ export const updateFave = async (userId, placeId) => {
 //adds feedback to db
 export const addFeedback = async (placeId, experience, boostOrPromote) => {
   try {
-    const placeRef = db.collection('places').doc(placeId);
-    const feedbackRef = placeRef.collection('feedback').doc();
+    const placeRef = db.collection("places").doc(placeId);
+    const feedbackRef = placeRef.collection("feedback").doc();
     await db.runTransaction(async (transaction) => {
       transaction.set(feedbackRef, { experience, boostOrPromote });
     });
   } catch (error) {
     console.log(error);
+  }
+};
 //gets all average capacities for all single places in DB
 export const getAllCaps = async () => {
   try {
@@ -151,7 +153,7 @@ export const getAllCaps = async () => {
   }
 };
 
-//gets points for heatmap 
+//gets points for heatmap
 export const getHeat = async () => {
   try {
     const locations = await getAllCaps();

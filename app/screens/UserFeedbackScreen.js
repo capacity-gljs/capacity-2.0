@@ -19,7 +19,6 @@ import RadioForm, {
 import { addFeedback } from "./fbFuncs";
 
 function UserFeedbackScreen({ navigation, route }) {
-  
   const [experience, setExperience] = useState(-1);
   const [boostOrPromote, setBoostOrPromote] = useState(false);
 
@@ -42,6 +41,8 @@ function UserFeedbackScreen({ navigation, route }) {
           labelHorizontal={false}
           style={{ textAlign: "center" }}
         />
+        <Text style={singlePlace.subtitle}>Boost?</Text>
+
         <RadioForm
           key={0}
           radio_props={[
@@ -57,14 +58,14 @@ function UserFeedbackScreen({ navigation, route }) {
         <Button
           title="Submit"
           onPress={async () => {
-            console.log(route.params.placeId)
+            console.log(route.params.placeId);
             await addFeedback(route.params.placeId, experience, boostOrPromote);
+            alert("Thanks for leaving feedback!")
           }}
         />
       </View>
     </SafeAreaView>
   );
 }
-
 
 export default connect(null, null)(UserFeedbackScreen);
