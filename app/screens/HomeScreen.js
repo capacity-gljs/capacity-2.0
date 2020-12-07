@@ -25,9 +25,8 @@ import { homeStyleSheet } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 // IMPORT FIREBASE FUNCS
-import { getCapacity } from "./fbFuncs";
-import { Heatmap } from "react-native-maps";
-import { locations } from "../../data/heatmap";
+import { getCapacity, getAllCaps } from "./fbFuncs";
+import HeatLayer from "./HeatLayer";
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -58,23 +57,7 @@ export default class HomeScreen extends React.Component {
     this.setState({
       initialRegion: region,
     });
-
-    //   const places = db.collection('places');
-    //   const rating = places
-    //     .doc('ChIJrUj5NiQZBYgROOtRy0_Mnfg')
-    //     .collection('capacity')
-    //     .get()
-    //     .then((snap) => {
-    //       snap.forEach((doc) => {
-    //         this.setState({ ratings: doc.data() });
-    //         console.log('RATING', doc.data());
-    //       });
-    //     });
-
-    //   const place = await places.get();
-    //   const foundPlace = place.forEach((doc) => {
-    //     console.log('FOUND PLACE', doc.id, '=>', doc.data());
-    //   });
+    getAllCaps();
   }
 
   closeModal(visible) {
@@ -165,12 +148,7 @@ export default class HomeScreen extends React.Component {
           showsUserLocation
           initialRegion={this.state.initialRegion}
         >
-          <Heatmap
-            points={locations}
-            opacity={1}
-            radius={100}
-            maxIntensity={100}
-          />
+          <HeatLayer />
 
           {this.state.coordinates.latitude && (
             <Marker
