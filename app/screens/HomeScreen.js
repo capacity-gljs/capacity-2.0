@@ -146,6 +146,7 @@ export default class HomeScreen extends React.Component {
                   id: this.state.id,
                   placeLat: this.state.placeLat,
                   placeLng: this.state.placeLng,
+                  isHere: true
                 });
               }}
             />
@@ -154,12 +155,13 @@ export default class HomeScreen extends React.Component {
               onPress={() => {
                 this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
                 this.closeModal(!modalVisible);
-                this.props.navigation.navigate("PlaceCapacity", {
+                this.props.navigation.navigate("SinglePlace", {
                   // PASS PROPS TO SINGLE PLACE HERE
                   name: this.state.selectedName,
                   id: this.state.id,
                   placeLat: this.state.placeLat,
                   placeLng: this.state.placeLng,
+                  isHere: false
                 });
               }}
             />
