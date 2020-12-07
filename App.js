@@ -1,13 +1,14 @@
-import React from 'react';
-import HomeScreen from './app/screens/HomeScreen';
-import SinglePlaceScreen from './app/screens/SinglePlaceScreen';
-import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Provider } from 'react-redux';
-import SignUpScreen from './app/screens/SignUpScreen';
-import LoginScreen from './app/screens/LoginScreen';
-import store from './app/store';
+import React from "react";
+import HomeScreen from "./app/screens/HomeScreen";
+import SinglePlaceScreen from "./app/screens/SinglePlaceScreen";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { Provider } from "react-redux";
+import SignUpScreen from "./app/screens/SignUpScreen";
+import LoginScreen from "./app/screens/LoginScreen";
+import store from "./app/store";
+import CameraScreen from "./app/screens/CameraScreen";
 
 const Stack = createStackNavigator();
 
@@ -21,17 +22,22 @@ export default class App extends React.Component {
             <Stack.Screen
               name="SinglePlace"
               component={SinglePlaceScreen}
-              options={{ title: 'Location Details' }}
+              options={{ title: "Location Details" }}
             />
             <Stack.Screen
               name="SignUp"
               component={SignUpScreen}
-              options={{ title: 'Sign Up' }}
+              options={{ title: "Sign Up" }}
             />
             <Stack.Screen
               name="Login"
               component={LoginScreen}
-              options={{ title: 'Log in' }}
+              options={{ title: "Log in" }}
+            />
+            <Stack.Screen
+              name="Camera"
+              component={CameraScreen}
+              options={{ title: "Add a Photo" }}
             />
           </Stack.Navigator>
         </NavigationContainer>
