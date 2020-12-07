@@ -12,6 +12,7 @@ import CameraScreen from "./app/screens/CameraScreen";
 import { Button } from "react-native";
 // option for drawer with no header
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import Loader from "./app/screens/loader";
 
 const Stack = createStackNavigator();
 
@@ -20,7 +21,15 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home">
+          <Stack.Navigator
+            screenOptions={
+              {
+                //headerShown: false,
+              }
+            }
+            initialRouteName="Loader"
+          >
+            <Stack.Screen name="Loader" component={Loader} />
             <Stack.Screen
               name="Home"
               component={HomeScreen}
