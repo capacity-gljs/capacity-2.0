@@ -54,7 +54,7 @@ export const addCapacity = async (placeId, capacityPercent) => {
       try {
         doc = await transaction.get(placeRef);
       } catch (error) {
-        console.log("THIS IS THE ERROR", error);
+        console.error("THIS IS THE ERROR", error);
         throw error;
       }
 
@@ -76,7 +76,7 @@ export const addCapacity = async (placeId, capacityPercent) => {
       transaction.set(capacityRef, { capacityPercent: capacityPercent });
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 
@@ -89,7 +89,7 @@ export const addFave = async (userId, placeId) => {
       transaction.set(favesRef, { favorited: true });
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -102,12 +102,12 @@ export const removeFave = async (userId, placeId) => {
       transaction.set(favesRef, { favorited: false });
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
 // get fave
-export const getFave = async (userId, placeId) => {
+export const updateFave = async (userId, placeId) => {
   try {
     const userRef = db.collection("users").doc(userId);
     const favesRef = userRef.collection("favorites").doc(placeId);
@@ -122,7 +122,7 @@ export const getFave = async (userId, placeId) => {
     }
     return favorited;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

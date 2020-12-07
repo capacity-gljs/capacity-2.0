@@ -24,7 +24,7 @@ import {
   getOrAddPlace,
   addCapacity,
   addFave,
-  getFave,
+  updateFave,
   removeFave,
 } from "./fbFuncs";
 
@@ -50,7 +50,7 @@ class SinglePlaceScreen extends React.Component {
   }
 
   async componentDidMount() {
-    const favorited = await getFave(
+    const favorited = await updateFave(
       this.props.user.uid,
       this.props.route.params.id
     );
