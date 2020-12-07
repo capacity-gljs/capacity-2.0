@@ -10,6 +10,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Provider } from 'react-redux';
 import SignUpScreen from './app/screens/SignUpScreen';
 import LoginScreen from './app/screens/LoginScreen';
+import Loader from "./app/screens/loader";
 import store from './app/store';
 
 const Stack = createStackNavigator();
@@ -19,7 +20,13 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home">
+          <Stack.Navigator 
+            screenOptions={{
+            headerShown: false,
+          }}
+          initialRouteName="Loader"
+        >
+          <Stack.Screen name="Loader" component={Loader} />
             <Stack.Screen
               name="Home"
               component={HomeScreen}
@@ -54,7 +61,7 @@ export default class App extends React.Component {
             <Stack.Screen
               name="SignUp"
               component={SignUpScreen}
-              options={{ title: 'Sign Up' }}
+              options={{ title: "Sign Up" }}
             />
             <Stack.Screen
               name="Login"
