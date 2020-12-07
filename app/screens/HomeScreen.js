@@ -136,11 +136,25 @@ export default class HomeScreen extends React.Component {
             </TouchableHighlight>
             <Text>Capacity: 77%</Text>
             <Button
-              title="Let's go!"
+              title="I'm here now"
               onPress={() => {
                 this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
                 this.closeModal(!modalVisible);
                 this.props.navigation.navigate("SinglePlace", {
+                  // PASS PROPS TO SINGLE PLACE HERE
+                  name: this.state.selectedName,
+                  id: this.state.id,
+                  placeLat: this.state.placeLat,
+                  placeLng: this.state.placeLng,
+                });
+              }}
+            />
+            <Button
+              title="I'm thinking of going"
+              onPress={() => {
+                this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
+                this.closeModal(!modalVisible);
+                this.props.navigation.navigate("PlaceCapacity", {
                   // PASS PROPS TO SINGLE PLACE HERE
                   name: this.state.selectedName,
                   id: this.state.id,
