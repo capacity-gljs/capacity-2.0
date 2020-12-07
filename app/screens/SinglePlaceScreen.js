@@ -20,7 +20,13 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 //import { useNavigation } from "@react-navigation/native";
 
 // importing fbFuncs
-import { getOrAddPlace, addCapacity } from "./fbFuncs";
+import {
+  getOrAddPlace,
+  addCapacity,
+  addFave,
+  getFave,
+  removeFave,
+} from "./fbFuncs";
 
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
@@ -41,6 +47,14 @@ class SinglePlaceScreen extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async componentDidMount() {
+    const favorited = await getFave(
+      this.props.user.uid,
+      this.props.route.params.id
+    );
+    this.setState({ favorited });
   }
 
   handleChange(capacityPercent) {
@@ -73,6 +87,11 @@ class SinglePlaceScreen extends React.Component {
             size={32}
             onPress={() => {
               if (this.props.user.email) {
+                if (this.state.favorited) {
+                  removeFave(this.props.user.uid, this.props.route.params.id);
+                } else {
+                  addFave(this.props.user.uid, this.props.route.params.id);
+                }
                 this.setState({ favorited: !this.state.favorited });
               } else {
                 alert("create account to favorite");
