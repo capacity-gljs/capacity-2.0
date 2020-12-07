@@ -103,7 +103,7 @@ export const singlePlace = StyleSheet.create({
   },
 });
 
-export const SignUp = StyleSheet.create({
+export const SignUpLogin = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
