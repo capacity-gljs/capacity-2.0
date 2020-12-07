@@ -11,6 +11,7 @@ import {
 import Modal from "react-native-modal";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import { connect } from "react-redux";
 
 // IMPORT FUNCS
 import {
@@ -27,8 +28,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 // IMPORT FIREBASE FUNCS
 import { getCapacity, getAllCaps } from "./fbFuncs";
 import HeatLayer from "./HeatLayer";
+import FavesLayer from "./FavesLayer";
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -149,17 +151,7 @@ export default class HomeScreen extends React.Component {
           initialRegion={this.state.initialRegion}
         >
           <HeatLayer />
-
-          {this.state.coordinates.latitude && (
-            <Marker
-              coordinate={this.state.coordinates}
-              onPress={() => {
-                this.props.navigation.navigate("SinglePlace", {
-                  name: this.state.selectedName,
-                });
-              }}
-            />
-          )}
+          <FavesLayer />
 
           <GooglePlacesAutocomplete
             ref={(instance) => (this.GooglePlacesAutocompleteRef = instance)}
@@ -209,3 +201,9 @@ export default class HomeScreen extends React.Component {
     );
   }
 }
+
+const mapState = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapState)(HomeScreen);
