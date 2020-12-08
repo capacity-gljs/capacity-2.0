@@ -11,7 +11,7 @@ import { SignUpLogin } from './styles';
 import { connect } from 'react-redux';
 import { loginUser } from '../store/user';
 
-function LoginScreen({ navigation, loginUser }) {
+function Logout({ navigation, loginUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,7 +19,7 @@ function LoginScreen({ navigation, loginUser }) {
     navigation.navigate('SignUp');
   };
 
-  const onLoginPress = () => {
+  const onLogoutPress = () => {
     loginUser(email, password);
     alert('Login Successful');
     navigation.navigate('Home');
@@ -50,7 +50,7 @@ function LoginScreen({ navigation, loginUser }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TouchableOpacity style={SignUpLogin.button} onPress={() => onLoginPress()}>
+        <TouchableOpacity style={SignUpLogin.button} onPress={() => onLogoutPress()}>
           <Text>Log in</Text>
         </TouchableOpacity>
         <View>
@@ -70,4 +70,4 @@ const mapDispatch = (dispatch) => ({
   loginUser: (email, password) => dispatch(loginUser(email, password)),
 });
 
-export default connect(null, mapDispatch)(LoginScreen);
+export default connect(null, mapDispatch)(LogoutScreen);
