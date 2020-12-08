@@ -1,6 +1,6 @@
-import { guidelines } from '../../data/guidelines';
-import * as Linking from 'expo-linking';
-import { Alert } from 'react-native';
+import { guidelines } from "../../data/guidelines";
+import * as Linking from "expo-linking";
+import { Alert } from "react-native";
 
 //grabs users current location
 export function getCurrentLocation() {
@@ -18,12 +18,12 @@ export function getCurrentLocation() {
 }
 //Gets whether a location is open || closed
 export const isOpen = (hours) => {
-  return hours['open_now'] ? 'Open' : 'Closed';
+  return hours["open_now"] ? "Open" : "Closed";
 };
 
 //Sets color of text whether location is open || closed
 export const getColor = (hours) => {
-  return hours['open_now'] ? 'green' : 'red';
+  return hours["open_now"] ? "green" : "red";
 };
 
 //Gets the type of establishment(restaurant, grocer etc.)
@@ -31,22 +31,29 @@ export const getType = (types) => {
   let type = [];
 
   for (let i = 0; i < types.length; i++) {
-    type.push(types[i].split('_').join(' '));
+    type.push(types[i].split("_").join(" "));
   }
   return type[0];
 };
 
 //Sets dollar sign amount as to how expensive establishment is
 export const dollarSign = (num) => {
-  return num == 1
-    ? '$'
-    : num == 2
-    ? '$$'
-    : num == 3
-    ? '$$$'
-    : num == 4
-    ? '$$$$'
-    : '';
+  switch (num) {
+    case 1:
+      return "$";
+      break;
+    case 2:
+      return "$$";
+      break;
+    case 3:
+      return "$$$";
+      break;
+    case 4:
+      return "$$$$";
+      break;
+    default:
+      "";
+  }
 };
 
 export const getGuidelines = (state) => {
@@ -59,8 +66,6 @@ export const getGuidelines = (state) => {
         return Linking.openURL(guidelines[i].link);
       }
     }
-    Alert.alert('Site not found');
+    Alert.alert("Site not found");
   }
-}
-
-
+};

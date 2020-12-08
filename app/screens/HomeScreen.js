@@ -21,12 +21,12 @@ import {
   getType,
   dollarSign,
   getGuidelines,
-} from "./funcs";
+} from "../funcs/homeFuncs";
 import { homeStyleSheet } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 // IMPORT FIREBASE FUNCS
-import { getCapacity, getAllCaps } from "./fbFuncs";
+import { getCapacity, getAllCaps } from "../funcs/placesFuncs";
 import HeatLayer from "./HeatLayer";
 import FavesLayer from "./FavesLayer";
 
