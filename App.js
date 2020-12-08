@@ -7,7 +7,6 @@ import HomeScreen from "./app/screens/HomeScreen";
 import SinglePlaceScreen from "./app/screens/SinglePlaceScreen";
 import SignUpScreen from "./app/screens/SignUpScreen";
 import LoginScreen from "./app/screens/LoginScreen";
-import LogoutScreen from "./app/screens/LogoutScreen";
 import UserFeedbackScreen from "./app/screens/UserFeedbackScreen";
 import store from "./app/store";
 import CameraScreen from "./app/screens/CameraScreen";
@@ -15,7 +14,7 @@ import { Button } from "react-native";
 // option for drawer with no header
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Loader from "./app/screens/loader";
-import logoutUser from "./app/funcs/userFuncs"
+import {logoutUser} from "./app/funcs/userFuncs"
 
 const Stack = createStackNavigator();
 
@@ -38,7 +37,6 @@ export default class App extends React.Component {
                 headerRight: () => (
                   store.getState().user.uid ? (
                     <Button
-                      // onPress={() => navigation.navigate("Logout")}
                       onPress={() => logoutUser()}
                       title="Log out"
                     />
@@ -88,19 +86,6 @@ export default class App extends React.Component {
                 ),
               })}
             />
-            {/* <Stack.Screen
-              name="Logout"
-              component={LogoutScreen}
-              options={({ navigation, route }) => ({
-                title: "Log in",
-                headerRight: () => (
-                  <Button
-                    onPress={() => navigation.navigate("Logout")}
-                    title="Log in"
-                  />
-                ),
-              })}
-            /> */}
             <Stack.Screen
               name="Camera"
               component={CameraScreen}
