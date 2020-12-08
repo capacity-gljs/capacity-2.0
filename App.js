@@ -15,11 +15,14 @@ import { Button } from "react-native";
 // option for drawer with no header
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Loader from "./app/screens/loader";
+import logoutUser from "./app/funcs/userFuncs"
 
 const Stack = createStackNavigator();
 
 export default class App extends React.Component {
   render() {
+
+    // console.log('USER IN APP.JS', store.getState())
 
     return (
       <Provider store={store}>
@@ -35,7 +38,8 @@ export default class App extends React.Component {
                 headerRight: () => (
                   store.getState().user.uid ? (
                     <Button
-                      onPress={() => navigation.navigate("Logout")}
+                      // onPress={() => navigation.navigate("Logout")}
+                      onPress={() => logoutUser()}
                       title="Log out"
                     />
                   ) : (
@@ -84,7 +88,7 @@ export default class App extends React.Component {
                 ),
               })}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Logout"
               component={LogoutScreen}
               options={({ navigation, route }) => ({
@@ -96,7 +100,7 @@ export default class App extends React.Component {
                   />
                 ),
               })}
-            />
+            /> */}
             <Stack.Screen
               name="Camera"
               component={CameraScreen}

@@ -34,8 +34,7 @@ export const logoutUser = () => async (dispatch) => {
     const response = await firebase
       .auth()
       .signOut()
-    console.log('SUCCESSFULLY SIGNED OUT', response.user);
-    dispatch(gotUser(response.user));
+    // dispatch(gotUser(response.user));
   } catch (error) {
     alert(error);
   }

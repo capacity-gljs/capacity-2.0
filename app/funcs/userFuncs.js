@@ -90,6 +90,18 @@ export const addFeedback = async (placeId, experience, boostOrPromote) => {
         transaction.set(feedbackRef, { experience, boostOrPromote });
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
+
+  export const logoutUser = async () => {
+    try {
+      const response = await firebase
+        .auth()
+        .signOut()
+      // console.log('SUCCESSFULLY SIGNED OUT');
+      alert("You are now logged out")
+    } catch (error) {
+      alert(error);
+    }
+  }
