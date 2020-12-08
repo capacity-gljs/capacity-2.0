@@ -30,7 +30,7 @@ import { getCapacity, getAllCaps } from "../funcs/placesFuncs";
 import HeatLayer from "./HeatLayer";
 import FavesLayer from "./FavesLayer";
 
-import { MAP_KEY } from '@env'
+// import { MAP_KEY } from '@env'
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -208,7 +208,7 @@ class HomeScreen extends React.Component {
               ); //shortensname in searchbar
             }}
             query={{
-              key: MAP_KEY,
+              key: "AIzaSyCukq40uCr0mkfwu4JlZaO6yQ6P0K5D7Bc",
               language: "en",
             }}
             nearbyPlacesAPI="GooglePlacesSearch"

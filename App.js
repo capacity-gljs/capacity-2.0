@@ -1,10 +1,10 @@
 import React from "react";
-import HomeScreen from "./app/screens/HomeScreen";
-import SinglePlaceScreen from "./app/screens/SinglePlaceScreen";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Provider } from "react-redux";
+import HomeScreen from "./app/screens/HomeScreen";
+import SinglePlaceScreen from "./app/screens/SinglePlaceScreen";
 import SignUpScreen from "./app/screens/SignUpScreen";
 import LoginScreen from "./app/screens/LoginScreen";
 import UserFeedbackScreen from "./app/screens/UserFeedbackScreen";
@@ -14,6 +14,7 @@ import { Button } from "react-native";
 // option for drawer with no header
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Loader from "./app/screens/loader";
+import {logoutUser} from "./app/funcs/userFuncs"
 
 const Stack = createStackNavigator();
 
@@ -23,11 +24,6 @@ export default class App extends React.Component {
       <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
-            screenOptions={
-              {
-                //headerShown: false,
-              }
-            }
             initialRouteName="Loader"
           >
             <Stack.Screen name="Loader" component={Loader} />
@@ -36,10 +32,17 @@ export default class App extends React.Component {
               component={HomeScreen}
               options={({ navigation, route }) => ({
                 headerRight: () => (
-                  <Button
-                    onPress={() => navigation.navigate("Login")}
-                    title="Log in"
-                  />
+                  store.getState().user.uid ? (
+                    <Button
+                      onPress={() => logoutUser()}
+                      title="Log out"
+                    />
+                  ) : (
+                    <Button
+                      onPress={() => navigation.navigate("Login")}
+                      title="Log in"
+                    />
+                  )
                 ),
                 headerLeft: () => (
                   <Button
