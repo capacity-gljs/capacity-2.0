@@ -23,11 +23,14 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import {
   getOrAddPlace,
   addCapacity,
+} from "../funcs/placesFuncs";
+
+import { 
   addFave,
   updateFave,
   removeFave,
   getFave,
-} from "./fbFuncs";
+} from '../funcs/userFuncs';
 
 class SinglePlaceScreen extends React.Component {
   constructor(props) {

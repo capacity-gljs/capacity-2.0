@@ -1,6 +1,6 @@
 import React from "react";
 import { Marker } from "react-native-maps";
-import { getFave } from "./fbFuncs";
+import { getFave } from "../funcs/userFuncs";
 import { View } from "react-native";
 import { connect } from "react-redux";
 
