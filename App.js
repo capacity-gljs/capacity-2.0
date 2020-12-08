@@ -1,12 +1,13 @@
 import React from "react";
-import HomeScreen from "./app/screens/HomeScreen";
-import SinglePlaceScreen from "./app/screens/SinglePlaceScreen";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Provider } from "react-redux";
+import HomeScreen from "./app/screens/HomeScreen";
+import SinglePlaceScreen from "./app/screens/SinglePlaceScreen";
 import SignUpScreen from "./app/screens/SignUpScreen";
 import LoginScreen from "./app/screens/LoginScreen";
+import LogoutScreen from "./app/screens/LogoutScreen";
 import UserFeedbackScreen from "./app/screens/UserFeedbackScreen";
 import store from "./app/store";
 import CameraScreen from "./app/screens/CameraScreen";
@@ -19,15 +20,11 @@ const Stack = createStackNavigator();
 
 export default class App extends React.Component {
   render() {
+
     return (
       <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
-            screenOptions={
-              {
-                //headerShown: false,
-              }
-            }
             initialRouteName="Loader"
           >
             <Stack.Screen name="Loader" component={Loader} />
@@ -36,10 +33,17 @@ export default class App extends React.Component {
               component={HomeScreen}
               options={({ navigation, route }) => ({
                 headerRight: () => (
-                  <Button
-                    onPress={() => navigation.navigate("Login")}
-                    title="Log in"
-                  />
+                  store.getState().user.uid ? (
+                    <Button
+                      onPress={() => navigation.navigate("Logout")}
+                      title="Log out"
+                    />
+                  ) : (
+                    <Button
+                      onPress={() => navigation.navigate("Login")}
+                      title="Log in"
+                    />
+                  )
                 ),
                 headerLeft: () => (
                   <Button
@@ -75,6 +79,19 @@ export default class App extends React.Component {
                 headerRight: () => (
                   <Button
                     onPress={() => navigation.navigate("Login")}
+                    title="Log in"
+                  />
+                ),
+              })}
+            />
+            <Stack.Screen
+              name="Logout"
+              component={LogoutScreen}
+              options={({ navigation, route }) => ({
+                title: "Log in",
+                headerRight: () => (
+                  <Button
+                    onPress={() => navigation.navigate("Logout")}
                     title="Log in"
                   />
                 ),

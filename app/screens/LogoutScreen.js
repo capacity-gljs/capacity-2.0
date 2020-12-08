@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import { SignUpLogin } from './styles';
 import { connect } from 'react-redux';
-import { loginUser } from '../store/user';
+import { logoutUser } from '../store/user';
 
-function Logout({ navigation, loginUser }) {
+function LogoutScreen({ navigation, logoutUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -20,7 +20,7 @@ function Logout({ navigation, loginUser }) {
   };
 
   const onLogoutPress = () => {
-    loginUser(email, password);
+    logoutUser();
     alert('Login Successful');
     navigation.navigate('Home');
   };
@@ -31,43 +31,16 @@ function Logout({ navigation, loginUser }) {
         style={{ flex: 1, width: '100%' }}
         keyboardShouldPersistTaps="always"
       >
-        <TextInput
-          style={SignUpLogin.input}
-          placeholder="E-mail"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={SignUpLogin.input}
-          placeholderTextColor="#aaaaaa"
-          secureTextEntry
-          placeholder="Password"
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
         <TouchableOpacity style={SignUpLogin.button} onPress={() => onLogoutPress()}>
-          <Text>Log in</Text>
+          <Text>Log Out</Text>
         </TouchableOpacity>
-        <View>
-          <Text style={SignUpLogin.footerText}>
-            No account?{' '}
-            <Text onPress={onFooterLinkPress} style={SignUpLogin.footerLink}>
-              Sign up!
-            </Text>
-          </Text>
-        </View>
       </View>
     </SafeAreaView>
   );
 }
 
 const mapDispatch = (dispatch) => ({
-  loginUser: (email, password) => dispatch(loginUser(email, password)),
+  logoutUser: () => dispatch(logoutUser()),
 });
 
 export default connect(null, mapDispatch)(LogoutScreen);

@@ -71,7 +71,7 @@ export const getFave = async (userId) => {
       if (userFaves.empty) {
         console.log("No matching documents.");
       } else {
-        console.log("THESE ARE MY FAVES: ", favorites);
+        // console.log("THESE ARE MY FAVES: ", favorites);
       }
     } catch (error) {
       console.error(error);

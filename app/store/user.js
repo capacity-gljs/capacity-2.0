@@ -12,10 +12,8 @@ export const signUp = (email, password) => async (dispatch) => {
     db.collection("users")
       .doc(response.user.uid)
       .set({ uid: response.user.uid, email: email });
-    //console.log('SIGNUP RESPONSE', response.user);
     dispatch(gotUser(response.user));
   } catch (error) {
-    console.log(error);
     alert(error);
   }
 };
@@ -25,19 +23,18 @@ export const loginUser = (email, password) => async (dispatch) => {
     const response = await firebase
       .auth()
       .signInWithEmailAndPassword(email, password);
-    //console.log(response.user);
     dispatch(gotUser(response.user));
   } catch (error) {
     alert(error);
   }
 };
 
-export const logoutUser = (email, password) => async (dispatch) => {
+export const logoutUser = () => async (dispatch) => {
   try {
     const response = await firebase
       .auth()
-      .signInWithEmailAndPassword(email, password);
-    //console.log(response.user);
+      .signOut()
+    console.log('SUCCESSFULLY SIGNED OUT', response.user);
     dispatch(gotUser(response.user));
   } catch (error) {
     alert(error);
