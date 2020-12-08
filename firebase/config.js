@@ -18,7 +18,7 @@ firebase.auth().onAuthStateChanged((user) => {
   if (user != null) {
     console.log('We are authenticated now!');
   }
-
+git 
   // Do other things
 });
 

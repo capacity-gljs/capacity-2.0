@@ -20,9 +20,6 @@ const Stack = createStackNavigator();
 
 export default class App extends React.Component {
   render() {
-
-    // console.log('USER IN APP.JS', store.getState())
-
     return (
       <Provider store={store}>
         <NavigationContainer>
