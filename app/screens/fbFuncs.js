@@ -17,6 +17,16 @@ import { db } from "../../firebase/config";
 //       });
 // }
 
+/**
+  Let's move this file outside of the "screens" folder since it's not really a screen or component. Can we create a new folder for firebase? Or for utility functions.
+
+  With a new folder, we can even split this file up according to the various collections it is reading / writing (places vs users)
+*/
+
+/**
+  General note: make sure to add in some "spring cleaning" time to get rid of stray console logs and commented out code.
+*/
+
 export const getOrAddPlace = async (placeId, placeLat, placeLng, placeName) => {
   const placeRef = db.collection("places").doc(placeId);
 
@@ -63,6 +73,11 @@ export const addCapacity = async (placeId, capacityPercent) => {
       }
       // Compute new number of ratings
       const newNumCapacities = doc.data().numCapacities + 1;
+
+      /** 
+        We should use "let" instead of "var" in the below lines
+      */
+
       // Compute new average rating
       var oldCapacityTotal = doc.data().avgCapacity * doc.data().numCapacities;
       var newAvgCapacity =

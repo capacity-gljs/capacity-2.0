@@ -4,6 +4,10 @@ import { db } from "../../firebase/config";
 const GOT_USER = "GOT_USER";
 const gotUser = (user) => ({ type: GOT_USER, user });
 
+/**
+  It's interesting to note that this is the only async call being done through Redux / Thunk. At this point, it would be most consistent if we didn't use Redux at all for this state and only managed it on the React side. If you have time set aside for refactoring this week, I'd recommend refactoring this so that either you utilize Redux more or remove it completely.
+*/
+
 export const signUp = (email, password) => async (dispatch) => {
   try {
     const response = await firebase

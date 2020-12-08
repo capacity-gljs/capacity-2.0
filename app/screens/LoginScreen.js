@@ -54,6 +54,7 @@ function LoginScreen({ navigation, loginUser }) {
         </TouchableOpacity>
         <View>
           <Text style={SignUpLogin.footerText}>
+        {/* Empty space probably added by prettier below */}
             No account?{' '}
             <Text onPress={onFooterLinkPress} style={SignUpLogin.footerLink}>
               Sign up!

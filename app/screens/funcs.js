@@ -2,6 +2,10 @@ import { guidelines } from '../../data/guidelines';
 import * as Linking from 'expo-linking';
 import { Alert } from 'react-native';
 
+/** 
+  This file could also be moved to our new folder
+*/
+
 //grabs users current location
 export function getCurrentLocation() {
   return new Promise(function (resolve, reject) {
@@ -35,6 +39,8 @@ export const getType = (types) => {
   }
   return type[0];
 };
+
+// Below is a perfect use case for a "switch" statement
 
 //Sets dollar sign amount as to how expensive establishment is
 export const dollarSign = (num) => {
