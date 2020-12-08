@@ -1,6 +1,6 @@
 import React from "react";
 import { Heatmap } from "react-native-maps";
-import { getHeat } from "./fbFuncs";
+import { getHeat } from "../funcs/placesFuncs";
 
 export default class HeatLayer extends React.Component {
   constructor() {

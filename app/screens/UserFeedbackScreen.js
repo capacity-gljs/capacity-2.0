@@ -16,7 +16,7 @@ import RadioForm, {
   RadioButtonInput,
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
-import { addFeedback } from "./fbFuncs";
+import { addFeedback } from "../funcs/userFuncs";
 
 function UserFeedbackScreen({ navigation, route }) {
   const [experience, setExperience] = useState(-1);
