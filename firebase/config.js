@@ -1,8 +1,8 @@
 import * as firebase from 'firebase';
 import '@firebase/firestore';
-
+import { FIRE_KEY } from '@env'
 const firebaseConfig = {
-  apiKey: 'AIzaSyBzgtgCGnnIQSXjlnbwPV5bj0f3aZVcJzE',
+  apiKey: FIRE_KEY,
   authDomain: 'capacity-gljs.firebaseapp.com',
   databaseURL: 'https://capacity-gljs.firebaseio.com',
   projectId: 'capacity-gljs',
