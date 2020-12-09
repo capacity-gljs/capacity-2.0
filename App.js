@@ -1,53 +1,80 @@
-import React from "react";
-import "react-native-gesture-handler";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { Provider } from "react-redux";
-import HomeScreen from "./app/screens/HomeScreen";
-import SinglePlaceScreen from "./app/screens/SinglePlaceScreen";
-import SignUpScreen from "./app/screens/SignUpScreen";
-import LoginScreen from "./app/screens/LoginScreen";
-import UserFeedbackScreen from "./app/screens/UserFeedbackScreen";
-import store from "./app/store";
-import CameraScreen from "./app/screens/CameraScreen";
-import { Button } from "react-native";
-// option for drawer with no header
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import Loader from "./app/screens/loader";
-import {logoutUser} from "./app/funcs/userFuncs"
+import React from 'react';
+import 'react-native-gesture-handler';
+import {
+  NavigationContainer,
+  useNavigation,
+  DrawerActions,
+} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Provider } from 'react-redux';
+import HomeScreen from './app/screens/HomeScreen';
+import SinglePlaceScreen from './app/screens/SinglePlaceScreen';
+import SignUpScreen from './app/screens/SignUpScreen';
+import LoginScreen from './app/screens/LoginScreen';
+import UserFeedbackScreen from './app/screens/UserFeedbackScreen';
+import store from './app/store';
+import CameraScreen from './app/screens/CameraScreen';
+import Loader from './app/screens/loader';
+import { logoutUser } from './app/funcs/userFuncs';
+import { Ionicons } from '@expo/vector-icons';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem label="Log out" onPress={() => logoutUser()} />
+    </DrawerContentScrollView>
+  );
+}
+
+function DrawerRoutes() {
+  return (
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+    >
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Sign up" component={SignUpScreen} />
+      <Drawer.Screen name="Log in" component={LoginScreen} />
+      <Drawer.Screen name="Camera" component={CameraScreen} />
+      <Drawer.Screen name="Leave Feedback" component={UserFeedbackScreen} />
+    </Drawer.Navigator>
+  );
+}
 
 export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
         <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Loader"
-          >
-            <Stack.Screen name="Loader" component={Loader} />
+          <Stack.Navigator initialRouteName="Getting Started">
+            <Stack.Screen
+              name="Getting Started"
+              component={Loader}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="Home"
-              component={HomeScreen}
+              component={DrawerRoutes}
               options={({ navigation, route }) => ({
-                headerRight: () => (
-                  store.getState().user.uid ? (
-                    <Button
-                      onPress={() => logoutUser()}
-                      title="Log out"
-                    />
-                  ) : (
-                    <Button
-                      onPress={() => navigation.navigate("Login")}
-                      title="Log in"
-                    />
-                  )
-                ),
                 headerLeft: () => (
-                  <Button
-                    onPress={() => navigation.navigate("SignUp")}
-                    title="Sign up"
+                  <Ionicons
+                    name="md-menu"
+                    size={24}
+                    color="black"
+                    style={{ margin: 10 }}
+                    onPress={() =>
+                      navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
                   />
                 ),
               })}
@@ -56,11 +83,16 @@ export default class App extends React.Component {
               name="SinglePlace"
               component={SinglePlaceScreen}
               options={({ navigation, route }) => ({
-                title: "Location Details",
-                headerRight: () => (
-                  <Button
-                    onPress={() => navigation.navigate("Login")}
-                    title="Log in"
+                title: 'Location Details',
+                headerLeft: () => (
+                  <Ionicons
+                    name="md-menu"
+                    size={24}
+                    color="black"
+                    style={{ margin: 10 }}
+                    onPress={() =>
+                      navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
                   />
                 ),
               })}
@@ -68,17 +100,35 @@ export default class App extends React.Component {
             <Stack.Screen
               name="SignUp"
               component={SignUpScreen}
-              options={{ title: "Sign Up" }}
+              options={({ navigation, route }) => ({
+                title: 'Sign Up',
+                headerLeft: () => (
+                  <Ionicons
+                    name="md-menu"
+                    size={24}
+                    color="black"
+                    style={{ margin: 10 }}
+                    onPress={() =>
+                      navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
+                  />
+                ),
+              })}
             />
             <Stack.Screen
               name="Login"
               component={LoginScreen}
               options={({ navigation, route }) => ({
-                title: "Log in",
-                headerRight: () => (
-                  <Button
-                    onPress={() => navigation.navigate("Login")}
-                    title="Log in"
+                title: 'Log in',
+                headerLeft: () => (
+                  <Ionicons
+                    name="md-menu"
+                    size={24}
+                    color="black"
+                    style={{ margin: 10 }}
+                    onPress={() =>
+                      navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
                   />
                 ),
               })}
@@ -86,12 +136,38 @@ export default class App extends React.Component {
             <Stack.Screen
               name="Camera"
               component={CameraScreen}
-              options={{ title: "Add a Photo" }}
+              options={({ navigation, route }) => ({
+                title: 'Add a Photo',
+                headerLeft: () => (
+                  <Ionicons
+                    name="md-menu"
+                    size={24}
+                    color="black"
+                    style={{ margin: 10 }}
+                    onPress={() =>
+                      navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
+                  />
+                ),
+              })}
             />
             <Stack.Screen
               name="UserFeedback"
               component={UserFeedbackScreen}
-              options={{ title: "Leave Feedback" }}
+              options={({ navigation, route }) => ({
+                title: 'Leave Feedback',
+                headerLeft: () => (
+                  <Ionicons
+                    name="md-menu"
+                    size={24}
+                    color="black"
+                    style={{ margin: 10 }}
+                    onPress={() =>
+                      navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
+                  />
+                ),
+              })}
             />
           </Stack.Navigator>
         </NavigationContainer>
