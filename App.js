@@ -1,10 +1,6 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-import {
-  NavigationContainer,
-  useNavigation,
-  DrawerActions,
-} from '@react-navigation/native';
+import { NavigationContainer, DrawerActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import HomeScreen from './app/screens/HomeScreen';
@@ -43,10 +39,9 @@ function DrawerRoutes() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Camera" component={CameraScreen} />
       <Drawer.Screen name="Sign up" component={SignUpScreen} />
       <Drawer.Screen name="Log in" component={LoginScreen} />
-      <Drawer.Screen name="Camera" component={CameraScreen} />
-      <Drawer.Screen name="Leave Feedback" component={UserFeedbackScreen} />
     </Drawer.Navigator>
   );
 }
@@ -84,17 +79,6 @@ export default class App extends React.Component {
               component={SinglePlaceScreen}
               options={({ navigation, route }) => ({
                 title: 'Location Details',
-                headerLeft: () => (
-                  <Ionicons
-                    name="md-menu"
-                    size={24}
-                    color="black"
-                    style={{ margin: 10 }}
-                    onPress={() =>
-                      navigation.dispatch(DrawerActions.toggleDrawer())
-                    }
-                  />
-                ),
               })}
             />
             <Stack.Screen
@@ -156,17 +140,6 @@ export default class App extends React.Component {
               component={UserFeedbackScreen}
               options={({ navigation, route }) => ({
                 title: 'Leave Feedback',
-                headerLeft: () => (
-                  <Ionicons
-                    name="md-menu"
-                    size={24}
-                    color="black"
-                    style={{ margin: 10 }}
-                    onPress={() =>
-                      navigation.dispatch(DrawerActions.toggleDrawer())
-                    }
-                  />
-                ),
               })}
             />
           </Stack.Navigator>
