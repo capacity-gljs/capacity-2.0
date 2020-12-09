@@ -1,6 +1,6 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer, useNavigation, DrawerActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import HomeScreen from './app/screens/HomeScreen';
@@ -30,7 +30,7 @@ function CustomDrawerContent(props) {
 function DrawerRoutes() {
   return (
     <Drawer.Navigator initialRouteName="Home" drawerContent={props => <CustomDrawerContent {...props} />} >
-      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Home" component={HomeScreen} /> 
       <Drawer.Screen name="Sign up" component={SignUpScreen} />
       <Drawer.Screen name="Log in" component={LoginScreen} />
       <Drawer.Screen name="Camera" component={CameraScreen} />
@@ -59,7 +59,7 @@ export default class App extends React.Component {
                     name="md-menu"
                     size={24}
                     color="black"
-                    // onPress={() => navigation.toggleDrawer()}
+                    onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
                   />
                 ),
               })}
@@ -74,7 +74,7 @@ export default class App extends React.Component {
                     name="md-menu"
                     size={24}
                     color="black"
-                    // onPress={() => navigation.toggleDrawer()}
+                    onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
                   />
                 ),
               })}
@@ -89,7 +89,7 @@ export default class App extends React.Component {
                     name="md-menu"
                     size={24}
                     color="black"
-                    // onPress={() => navigation.toggleDrawer()}
+                    onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
                   />
                 ),
               })}
@@ -104,7 +104,7 @@ export default class App extends React.Component {
                     name="md-menu"
                     size={24}
                     color="black"
-                    // onPress={() => navigation.toggleDrawer()}
+                    onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
                   />
                 ),
               })}
@@ -119,7 +119,7 @@ export default class App extends React.Component {
                     name="md-menu"
                     size={24}
                     color="black"
-                    // onPress={() => navigation.toggleDrawer()}
+                    onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
                   />
                 ),
               })}
@@ -134,7 +134,7 @@ export default class App extends React.Component {
                     name="md-menu"
                     size={24}
                     color="black"
-                    onPress={() => navigation.toggleDrawer()}
+                    onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
                   />
                 ),
               })}
