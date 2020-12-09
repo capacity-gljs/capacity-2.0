@@ -26,7 +26,7 @@ import { homeStyleSheet } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 // IMPORT FIREBASE FUNCS
-import { getCapacity, getAllCaps } from "../funcs/placesFuncs";
+import { getAllCaps, getCapacity } from "../funcs/placesFuncs";
 import HeatLayer from "./HeatLayer";
 import FavesLayer from "./FavesLayer";
 
@@ -52,8 +52,10 @@ class HomeScreen extends React.Component {
       modalData: null,
       modalDetails: null,
       ratings: {},
+      capacity: null,
     };
     this.setData = this.setData.bind(this);
+    this.getSingleCap = this.getSingleCap.bind(this);
   }
 
   async componentDidMount() {
@@ -62,6 +64,13 @@ class HomeScreen extends React.Component {
       initialRegion: region,
     });
     getAllCaps();
+  }
+
+  async getSingleCap(name) {
+    const cap = await getCapacity(name);
+    this.setState({
+      capacity: `${cap}% Capacity`,
+    });
   }
 
   closeModal(visible) {
@@ -84,6 +93,7 @@ class HomeScreen extends React.Component {
     const hours = locDescription.opening_hours || "";
     const type = locData.types || "";
     const state = locData.terms || "";
+    const cap = this.state.capacity || "";
 
     return (
       <SafeAreaView style={homeStyleSheet.safeArea}>
@@ -121,7 +131,7 @@ class HomeScreen extends React.Component {
             >
               <Text style={homeStyleSheet.textStyle}> X </Text>
             </TouchableHighlight>
-            <Text>Capacity: 77%</Text>
+            <Text>{cap}</Text>
             {/* <Button
               title="I'm here now"
               onPress={() => {
@@ -137,7 +147,13 @@ class HomeScreen extends React.Component {
                 });
               }}
             /> */}
-            <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+              }}
+            >
               <TouchableOpacity
                 style={homeStyleSheet.buttonSideBySide}
                 //title="I'm thinking of going"
@@ -151,6 +167,7 @@ class HomeScreen extends React.Component {
                     placeLat: this.state.placeLat,
                     placeLng: this.state.placeLng,
                     isHere: true,
+                    capacity: cap
                   });
                 }}
               >
@@ -205,7 +222,7 @@ class HomeScreen extends React.Component {
             fetchDetails={true}
             onPress={(data, details = null) => {
               // console.log("LOCDETAILS => " ,details)
-
+              this.getSingleCap(data.description);
               this.setData(data, details, true);
               this.setState({
                 coordinates: {

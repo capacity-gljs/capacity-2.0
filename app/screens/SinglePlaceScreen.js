@@ -112,10 +112,11 @@ class SinglePlaceScreen extends React.Component {
           />
           <Text style={singlePlace.title}>{this.props.route.params.name}</Text>
           <Text style={singlePlace.subtitle}>
-            This location is at {this.state.capacityPercent}% capacity
+            This location is at {this.props.route.params.capacity}% capacity
           </Text>
         </View>
         <View>
+      
           <Text>
             {Array(this.state.capacityPercent)
               .fill()

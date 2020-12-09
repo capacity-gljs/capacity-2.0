@@ -95,3 +95,19 @@ export const getHeat = async () => {
     console.error(error);
   }
 };
+
+//get single capacity for a location
+export const getCapacity = async (name) => {
+  try {
+    const places = await getAllCaps();
+    const cap = [];
+    places.filter((place) => {
+      if (place["placeName"] === name) {
+        cap.push(place["avgCapacity"]);
+      }
+    });
+    return cap;
+  } catch (error) {
+    console.error(error);
+  }
+};
