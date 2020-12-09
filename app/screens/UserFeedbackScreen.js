@@ -31,22 +31,8 @@ function UserFeedbackScreen({ navigation, route }) {
   return (
     <SafeAreaView>
       <View style={{ alignItems: "center" }}>
-        <Text style={singlePlace.subtitle}>How was your experience?</Text>
-        {/* <RadioForm
-          key={0}
-          radio_props={[
-            { label: "", value: 1 },
-            { label: "", value: 2 },
-            { label: "", value: 3 },
-            { label: "", value: 4 },
-            { label: "", value: 5 },
-          ]}
-          initial={-1}
-          onPress={(exp) => setExperience(exp)}
-          formHorizontal={true}
-          labelHorizontal={false}
-          style={{ textAlign: "center" }}
-        /> */}
+        <Text style={UserFeedback.titleStyle}>How was your experience?</Text>
+
         <Text>{experienceText}</Text>
         <Slider
           style={{ width: "50%", height: 40 }}
@@ -59,20 +45,8 @@ function UserFeedbackScreen({ navigation, route }) {
           }}
           step={1}
         />
-        <Text style={singlePlace.subtitle}>Boost?</Text>
+        <Text style={UserFeedback.titleStyle}>Boost?</Text>
 
-        {/* <RadioForm
-          key={0}
-          radio_props={[
-            { label: "", value: false },
-            { label: "", value: true },
-          ]}
-          initial={-1}
-          onPress={(boost) => setBoostOrPromote(boost)}
-          formHorizontal={true}
-          labelHorizontal={false}
-          style={{ textAlign: "center" }}
-        /> */}
         <Switch
           onValueChange={() => {
             setBoostOrPromote(!boostOrPromote);

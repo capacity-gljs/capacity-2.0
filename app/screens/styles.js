@@ -284,5 +284,10 @@ export const UserFeedback = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
-  style: {},
+  titleStyle: {
+    fontSize: 30,
+    fontWeight: "500",
+    margin: 20,
+    paddingTop: 20
+  },
 });

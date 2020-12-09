@@ -87,7 +87,6 @@ export const addFeedback = async (placeId, experience, boostOrPromote) => {
     await db.runTransaction(async (transaction) => {
       transaction.set(feedbackRef, { experience, boostOrPromote });
     });
-    console.log(placeRef, feedbackRef, experience, boostOrPromote, placeId)
   } catch (error) {
     console.error(error);
   }
