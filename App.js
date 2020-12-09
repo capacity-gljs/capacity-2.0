@@ -10,37 +10,27 @@ import LoginScreen from './app/screens/LoginScreen';
 import UserFeedbackScreen from './app/screens/UserFeedbackScreen';
 import store from './app/store';
 import CameraScreen from './app/screens/CameraScreen';
-import { Button } from 'react-native';
 import Loader from './app/screens/loader';
 import { logoutUser } from './app/funcs/userFuncs';
 import { Ionicons } from '@expo/vector-icons';
-
-// option for drawer with no header
-import { createDrawerNavigator, DrawerActions } from '@react-navigation/drawer';
-import { View, Text } from 'react-native';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-// const navigation = useNavigation();
+
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props} >
+      <DrawerItemList {...props} />
+      <DrawerItem label="Log out" onPress={() => logoutUser()} />
+    </DrawerContentScrollView>
+  );
+}
 
 function DrawerRoutes() {
   return (
-    <Drawer.Navigator initialRouteName="Home">
-      {/* <Drawer.Screen name="Home" component={HomeScreen} /> */}
-      <Drawer.Screen
-              name="Home"
-              component={DrawerRoutes}
-              options={({ navigation, route }) => ({
-                headerLeft: () => (
-                  <Ionicons
-                    name="md-menu"
-                    size={24}
-                    color="black"
-                    onPress={() => navigation.toggleDrawer()}
-                  />
-                ),
-              })}
-            />
+    <Drawer.Navigator initialRouteName="Home" drawerContent={props => <CustomDrawerContent {...props} />} >
+      <Drawer.Screen name="Home" component={HomeScreen} />
       <Drawer.Screen name="Sign up" component={SignUpScreen} />
       <Drawer.Screen name="Log in" component={LoginScreen} />
       <Drawer.Screen name="Camera" component={CameraScreen} />
@@ -63,16 +53,16 @@ export default class App extends React.Component {
             <Stack.Screen
               name="Home"
               component={DrawerRoutes}
-              // options={({ navigation, route }) => ({
-              //   headerLeft: () => (
-              //     <Ionicons
-              //       name="md-menu"
-              //       size={24}
-              //       color="black"
-              //       onPress={() => navigation.toggleDrawer()}
-              //     />
-              //   ),
-              // })}
+              options={({ navigation, route }) => ({
+                headerLeft: () => (
+                  <Ionicons
+                    name="md-menu"
+                    size={24}
+                    color="black"
+                    // onPress={() => navigation.toggleDrawer()}
+                  />
+                ),
+              })}
             />
             <Stack.Screen
               name="SinglePlace"
