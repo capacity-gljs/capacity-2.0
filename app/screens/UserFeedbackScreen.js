@@ -21,7 +21,7 @@ import RadioForm, {
 import { addFeedback } from "../funcs/userFuncs";
 import Slider from "@react-native-community/slider";
 
-function UserFeedbackScreen({ navigation, route }) {
+function UserFeedbackScreen({ navigation, route, navigate }) {
   const [experience, setExperience] = useState(1);
   const [boostOrPromote, setBoostOrPromote] = useState(false);
   let experienceText;
@@ -59,6 +59,7 @@ function UserFeedbackScreen({ navigation, route }) {
             console.log(route.params.placeId);
             await addFeedback(route.params.placeId, experience, boostOrPromote);
             alert("Thanks for leaving feedback!");
+            navigation.navigate("Home");
           }}
         />
       </View>
