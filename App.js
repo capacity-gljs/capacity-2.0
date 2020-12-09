@@ -1,6 +1,10 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-import { NavigationContainer, useNavigation, DrawerActions } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useNavigation,
+  DrawerActions,
+} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import HomeScreen from './app/screens/HomeScreen';
@@ -13,14 +17,19 @@ import CameraScreen from './app/screens/CameraScreen';
 import Loader from './app/screens/loader';
 import { logoutUser } from './app/funcs/userFuncs';
 import { Ionicons } from '@expo/vector-icons';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
   return (
-    <DrawerContentScrollView {...props} >
+    <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
       <DrawerItem label="Log out" onPress={() => logoutUser()} />
     </DrawerContentScrollView>
@@ -29,8 +38,11 @@ function CustomDrawerContent(props) {
 
 function DrawerRoutes() {
   return (
-    <Drawer.Navigator initialRouteName="Home" drawerContent={props => <CustomDrawerContent {...props} />} >
-      <Drawer.Screen name="Home" component={HomeScreen} /> 
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+    >
+      <Drawer.Screen name="Home" component={HomeScreen} />
       <Drawer.Screen name="Sign up" component={SignUpScreen} />
       <Drawer.Screen name="Log in" component={LoginScreen} />
       <Drawer.Screen name="Camera" component={CameraScreen} />
@@ -45,10 +57,10 @@ export default class App extends React.Component {
       <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Getting Started">
-            <Stack.Screen 
+            <Stack.Screen
               name="Getting Started"
               component={Loader}
-              options={{headerShown: false}}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
               name="Home"
@@ -59,7 +71,10 @@ export default class App extends React.Component {
                     name="md-menu"
                     size={24}
                     color="black"
-                    onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+                    style={{ margin: 10 }}
+                    onPress={() =>
+                      navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
                   />
                 ),
               })}
@@ -74,7 +89,10 @@ export default class App extends React.Component {
                     name="md-menu"
                     size={24}
                     color="black"
-                    onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+                    style={{ margin: 10 }}
+                    onPress={() =>
+                      navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
                   />
                 ),
               })}
@@ -89,7 +107,10 @@ export default class App extends React.Component {
                     name="md-menu"
                     size={24}
                     color="black"
-                    onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+                    style={{ margin: 10 }}
+                    onPress={() =>
+                      navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
                   />
                 ),
               })}
@@ -104,7 +125,10 @@ export default class App extends React.Component {
                     name="md-menu"
                     size={24}
                     color="black"
-                    onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+                    style={{ margin: 10 }}
+                    onPress={() =>
+                      navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
                   />
                 ),
               })}
@@ -119,7 +143,10 @@ export default class App extends React.Component {
                     name="md-menu"
                     size={24}
                     color="black"
-                    onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+                    style={{ margin: 10 }}
+                    onPress={() =>
+                      navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
                   />
                 ),
               })}
@@ -134,7 +161,10 @@ export default class App extends React.Component {
                     name="md-menu"
                     size={24}
                     color="black"
-                    onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+                    style={{ margin: 10 }}
+                    onPress={() =>
+                      navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
                   />
                 ),
               })}
