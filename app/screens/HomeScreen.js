@@ -122,7 +122,7 @@ class HomeScreen extends React.Component {
               <Text style={homeStyleSheet.textStyle}> X </Text>
             </TouchableHighlight>
             <Text>Capacity: 77%</Text>
-            <Button
+            {/* <Button
               title="I'm here now"
               onPress={() => {
                 this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
@@ -133,25 +133,51 @@ class HomeScreen extends React.Component {
                   id: this.state.id,
                   placeLat: this.state.placeLat,
                   placeLng: this.state.placeLng,
-                  isHere: true
+                  isHere: true,
                 });
               }}
-            />
-            <Button
-              title="I'm thinking of going"
-              onPress={() => {
-                this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
-                this.closeModal(!modalVisible);
-                this.props.navigation.navigate("SinglePlace", {
-                  // PASS PROPS TO SINGLE PLACE HERE
-                  name: this.state.selectedName,
-                  id: this.state.id,
-                  placeLat: this.state.placeLat,
-                  placeLng: this.state.placeLng,
-                  isHere: false
-                });
-              }}
-            />
+            /> */}
+            <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
+              <TouchableOpacity
+                style={homeStyleSheet.buttonSideBySide}
+                //title="I'm thinking of going"
+                onPress={() => {
+                  this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
+                  this.closeModal(!modalVisible);
+                  this.props.navigation.navigate("SinglePlace", {
+                    // PASS PROPS TO SINGLE PLACE HERE
+                    name: this.state.selectedName,
+                    id: this.state.id,
+                    placeLat: this.state.placeLat,
+                    placeLng: this.state.placeLng,
+                    isHere: true,
+                  });
+                }}
+              >
+                <Text style={homeStyleSheet.buttonText}>I'm here now</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={homeStyleSheet.buttonSideBySide}
+                //title="I'm thinking of going"
+                onPress={() => {
+                  this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
+                  this.closeModal(!modalVisible);
+                  this.props.navigation.navigate("SinglePlace", {
+                    // PASS PROPS TO SINGLE PLACE HERE
+                    name: this.state.selectedName,
+                    id: this.state.id,
+                    placeLat: this.state.placeLat,
+                    placeLng: this.state.placeLng,
+                    isHere: false,
+                  });
+                }}
+              >
+                <Text style={homeStyleSheet.buttonText}>
+                  I'm thinking of going
+                </Text>
+              </TouchableOpacity>
+            </View>
+
             <TouchableOpacity
               style={homeStyleSheet.button}
               onPress={() => getGuidelines(state)}
