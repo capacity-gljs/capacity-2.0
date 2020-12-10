@@ -20,17 +20,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 //import { useNavigation } from "@react-navigation/native";
 
 // importing fbFuncs
-import {
-  getOrAddPlace,
-  addCapacity,
-} from "../funcs/placesFuncs";
+import { getOrAddPlace, addCapacity } from "../funcs/placesFuncs";
 
-import { 
-  addFave,
-  updateFave,
-  removeFave,
-  getFave,
-} from '../funcs/userFuncs';
+import { addFave, updateFave, removeFave, getFave } from "../funcs/userFuncs";
 
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
@@ -101,7 +93,8 @@ class SinglePlaceScreen extends React.Component {
                     this.props.route.params.placeLat,
                     this.props.route.params.placeLng
                   );
-                  //getFave(this.props.user.uid);
+                  console.log("THIS IS FAVORITE");
+                  getFave(this.props.user.uid);
                 }
                 this.setState({ favorited: !this.state.favorited });
               } else {
@@ -149,7 +142,11 @@ class SinglePlaceScreen extends React.Component {
         </View>
         <Button
           title="Leave Feedback"
-          onPress={() => this.props.navigation.navigate("UserFeedback", {placeId: this.props.route.params.id})}
+          onPress={() =>
+            this.props.navigation.navigate("UserFeedback", {
+              placeId: this.props.route.params.id,
+            })
+          }
         />
         <View style={{ alignItems: "center" }}>
           <TouchableOpacity

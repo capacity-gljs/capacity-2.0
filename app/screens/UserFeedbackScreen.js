@@ -58,9 +58,9 @@ function UserFeedbackScreen({ navigation, route }) {
         <Button
           title="Submit"
           onPress={async () => {
-            console.log(route.params.placeId);
+            //console.log(route.params.placeId);
             await addFeedback(route.params.placeId, experience, boostOrPromote);
-            alert("Thanks for leaving feedback!")
+            alert("Thanks for leaving feedback!");
           }}
         />
       </View>

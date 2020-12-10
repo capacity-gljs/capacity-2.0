@@ -133,7 +133,7 @@ class HomeScreen extends React.Component {
                   id: this.state.id,
                   placeLat: this.state.placeLat,
                   placeLng: this.state.placeLng,
-                  isHere: true
+                  isHere: true,
                 });
               }}
             />
@@ -148,7 +148,7 @@ class HomeScreen extends React.Component {
                   id: this.state.id,
                   placeLat: this.state.placeLat,
                   placeLng: this.state.placeLng,
-                  isHere: false
+                  isHere: false,
                 });
               }}
             />
