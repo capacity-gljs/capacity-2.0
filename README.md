@@ -45,8 +45,10 @@ Note: testing this app requires downloading 'expo client' on an iOS  product.
 ## The App
 
 ![Loader](assets/appImages/Loader.PNG)
-![Home](assets/appImages/Heatmap.PNG)
+![Home](assets/appImages/MyLocation.png)
 ![Modal](assets/appImages/Modal.PNG)
+![SinglePlaceScreen](assets/appImages/SinglePlaceScreen.PNG)
 ![Feedback](assets/appImages/Feedback.PNG)
 ![Menu](assets/appImages/Menu.PNG)
+![Camera](assets/appImages/Camera.PNG)
 
