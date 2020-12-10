@@ -146,6 +146,20 @@ class HomeScreen extends React.Component {
                   isHere: true,
                 });
               }}
+            />
+            <Button
+              title="I'm thinking of going"
+              onPress={() => {
+                this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
+                this.closeModal(!modalVisible);
+                this.props.navigation.navigate("SinglePlace", {
+                  // PASS PROPS TO SINGLE PLACE HERE
+                  name: this.state.selectedName,
+                  id: this.state.id,
+                  placeLat: this.state.placeLat,
+                  placeLng: this.state.placeLng,
+                  isHere: false,
+                });
             /> */}
             <View
               style={{
@@ -167,7 +181,7 @@ class HomeScreen extends React.Component {
                     placeLat: this.state.placeLat,
                     placeLng: this.state.placeLng,
                     isHere: true,
-                    capacity: cap
+                    capacity: cap,
                   });
                 }}
               >

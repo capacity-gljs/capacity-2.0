@@ -1,24 +1,25 @@
-import React from 'react';
-import 'react-native-gesture-handler';
-import { NavigationContainer, DrawerActions } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Provider } from 'react-redux';
-import HomeScreen from './app/screens/HomeScreen';
-import SinglePlaceScreen from './app/screens/SinglePlaceScreen';
-import SignUpScreen from './app/screens/SignUpScreen';
-import LoginScreen from './app/screens/LoginScreen';
-import UserFeedbackScreen from './app/screens/UserFeedbackScreen';
-import store from './app/store';
-import CameraScreen from './app/screens/CameraScreen';
-import Loader from './app/screens/loader';
-import { logoutUser } from './app/funcs/userFuncs';
-import { Ionicons } from '@expo/vector-icons';
+import React from "react";
+import "react-native-gesture-handler";
+import { NavigationContainer, DrawerActions } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { Provider } from "react-redux";
+import HomeScreen from "./app/screens/HomeScreen";
+import SinglePlaceScreen from "./app/screens/SinglePlaceScreen";
+import SignUpScreen from "./app/screens/SignUpScreen";
+import LoginScreen from "./app/screens/LoginScreen";
+import UserFeedbackScreen from "./app/screens/UserFeedbackScreen";
+import store from "./app/store";
+import CameraScreen from "./app/screens/CameraScreen";
+import UserFavesScreen from "./app/screens/UserFavesScreen";
+import Loader from "./app/screens/loader";
+import { logoutUser } from "./app/funcs/userFuncs";
+import { Ionicons } from "@expo/vector-icons";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
-} from '@react-navigation/drawer';
+} from "@react-navigation/drawer";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -39,6 +40,7 @@ function DrawerRoutes() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Favorites" component={UserFavesScreen} />
       <Drawer.Screen name="Camera" component={CameraScreen} />
       <Drawer.Screen name="Sign up" component={SignUpScreen} />
       <Drawer.Screen name="Log in" component={LoginScreen} />
@@ -78,14 +80,14 @@ export default class App extends React.Component {
               name="SinglePlace"
               component={SinglePlaceScreen}
               options={({ navigation, route }) => ({
-                title: 'Location Details',
+                title: "Location Details",
               })}
             />
             <Stack.Screen
               name="SignUp"
               component={SignUpScreen}
               options={({ navigation, route }) => ({
-                title: 'Sign Up',
+                title: "Sign Up",
                 headerLeft: () => (
                   <Ionicons
                     name="md-menu"
@@ -103,7 +105,7 @@ export default class App extends React.Component {
               name="Login"
               component={LoginScreen}
               options={({ navigation, route }) => ({
-                title: 'Log in',
+                title: "Log in",
                 headerLeft: () => (
                   <Ionicons
                     name="md-menu"
@@ -121,7 +123,7 @@ export default class App extends React.Component {
               name="Camera"
               component={CameraScreen}
               options={({ navigation, route }) => ({
-                title: 'Add a Photo',
+                title: "Add a Photo",
                 headerLeft: () => (
                   <Ionicons
                     name="md-menu"
@@ -139,7 +141,7 @@ export default class App extends React.Component {
               name="UserFeedback"
               component={UserFeedbackScreen}
               options={({ navigation, route }) => ({
-                title: 'Leave Feedback',
+                title: "Leave Feedback",
               })}
             />
           </Stack.Navigator>
