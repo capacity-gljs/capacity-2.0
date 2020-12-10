@@ -33,7 +33,6 @@ import HeatLayer from "./HeatLayer";
 import FavesLayer from "./FavesLayer";
 import { mapStyle } from "./map";
 
-
 // import { MAP_KEY } from '@env'
 
 class HomeScreen extends React.Component {
@@ -57,11 +56,10 @@ class HomeScreen extends React.Component {
       modalDetails: null,
       ratings: {},
       capacity: null,
-      capacityNum: null
+      capacityNum: null,
     };
     this.setData = this.setData.bind(this);
     this.getSingleCap = this.getSingleCap.bind(this);
-   
   }
 
   async componentDidMount() {
@@ -76,7 +74,7 @@ class HomeScreen extends React.Component {
     const cap = await getCapacity(name);
     this.setState({
       capacity: `${cap}% Capacity`,
-      capacityNum: Number(cap)
+      capacityNum: Number(cap),
     });
   }
 
@@ -183,7 +181,7 @@ class HomeScreen extends React.Component {
                     isHere: true,
                     capacity: cap,
                     color: colors,
-                    capacityNum: this.state.capacityNum
+                    capacityNum: this.state.capacityNum,
                   });
                 }}
               >
@@ -191,7 +189,6 @@ class HomeScreen extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity
                 style={homeStyleSheet.buttonSideBySide}
-                //title="I'm thinking of going"
                 onPress={() => {
                   this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
                   this.closeModal(!modalVisible);
@@ -202,7 +199,9 @@ class HomeScreen extends React.Component {
                     placeLat: this.state.placeLat,
                     placeLng: this.state.placeLng,
                     isHere: false,
+                    capacity: cap,
                     color: colors,
+                    capacityNum: this.state.capacityNum,
                   });
                 }}
               >

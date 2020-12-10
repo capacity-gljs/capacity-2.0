@@ -9,11 +9,6 @@ import {
   Button,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from "react-native-simple-radio-button";
 import { connect } from "react-redux";
 import { singlePlace } from "./styles";
 import { homeStyleSheet } from "./styles";
@@ -61,9 +56,13 @@ class SinglePlaceScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props.route.params)
     const colors = this.props.route.params.color;
-    const capacityNum = Math.floor(this.props.route.params.capacityNum);
+    let capacityNum = Math.floor(this.props.route.params.capacityNum);
+    console.log("CAPNUM: ", capacityNum)
+
+    if (Number.isNaN(capacityNum)) capacityNum = 0
+    console.log("CAPNUM: ", capacityNum)
+
     let capacityMessage = "";
     if (this.state.capacityRating === -1) capacityMessage = "";
     else if (this.state.capacityRating < 25) capacityMessage = "Empty";
@@ -168,18 +167,7 @@ class SinglePlaceScreen extends React.Component {
               <Text style={[singlePlace.subtitle, { color: colors.text }]}>
                 How Crowded Was It?
               </Text>
-              {/* <RadioForm
-                labelColor={colors.text}
-                key={this.state.formLabel}
-                radio_props={this.state.capacities}
-                radio_propsstyle={{ color: colors.text }}
-                initial={this.state.initialRadioPos}
-                onPress={this.handleChange}
-                formHorizontal={true}
-                labelHorizontal={false}
-                style={{ textAlign: "center" }}
-              /> */}
-              <Text>{capacityMessage}</Text>
+              <Text style={{ color: colors.text }}>{capacityMessage}</Text>
               <Slider
                 style={{ width: "50%", height: 40 }}
                 minimumValue={0}
