@@ -17,14 +17,14 @@ Capacity was writtten in React Native powered by Expo-cli. Below is a list of ot
    - Cloud FireStore 
 
 
-## How to Use 
+## Running this project:
 
-git clone https://github.com/capacity-gljs/capacity-2.0.git
-cd capacity-2.0 
-npm install 
-npm start 
+- git clone https://github.com/capacity-gljs/capacity-2.0.git
+- cd capacity-2.0 
+- npm install 
+- npm start 
 
-## Setup
+## Viewing Published App
 Note: testing this app requires downloading 'expo client' on an iOS  product.
 
 1. On your iOS device, download [expo client](https://apps.apple.com/us/app/expo-client/id982107779) from the app store.
@@ -38,7 +38,11 @@ Note: testing this app requires downloading 'expo client' on an iOS  product.
 4. On the profile page under published projects, click on capacity
 5. Sign up for a Capacity account or log in. You can now check on your favorite places and report on how crowded they are!
 
+## Authors
 
+ [Samantha Jardanowski](https://github.com/jathnamas "Samantha's Github") | [Laura Maranto](https://github.com/lwmaranto "Laura's Github")  | [Groana Melendez](https://github.com/groana7 "Groana's Github") |  [Jennifer Rafael](https://github.com/JenniferR326 "Jennifer's Github")
+
+## The App
 
 
 
