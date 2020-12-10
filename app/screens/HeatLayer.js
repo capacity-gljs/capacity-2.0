@@ -1,6 +1,6 @@
-import React from "react";
-import { Heatmap } from "react-native-maps";
-import { getHeat } from "../funcs/placesFuncs";
+import React from 'react';
+import { Heatmap } from 'react-native-maps';
+import { getHeat } from '../funcs/placesFuncs';
 
 export default class HeatLayer extends React.Component {
   constructor() {
@@ -22,7 +22,8 @@ export default class HeatLayer extends React.Component {
       <Heatmap
         points={this.state.places}
         opacity={1}
-        radius={100}
+        gradient={{colors: ["#F58FA2", "#788eec", ], startPoints: [0.1, 0.25], colorMapSize: 256}}
+        radius={25}
         maxIntensity={100}
       />
     );

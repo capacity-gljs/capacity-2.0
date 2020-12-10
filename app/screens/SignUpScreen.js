@@ -22,7 +22,6 @@ function SignUpScreen({ navigation, signUp }) {
 
   const onRegisterPress = () => {
     signUp(email, password);
-    alert('Registered Successfully');
     navigation.navigate('Home');
   };
 
