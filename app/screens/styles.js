@@ -110,10 +110,6 @@ export const singlePlace = StyleSheet.create({
     // backgroundColor: "white",
     flexDirection: "column",
     justifyContent: "space-between",
-    marginBottom: "10%",
-    marginTop: "10%",
-    marginLeft: "10%",
-    marginRight: "10%",
   },
   title: {
     textAlign: "center",
