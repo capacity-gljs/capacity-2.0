@@ -72,15 +72,14 @@ class SinglePlaceScreen extends React.Component {
   }
 
   render() {
-    // console.log('PROPS IN SINGLE COMP', this.props); // FIND THE PLACE ID
-    // console.log('STATE IN SINGLE COMP', this.state); // FIND THE PLACE ID
-
+    const colors = this.props.route.params.color;
+    this.state.capacities.color = colors.text;
     return (
       <SafeAreaView style={singlePlace.safeArea}>
         <ScrollView>
           <View>
             <Ionicons
-              style={singlePlace.starIcon}
+              style={[singlePlace.starIcon, { color: colors.text }]}
               name={this.state.favorited ? "ios-star" : "ios-star-outline"}
               size={32}
               onPress={() => {
@@ -105,10 +104,10 @@ class SinglePlaceScreen extends React.Component {
                 }
               }}
             />
-            <Text style={singlePlace.title}>
+            <Text style={[singlePlace.title, { color: colors.text }]}>
               {this.props.route.params.name}
             </Text>
-            <Text style={singlePlace.subtitle}>
+            <Text style={[singlePlace.subtitle, { color: colors.text }]}>
               This location is at {this.props.route.params.capacity}
             </Text>
           </View>
@@ -120,7 +119,7 @@ class SinglePlaceScreen extends React.Component {
                   <React.Fragment key={index}>
                     <Ionicons
                       key={index}
-                      style={singlePlace.icon}
+                      style={(singlePlace.icon, { color: colors.text })}
                       name="md-person"
                       size={32}
                       color="black"
@@ -152,21 +151,28 @@ class SinglePlaceScreen extends React.Component {
               })
             }
           />
+
           <View style={{ alignItems: "center" }}>
             <TouchableOpacity
               style={homeStyleSheet.button}
               onPress={() => this.props.navigation.navigate("Camera")} //open the camera component
             >
-              <Text style={homeStyleSheet.buttonText}>Take a Live Photo</Text>
+              <Text style={[homeStyleSheet.buttonText, { color: colors.text }]}>
+                Take a Live Photo
+              </Text>
             </TouchableOpacity>
           </View>
 
           {this.props.route.params.isHere && (
-            <View style={{ alignItems: "center" }}>
-              <Text style={singlePlace.subtitle}>How Crowded Was It?</Text>
+            <View style={[{ alignItems: "center", color: colors.text }]}>
+              <Text style={[singlePlace.subtitle, { color: colors.text }]}>
+                How Crowded Was It?
+              </Text>
               <RadioForm
+                labelColor={colors.text}
                 key={this.state.formLabel}
                 radio_props={this.state.capacities}
+                radio_propsstyle={{ color: colors.text }}
                 initial={this.state.initialRadioPos}
                 onPress={this.handleChange}
                 formHorizontal={true}

@@ -1,4 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { useTheme }from 'react'
+
+
 
 export const homeStyleSheet = StyleSheet.create({
   container: {
@@ -21,7 +24,7 @@ export const homeStyleSheet = StyleSheet.create({
     alignSelf: "center",
     position: "absolute",
     bottom: 12,
-    backgroundColor: "white",
+    // backgroundColor: "white",
     borderRadius: 20,
     padding: 20,
     shadowColor: "#000",

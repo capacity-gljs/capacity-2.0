@@ -69,3 +69,7 @@ export const getGuidelines = (state) => {
     Alert.alert("Site not found");
   }
 };
+
+export const isDarkMode = () => {
+  
+}
