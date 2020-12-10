@@ -106,7 +106,7 @@ export const getCapacity = async (name) => {
         cap.push(place["avgCapacity"]);
       }
     });
-    return cap;
+    return Number(cap).toFixed(2);
   } catch (error) {
     console.error(error);
   }

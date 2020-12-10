@@ -6,6 +6,7 @@ import {
   TextInput,
   Picker,
   TouchableOpacity,
+  ScrollView,
   View,
   Switch,
   SafeAreaView,
@@ -25,11 +26,14 @@ function UserFeedbackScreen({ navigation, route, navigate }) {
   const [experience, setExperience] = useState(1);
   const [boostOrPromote, setBoostOrPromote] = useState(false);
   let experienceText;
-  if (experience === 1) experienceText = "Abort";
-  else if (experience === 2) experienceText = "Chill";
-  else if (experience === 3) experienceText = "Stressful";
+  if (experience === 1) experienceText = "Stressful";
+  else if (experience === 2) experienceText = "OK";
+  else if (experience === 3) experienceText = "Chill";
+  else if (experience === 4) experienceText = "Great";
+
   return (
     <SafeAreaView>
+      <ScrollView>
       <View style={{ alignItems: "center" }}>
         <Text style={UserFeedback.titleStyle}>How was your experience?</Text>
 
@@ -37,7 +41,7 @@ function UserFeedbackScreen({ navigation, route, navigate }) {
         <Slider
           style={{ width: "50%", height: 40 }}
           minimumValue={1}
-          maximumValue={3}
+          maximumValue={4}
           minimumTrackTintColor="#FFFFFF"
           maximumTrackTintColor="#000000"
           onValueChange={(val) => {
@@ -63,6 +67,7 @@ function UserFeedbackScreen({ navigation, route, navigate }) {
           }}
         />
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

@@ -6,6 +6,7 @@ import {
   Alert,
   Button,
   TouchableHighlight,
+  ScrollView,
   Animated,
 } from "react-native";
 import Modal from "react-native-modal";
@@ -97,42 +98,44 @@ class HomeScreen extends React.Component {
 
     return (
       <SafeAreaView style={homeStyleSheet.safeArea}>
-        <Modal
-          animationType="slide"
-          visible={modalVisible}
-          onBackdropPress={() => this.closeModal(!modalVisible)}
-        >
-          <View style={homeStyleSheet.modalView}>
-            <Text style={homeStyleSheet.modalName}>{locDescription.name}</Text>
-            <Text style={homeStyleSheet.modalText}>
-              {locDescription.rating} ({locDescription.user_ratings_total})
-            </Text>
-            <Text style={homeStyleSheet.modalType}>
-              {" "}
-              {getType(type)} {dollarSign(locDescription.price_level)}
-            </Text>
-            <Text
-              style={{
-                marginBottom: 5,
-                fontSize: 15,
-                color: getColor(hours),
-              }}
-            >
-              {isOpen(hours)}
-            </Text>
-            <TouchableHighlight
-              style={{
-                ...homeStyleSheet.openButton,
-                backgroundColor: "#2196F3",
-              }}
-              onPress={() => {
-                this.closeModal(!modalVisible);
-              }}
-            >
-              <Text style={homeStyleSheet.textStyle}> X </Text>
-            </TouchableHighlight>
-            <Text>{cap}</Text>
-            {/* <Button
+          <Modal
+            animationType="slide"
+            visible={modalVisible}
+            onBackdropPress={() => this.closeModal(!modalVisible)}
+          >
+            <View style={homeStyleSheet.modalView}>
+              <Text style={homeStyleSheet.modalName}>
+                {locDescription.name}
+              </Text>
+              <Text style={homeStyleSheet.modalText}>
+                {locDescription.rating} ({locDescription.user_ratings_total})
+              </Text>
+              <Text style={homeStyleSheet.modalType}>
+                {" "}
+                {getType(type)} {dollarSign(locDescription.price_level)}
+              </Text>
+              <Text
+                style={{
+                  marginBottom: 5,
+                  fontSize: 15,
+                  color: getColor(hours),
+                }}
+              >
+                {isOpen(hours)}
+              </Text>
+              <TouchableHighlight
+                style={{
+                  ...homeStyleSheet.openButton,
+                  backgroundColor: "#2196F3",
+                }}
+                onPress={() => {
+                  this.closeModal(!modalVisible);
+                }}
+              >
+                <Text style={homeStyleSheet.textStyle}> X </Text>
+              </TouchableHighlight>
+              <Text>{cap}</Text>
+              {/* <Button
               title="I'm here now"
               onPress={() => {
                 this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
@@ -161,117 +164,117 @@ class HomeScreen extends React.Component {
                   isHere: false,
                 });
             /> */}
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-              }}
-            >
-              <TouchableOpacity
-                style={homeStyleSheet.buttonSideBySide}
-                //title="I'm thinking of going"
-                onPress={() => {
-                  this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
-                  this.closeModal(!modalVisible);
-                  this.props.navigation.navigate("SinglePlace", {
-                    // PASS PROPS TO SINGLE PLACE HERE
-                    name: this.state.selectedName,
-                    id: this.state.id,
-                    placeLat: this.state.placeLat,
-                    placeLng: this.state.placeLng,
-                    isHere: true,
-                    capacity: cap,
-                  });
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
                 }}
               >
-                <Text style={homeStyleSheet.buttonText}>I'm here now</Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={homeStyleSheet.buttonSideBySide}
+                  //title="I'm thinking of going"
+                  onPress={() => {
+                    this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
+                    this.closeModal(!modalVisible);
+                    this.props.navigation.navigate("SinglePlace", {
+                      // PASS PROPS TO SINGLE PLACE HERE
+                      name: this.state.selectedName,
+                      id: this.state.id,
+                      placeLat: this.state.placeLat,
+                      placeLng: this.state.placeLng,
+                      isHere: true,
+                      capacity: cap,
+                    });
+                  }}
+                >
+                  <Text style={homeStyleSheet.buttonText}>I'm here now</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={homeStyleSheet.buttonSideBySide}
+                  //title="I'm thinking of going"
+                  onPress={() => {
+                    this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
+                    this.closeModal(!modalVisible);
+                    this.props.navigation.navigate("SinglePlace", {
+                      // PASS PROPS TO SINGLE PLACE HERE
+                      name: this.state.selectedName,
+                      id: this.state.id,
+                      placeLat: this.state.placeLat,
+                      placeLng: this.state.placeLng,
+                      isHere: false,
+                    });
+                  }}
+                >
+                  <Text style={homeStyleSheet.buttonText}>
+                    I'm thinking of going
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
               <TouchableOpacity
-                style={homeStyleSheet.buttonSideBySide}
-                //title="I'm thinking of going"
-                onPress={() => {
-                  this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
-                  this.closeModal(!modalVisible);
-                  this.props.navigation.navigate("SinglePlace", {
-                    // PASS PROPS TO SINGLE PLACE HERE
-                    name: this.state.selectedName,
-                    id: this.state.id,
-                    placeLat: this.state.placeLat,
-                    placeLng: this.state.placeLng,
-                    isHere: false,
-                  });
-                }}
+                style={homeStyleSheet.button}
+                onPress={() => getGuidelines(state)}
               >
-                <Text style={homeStyleSheet.buttonText}>
-                  I'm thinking of going
-                </Text>
+                <Text style={homeStyleSheet.buttonText}>State Guidelines</Text>
               </TouchableOpacity>
             </View>
+          </Modal>
 
-            <TouchableOpacity
-              style={homeStyleSheet.button}
-              onPress={() => getGuidelines(state)}
-            >
-              <Text style={homeStyleSheet.buttonText}>State Guidelines</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
+          <MapView
+            ref={(map) => (this.map = map)}
+            style={homeStyleSheet.container}
+            provider={PROVIDER_GOOGLE}
+            showsUserLocation
+            initialRegion={this.state.initialRegion}
+          >
+            <HeatLayer />
+            <FavesLayer />
 
-        <MapView
-          ref={(map) => (this.map = map)}
-          style={homeStyleSheet.container}
-          provider={PROVIDER_GOOGLE}
-          showsUserLocation
-          initialRegion={this.state.initialRegion}
-        >
-          <HeatLayer />
-          <FavesLayer />
+            <GooglePlacesAutocomplete
+              ref={(instance) => (this.GooglePlacesAutocompleteRef = instance)}
+              style={homeStyleSheet.input}
+              placeholder="search"
+              minLength={2}
+              fetchDetails={true}
+              onPress={(data, details = null) => {
+                // console.log("LOCDETAILS => " ,details)
+                this.getSingleCap(data.description);
+                this.setData(data, details, true);
+                this.setState({
+                  coordinates: {
+                    latitude: details.geometry.location.lat,
+                    longitude: details.geometry.location.lng,
+                  },
+                  selectedName: data.description,
 
-          <GooglePlacesAutocomplete
-            ref={(instance) => (this.GooglePlacesAutocompleteRef = instance)}
-            style={homeStyleSheet.input}
-            placeholder="search"
-            minLength={2}
-            fetchDetails={true}
-            onPress={(data, details = null) => {
-              // console.log("LOCDETAILS => " ,details)
-              this.getSingleCap(data.description);
-              this.setData(data, details, true);
-              this.setState({
-                coordinates: {
-                  latitude: details.geometry.location.lat,
-                  longitude: details.geometry.location.lng,
-                },
-                selectedName: data.description,
+                  // SETTING STATES FOR PASSING DOWN PROPS HERE
+                  id: details.place_id,
+                  placeLat: details.geometry.location.lat,
+                  placeLng: details.geometry.location.lng,
+                });
 
-                // SETTING STATES FOR PASSING DOWN PROPS HERE
-                id: details.place_id,
-                placeLat: details.geometry.location.lat,
-                placeLng: details.geometry.location.lng,
-              });
+                // console.log for state
+                // console.log('STATE IN AUTO COMPLETE', this.state)
 
-              // console.log for state
-              // console.log('STATE IN AUTO COMPLETE', this.state)
-
-              this.map.animateCamera({
-                center: {
-                  latitude: details.geometry.location.lat,
-                  longitude: details.geometry.location.lng,
-                },
-              });
-              this.GooglePlacesAutocompleteRef.setAddressText(
-                data.terms[0].value
-              ); //shortensname in searchbar
-            }}
-            query={{
-              key: "AIzaSyCukq40uCr0mkfwu4JlZaO6yQ6P0K5D7Bc",
-              language: "en",
-            }}
-            nearbyPlacesAPI="GooglePlacesSearch"
-            debounce={200}
-          />
-        </MapView>
+                this.map.animateCamera({
+                  center: {
+                    latitude: details.geometry.location.lat,
+                    longitude: details.geometry.location.lng,
+                  },
+                });
+                this.GooglePlacesAutocompleteRef.setAddressText(
+                  data.terms[0].value
+                ); //shortensname in searchbar
+              }}
+              query={{
+                key: "AIzaSyCukq40uCr0mkfwu4JlZaO6yQ6P0K5D7Bc",
+                language: "en",
+              }}
+              nearbyPlacesAPI="GooglePlacesSearch"
+              debounce={200}
+            />
+          </MapView>
       </SafeAreaView>
     );
   }
