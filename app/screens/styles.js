@@ -1,7 +1,8 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { useTheme }from 'react'
 
-
+const { width: winWidth, height: winHeight } = Dimensions.get("window");
+const screen = Dimensions.get("screen");
 
 export const homeStyleSheet = StyleSheet.create({
   container: {
@@ -10,8 +11,8 @@ export const homeStyleSheet = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: "grey",
-    width: "99%",
-    height: "70%",
+    width: "100%",
+    height: "100%",
   },
   input: {
     borderRadius: 4,
@@ -19,7 +20,7 @@ export const homeStyleSheet = StyleSheet.create({
   },
   modalView: {
     flex: 0,
-    width: 400,
+    width: screen.width,
     height: 350,
     alignSelf: "center",
     position: "absolute",
@@ -113,6 +114,8 @@ export const singlePlace = StyleSheet.create({
     // backgroundColor: "white",
     flexDirection: "column",
     justifyContent: "space-between",
+    width: "90%",
+    alignSelf: "center"
   },
   title: {
     textAlign: "center",
@@ -190,7 +193,6 @@ export const SignUpLogin = StyleSheet.create({
   },
 });
 
-const { width: winWidth, height: winHeight } = Dimensions.get("window");
 export const CameraScreenSheet = StyleSheet.create({
   preview: {
     height: winHeight,
@@ -202,37 +204,6 @@ export const CameraScreenSheet = StyleSheet.create({
     bottom: 0,
     flex: 1,
   },
-  /*
-  alignCenter: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  bottomToolbar: {
-    width: winWidth,
-    position: "absolute",
-    height: 100,
-    bottom: 0,
-  },
-  captureBtn: {
-    width: 60,
-    height: 60,
-    borderWidth: 2,
-    borderRadius: 60,
-    borderColor: "#FFFFFF",
-  },
-  captureBtnActive: {
-    width: 80,
-    height: 80,
-  },
-  captureBtnInternal: {
-    width: 76,
-    height: 76,
-    borderWidth: 2,
-    borderRadius: 76,
-    backgroundColor: "red",
-    borderColor: "transparent",
-  },*/
 });
 export const UserFeedback = StyleSheet.create({
   container: {
