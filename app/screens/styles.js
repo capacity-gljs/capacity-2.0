@@ -7,6 +7,8 @@ export const homeStyleSheet = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: "grey",
+    width: "99%",
+    height: "70%",
   },
   input: {
     borderRadius: 4,
@@ -108,8 +110,6 @@ export const singlePlace = StyleSheet.create({
     // backgroundColor: "white",
     flexDirection: "column",
     justifyContent: "space-between",
-    marginBottom: 50,
-    marginTop: 35,
   },
   title: {
     textAlign: "center",
@@ -288,6 +288,6 @@ export const UserFeedback = StyleSheet.create({
     fontSize: 30,
     fontWeight: "500",
     margin: 20,
-    paddingTop: 20
+    paddingTop: 20,
   },
 });

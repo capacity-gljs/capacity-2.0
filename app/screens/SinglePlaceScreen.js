@@ -5,6 +5,7 @@ import {
   View,
   SafeAreaView,
   TextInput,
+  ScrollView,
   Button,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -76,103 +77,106 @@ class SinglePlaceScreen extends React.Component {
 
     return (
       <SafeAreaView style={singlePlace.safeArea}>
-        <View>
-          <Ionicons
-            style={singlePlace.starIcon}
-            name={this.state.favorited ? "ios-star" : "ios-star-outline"}
-            size={32}
-            onPress={() => {
-              if (this.props.user.email) {
-                if (this.state.favorited) {
-                  removeFave(this.props.user.uid, this.props.route.params.id);
+        <ScrollView>
+          <View>
+            <Ionicons
+              style={singlePlace.starIcon}
+              name={this.state.favorited ? "ios-star" : "ios-star-outline"}
+              size={32}
+              onPress={() => {
+                if (this.props.user.email) {
+                  if (this.state.favorited) {
+                    removeFave(this.props.user.uid, this.props.route.params.id);
+                  } else {
+                    addFave(
+                      this.props.user.uid,
+                      this.props.route.params.id,
+                      this.props.route.params.name,
+                      this.props.route.params.placeLat,
+                      this.props.route.params.placeLng
+                    );
+                    console.log("THIS IS FAVORITE");
+                    getFave(this.props.user.uid);
+                  }
+                  this.setState({ favorited: !this.state.favorited });
                 } else {
-                  addFave(
-                    this.props.user.uid,
-                    this.props.route.params.id,
-                    this.props.route.params.name,
-                    this.props.route.params.placeLat,
-                    this.props.route.params.placeLng
-                  );
-                  console.log("THIS IS FAVORITE");
-                  getFave(this.props.user.uid);
+                  alert("create account to favorite");
+                  this.props.navigation.navigate("SignUp");
                 }
-                this.setState({ favorited: !this.state.favorited });
-              } else {
-                alert("create account to favorite");
-                this.props.navigation.navigate("SignUp");
-              }
-            }}
-          />
-          <Text style={singlePlace.title}>{this.props.route.params.name}</Text>
-          <Text style={singlePlace.subtitle}>
-            This location is at {this.props.route.params.capacity}% capacity
-          </Text>
-        </View>
-        <View>
-      
-          <Text>
-            {Array(this.state.capacityPercent)
-              .fill()
-              .map((_, index) => (
-                <React.Fragment key={index}>
-                  <Ionicons
-                    key={index}
-                    style={singlePlace.icon}
-                    name="md-person"
-                    size={32}
-                    color="black"
-                  />
-                  {"  "}
-                </React.Fragment>
-              ))}
-            {Array(100 - this.state.capacityPercent)
-              .fill()
-              .map((_, index) => (
-                <React.Fragment key={index}>
-                  <Ionicons
-                    key={index}
-                    style={singlePlace.icon}
-                    name="md-person"
-                    size={32}
-                    color="grey"
-                  />
-                  {"  "}
-                </React.Fragment>
-              ))}
-          </Text>
-        </View>
-        <Button
-          title="Leave Feedback"
-          onPress={() =>
-            this.props.navigation.navigate("UserFeedback", {
-              placeId: this.props.route.params.id,
-            })
-          }
-        />
-        <View style={{ alignItems: "center" }}>
-          <TouchableOpacity
-            style={homeStyleSheet.button}
-            onPress={() => this.props.navigation.navigate("Camera")} //open the camera component
-          >
-            <Text style={homeStyleSheet.buttonText}>Take a Live Photo</Text>
-          </TouchableOpacity>
-        </View>
-
-        {this.props.route.params.isHere && (
-          <View style={{ alignItems: "center" }}>
-            <Text style={singlePlace.subtitle}>How Crowded Was It?</Text>
-            <RadioForm
-              key={this.state.formLabel}
-              radio_props={this.state.capacities}
-              initial={this.state.initialRadioPos}
-              onPress={this.handleChange}
-              formHorizontal={true}
-              labelHorizontal={false}
-              style={{ textAlign: "center" }}
+              }}
             />
-            <Button title="Submit" onPress={this.handleSubmit} />
+            <Text style={singlePlace.title}>
+              {this.props.route.params.name}
+            </Text>
+            <Text style={singlePlace.subtitle}>
+              This location is at {this.props.route.params.capacity}
+            </Text>
           </View>
-        )}
+          <View>
+            <Text>
+              {Array(this.state.capacityPercent)
+                .fill()
+                .map((_, index) => (
+                  <React.Fragment key={index}>
+                    <Ionicons
+                      key={index}
+                      style={singlePlace.icon}
+                      name="md-person"
+                      size={32}
+                      color="black"
+                    />
+                    {"  "}
+                  </React.Fragment>
+                ))}
+              {Array(100 - this.state.capacityPercent)
+                .fill()
+                .map((_, index) => (
+                  <React.Fragment key={index}>
+                    <Ionicons
+                      key={index}
+                      style={singlePlace.icon}
+                      name="md-person"
+                      size={32}
+                      color="grey"
+                    />
+                    {"  "}
+                  </React.Fragment>
+                ))}
+            </Text>
+          </View>
+          <Button
+            title="Leave Feedback"
+            onPress={() =>
+              this.props.navigation.navigate("UserFeedback", {
+                placeId: this.props.route.params.id,
+              })
+            }
+          />
+          <View style={{ alignItems: "center" }}>
+            <TouchableOpacity
+              style={homeStyleSheet.button}
+              onPress={() => this.props.navigation.navigate("Camera")} //open the camera component
+            >
+              <Text style={homeStyleSheet.buttonText}>Take a Live Photo</Text>
+            </TouchableOpacity>
+          </View>
+
+          {this.props.route.params.isHere && (
+            <View style={{ alignItems: "center" }}>
+              <Text style={singlePlace.subtitle}>How Crowded Was It?</Text>
+              <RadioForm
+                key={this.state.formLabel}
+                radio_props={this.state.capacities}
+                initial={this.state.initialRadioPos}
+                onPress={this.handleChange}
+                formHorizontal={true}
+                labelHorizontal={false}
+                style={{ textAlign: "center" }}
+              />
+              <Button title="Submit" onPress={this.handleSubmit} />
+            </View>
+          )}
+        </ScrollView>
       </SafeAreaView>
     );
   }
