@@ -18,6 +18,8 @@ import { connect } from "react-redux";
 import { singlePlace } from "./styles";
 import { homeStyleSheet } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Slider from "@react-native-community/slider";
+
 //import { useNavigation } from "@react-navigation/native";
 
 // importing fbFuncs
@@ -29,20 +31,11 @@ class SinglePlaceScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      capacityPercent: 0,
-      capacities: [
-        { label: "Empty", value: 0 },
-        { label: "A Few People", value: 25 },
-        { label: "Half Full", value: 50 },
-        { label: "Full", value: 75 },
-        { label: "Crowded", value: 100 },
-      ],
-      initialRadioPos: -1,
+      capacityRating: 0,
       formLabel: 0,
       favorited: false,
     };
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -52,10 +45,6 @@ class SinglePlaceScreen extends React.Component {
       this.props.route.params.id
     );
     this.setState({ favorited });
-  }
-
-  handleChange(capacityPercent) {
-    this.setState({ capacityPercent });
   }
 
   // grab capacity and write to the db
@@ -68,12 +57,23 @@ class SinglePlaceScreen extends React.Component {
     );
     alert("Thanks for rating!");
     console.log("place created");
-    addCapacity(this.props.route.params.id, this.state.capacityPercent);
+    addCapacity(this.props.route.params.id, this.state.capacityRating);
   }
 
   render() {
+    console.log(this.props.route.params)
     const colors = this.props.route.params.color;
-    this.state.capacities.color = colors.text;
+    const capacityNum = Math.floor(this.props.route.params.capacityNum);
+    let capacityMessage = "";
+    if (this.state.capacityRating === -1) capacityMessage = "";
+    else if (this.state.capacityRating < 25) capacityMessage = "Empty";
+    else if (this.state.capacityRating < 50) capacityMessage = "A Few People";
+    else if (this.state.capacityRating < 75) capacityMessage = "Half Full";
+    else if (this.state.capacityRating < 100) capacityMessage = "Crowded";
+    else if (this.state.capacityRating === 100) capacityMessage = "Super Crowded";
+
+
+    // this.state.capacities.color = colors.text;
     return (
       <SafeAreaView style={singlePlace.safeArea}>
         <ScrollView>
@@ -113,7 +113,7 @@ class SinglePlaceScreen extends React.Component {
           </View>
           <View>
             <Text>
-              {Array(this.state.capacityPercent)
+              {Array(capacityNum)
                 .fill()
                 .map((_, index) => (
                   <React.Fragment key={index}>
@@ -127,7 +127,7 @@ class SinglePlaceScreen extends React.Component {
                     {"  "}
                   </React.Fragment>
                 ))}
-              {Array(100 - this.state.capacityPercent)
+              {Array(100 - capacityNum)
                 .fill()
                 .map((_, index) => (
                   <React.Fragment key={index}>
@@ -168,7 +168,7 @@ class SinglePlaceScreen extends React.Component {
               <Text style={[singlePlace.subtitle, { color: colors.text }]}>
                 How Crowded Was It?
               </Text>
-              <RadioForm
+              {/* <RadioForm
                 labelColor={colors.text}
                 key={this.state.formLabel}
                 radio_props={this.state.capacities}
@@ -178,6 +178,18 @@ class SinglePlaceScreen extends React.Component {
                 formHorizontal={true}
                 labelHorizontal={false}
                 style={{ textAlign: "center" }}
+              /> */}
+              <Text>{capacityMessage}</Text>
+              <Slider
+                style={{ width: "50%", height: 40 }}
+                minimumValue={0}
+                maximumValue={100}
+                minimumTrackTintColor="#FFFFFF"
+                maximumTrackTintColor="#000000"
+                onValueChange={(val) => {
+                  this.setState({ capacityRating: val });
+                }}
+                step={25}
               />
               <Button title="Submit" onPress={this.handleSubmit} />
             </View>

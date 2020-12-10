@@ -57,6 +57,7 @@ class HomeScreen extends React.Component {
       modalDetails: null,
       ratings: {},
       capacity: null,
+      capacityNum: null
     };
     this.setData = this.setData.bind(this);
     this.getSingleCap = this.getSingleCap.bind(this);
@@ -75,6 +76,7 @@ class HomeScreen extends React.Component {
     const cap = await getCapacity(name);
     this.setState({
       capacity: `${cap}% Capacity`,
+      capacityNum: Number(cap)
     });
   }
 
@@ -181,6 +183,7 @@ class HomeScreen extends React.Component {
                     isHere: true,
                     capacity: cap,
                     color: colors,
+                    capacityNum: this.state.capacityNum
                   });
                 }}
               >
