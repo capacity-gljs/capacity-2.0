@@ -41,6 +41,12 @@ class UserFavesScreen extends React.Component {
     this.setState({ favorites: favorited });
   }
 
+  async componentDidUpdate() {
+    const favorited = await getFave(this.props.user.uid);
+    //console.log("THESE ARE THE USERS FAVORITE PLACES:", favorited);
+    this.setState({ favorites: favorited });
+  }
+
   handleChange(capacityPercent) {}
 
   // grab capacity and write to the db
@@ -48,6 +54,7 @@ class UserFavesScreen extends React.Component {
 
   render() {
     const userFavorites = this.state.favorites || [];
+    let counter = 0;
     console.log("THESE ARE THE USERS FAVORITE PLACES:", userFavorites);
     console.log("THESE ARE THE USERS FAVORITE PLACES:", userFavorites);
     if (this.props.user.uid && userFavorites.length) {
@@ -61,7 +68,7 @@ class UserFavesScreen extends React.Component {
 
           {userFavorites.map((place) => {
             return (
-              <View key={id}>
+              <View key={counter++}>
                 <Text>
                   {Object.keys(place)} : {Object.values(place)}
                 </Text>
