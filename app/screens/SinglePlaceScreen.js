@@ -10,8 +10,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
-import { singlePlace } from "./styles";
-import { homeStyleSheet } from "./styles";
+import { singlePlace, homeStyleSheet, screenWidth } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Slider from "@react-native-community/slider";
 
