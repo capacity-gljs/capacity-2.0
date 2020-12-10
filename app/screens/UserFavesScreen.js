@@ -28,7 +28,7 @@ class UserFavesScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorites: null,
+      favorites: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -50,7 +50,7 @@ class UserFavesScreen extends React.Component {
     const userFavorites = this.state.favorites || [];
     console.log("THESE ARE THE USERS FAVORITE PLACES:", userFavorites);
     console.log("THESE ARE THE USERS FAVORITE PLACES:", userFavorites);
-    if (this.props.user.uid) {
+    if (this.props.user.uid && userFavorites.length) {
       return (
         <SafeAreaView style={singlePlace.safeArea}>
           <View>
@@ -61,7 +61,7 @@ class UserFavesScreen extends React.Component {
 
           {userFavorites.map((place) => {
             return (
-              <View>
+              <View key={id}>
                 <Text>
                   {Object.keys(place)} : {Object.values(place)}
                 </Text>

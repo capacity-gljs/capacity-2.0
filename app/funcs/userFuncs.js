@@ -98,7 +98,8 @@ export const getFave = async (userId) => {
     //check if the user has any favorites
     if (userFaves.empty) {
       console.log("No matching documents.");
-      return "You have no places favorites :)";
+      placeDetails.push("You have no places favorited");
+      return placeDetails;
     } else {
       console.log("THESE ARE THE FAVES PLACES DETAILS: ", placeDetails);
 
