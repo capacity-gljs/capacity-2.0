@@ -25,7 +25,7 @@ function UserFeedbackScreen({ navigation, route, navigate }) {
   const [experience, setExperience] = useState(1);
   const [boostOrPromote, setBoostOrPromote] = useState(false);
   let experienceText;
-  if (experience === 1) experienceText = "Abort";
+  if (experience === 1) experienceText = "Unpleasant";
   else if (experience === 2) experienceText = "Chill";
   else if (experience === 3) experienceText = "Stressful";
   return (
