@@ -13,7 +13,8 @@ Capacity was writtten in React Native powered by Expo-cli. Below is a list of ot
    - Google Places API 
 
    ## Back End 
-   - Firebase/FireStore 
+   - Firebase
+   - Cloud FireStore 
 
 
 ## How to Use 
@@ -23,6 +24,19 @@ cd capacity-2.0
 npm install 
 npm start 
 
+## Setup
+Note: testing this app requires downloading 'expo client' on an iOS  product.
+
+1. On your iOS device, download [expo client](https://apps.apple.com/us/app/expo-client/id982107779) from the app store.
+2. Open the expo app and click on profile.
+3. Sign in with the following credentials:
+
+    • Username: **capacity**
+    
+    • Password: **capacity2020**
+
+4. On the profile page under published projects, click on capacity
+5. Sign up for a Capacity account or log in. You can now check on your favorite places and report on how crowded they are!
 
 
 

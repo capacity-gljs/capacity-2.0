@@ -6,7 +6,6 @@ export const getOrAddPlace = async (placeId, placeLat, placeLng, placeName) => {
 
   const docSnapshot = await placeRef.get();
   if (!docSnapshot.exists) {
-    console.log("THE PLACE DOES NOT EXIST YET");
     const newPlace = await db.collection("places").doc(placeId).set({
       placeName: placeName,
       avgCapacity: 0,
@@ -14,7 +13,6 @@ export const getOrAddPlace = async (placeId, placeLat, placeLng, placeName) => {
       lat: placeLat,
       long: placeLng,
     });
-    console.log("HI I CREATED A NEW PLACE: ", placeId);
     //placeRef.set({placeName, avgCapacity: 0, numRatings: 0, placeLat, placeLng, placeName}) // create the document
   } else {
     ("IT THINKS THE PLACE EXISTS");

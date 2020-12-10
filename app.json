@@ -28,6 +28,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": ""
+    "description": "A mobile application for tracking and viewing crowd patterns in public spaces.",
+    "githubUrl": "https://github.com/capacity-gljs/capacity-2.0.git"
   }
 }
