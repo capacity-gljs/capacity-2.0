@@ -63,10 +63,7 @@ export const getFave = async (userId) => {
   try {
     //query users to get the placesIds of the user's favorite places
     const userRef = db.collection("users").doc(userId).collection("favorites");
-    const userFaves = await userRef
-      .where("favorited", "==", true)
-      .limit(10)
-      .get();
+    const userFaves = await userRef.where("favorited", "==", true).get();
     const favorites = [];
     const favoritesId = [];
     userFaves.forEach((doc) => {

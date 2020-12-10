@@ -26,7 +26,7 @@ import { homeStyleSheet } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 // IMPORT FIREBASE FUNCS
-import { getCapacity, getAllCaps } from "../funcs/placesFuncs";
+import { getAllCaps, getCapacity } from "../funcs/placesFuncs";
 import HeatLayer from "./HeatLayer";
 import FavesLayer from "./FavesLayer";
 
@@ -52,8 +52,10 @@ class HomeScreen extends React.Component {
       modalData: null,
       modalDetails: null,
       ratings: {},
+      capacity: null,
     };
     this.setData = this.setData.bind(this);
+    this.getSingleCap = this.getSingleCap.bind(this);
   }
 
   async componentDidMount() {
@@ -62,6 +64,13 @@ class HomeScreen extends React.Component {
       initialRegion: region,
     });
     getAllCaps();
+  }
+
+  async getSingleCap(name) {
+    const cap = await getCapacity(name);
+    this.setState({
+      capacity: `${cap}% Capacity`,
+    });
   }
 
   closeModal(visible) {
@@ -84,6 +93,7 @@ class HomeScreen extends React.Component {
     const hours = locDescription.opening_hours || "";
     const type = locData.types || "";
     const state = locData.terms || "";
+    const cap = this.state.capacity || "";
 
     return (
       <SafeAreaView style={homeStyleSheet.safeArea}>
@@ -121,8 +131,8 @@ class HomeScreen extends React.Component {
             >
               <Text style={homeStyleSheet.textStyle}> X </Text>
             </TouchableHighlight>
-            <Text>Capacity: 77%</Text>
-            <Button
+            <Text>{cap}</Text>
+            {/* <Button
               title="I'm here now"
               onPress={() => {
                 this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
@@ -150,8 +160,55 @@ class HomeScreen extends React.Component {
                   placeLng: this.state.placeLng,
                   isHere: false,
                 });
+            /> */}
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-evenly",
               }}
-            />
+            >
+              <TouchableOpacity
+                style={homeStyleSheet.buttonSideBySide}
+                //title="I'm thinking of going"
+                onPress={() => {
+                  this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
+                  this.closeModal(!modalVisible);
+                  this.props.navigation.navigate("SinglePlace", {
+                    // PASS PROPS TO SINGLE PLACE HERE
+                    name: this.state.selectedName,
+                    id: this.state.id,
+                    placeLat: this.state.placeLat,
+                    placeLng: this.state.placeLng,
+                    isHere: true,
+                    capacity: cap,
+                  });
+                }}
+              >
+                <Text style={homeStyleSheet.buttonText}>I'm here now</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={homeStyleSheet.buttonSideBySide}
+                //title="I'm thinking of going"
+                onPress={() => {
+                  this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
+                  this.closeModal(!modalVisible);
+                  this.props.navigation.navigate("SinglePlace", {
+                    // PASS PROPS TO SINGLE PLACE HERE
+                    name: this.state.selectedName,
+                    id: this.state.id,
+                    placeLat: this.state.placeLat,
+                    placeLng: this.state.placeLng,
+                    isHere: false,
+                  });
+                }}
+              >
+                <Text style={homeStyleSheet.buttonText}>
+                  I'm thinking of going
+                </Text>
+              </TouchableOpacity>
+            </View>
+
             <TouchableOpacity
               style={homeStyleSheet.button}
               onPress={() => getGuidelines(state)}
@@ -179,7 +236,7 @@ class HomeScreen extends React.Component {
             fetchDetails={true}
             onPress={(data, details = null) => {
               // console.log("LOCDETAILS => " ,details)
-
+              this.getSingleCap(data.description);
               this.setData(data, details, true);
               this.setState({
                 coordinates: {
