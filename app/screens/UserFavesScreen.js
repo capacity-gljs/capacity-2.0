@@ -4,6 +4,7 @@ import {
   Text,
   View,
   SafeAreaView,
+  ScrollView,
   TextInput,
   Button,
 } from "react-native";
@@ -53,22 +54,24 @@ class UserFavesScreen extends React.Component {
     if (this.props.user.uid) {
       return (
         <SafeAreaView style={singlePlace.safeArea}>
-          <View>
-            <Text style={singlePlace.subtitle}>
-              These are your favorite locations {userFavorites.length}
-            </Text>
-          </View>
+          <ScrollView>
+            <View>
+              <Text style={singlePlace.subtitle}>
+                These are your favorite locations {userFavorites.length}
+              </Text>
+            </View>
 
-          {userFavorites.map((place) => {
-            return (
-              <View>
-                <Text>
-                  {Object.keys(place)} : {Object.values(place)}
-                </Text>
-                {/* <Text>{Object.values(place)}</Text> */}
-              </View>
-            );
-          })}
+            {userFavorites.map((place) => {
+              return (
+                <View>
+                  <Text>
+                    {Object.keys(place)} : {Object.values(place)}
+                  </Text>
+                  {/* <Text>{Object.values(place)}</Text> */}
+                </View>
+              );
+            })}
+          </ScrollView>
         </SafeAreaView>
       );
     } else {

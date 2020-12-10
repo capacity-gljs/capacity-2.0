@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
+import normalize from "react-native-normalize";
 
 export const homeStyleSheet = StyleSheet.create({
   container: {
@@ -8,7 +9,7 @@ export const homeStyleSheet = StyleSheet.create({
     flex: 1,
     backgroundColor: "grey",
     width: "99%",
-    height: "70%"
+    height: "70%",
   },
   input: {
     borderRadius: 4,
@@ -112,6 +113,8 @@ export const singlePlace = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: "50%",
     marginTop: 20,
+    marginLeft: "10%",
+    marginRight: "10%",
   },
   title: {
     textAlign: "center",
@@ -290,6 +293,6 @@ export const UserFeedback = StyleSheet.create({
     fontSize: 30,
     fontWeight: "500",
     margin: 20,
-    paddingTop: 20
+    paddingTop: 20,
   },
 });
