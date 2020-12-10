@@ -13,6 +13,7 @@ export const signUp = (email, password) => async (dispatch) => {
       .doc(response.user.uid)
       .set({ uid: response.user.uid, email: email });
     dispatch(gotUser(response.user));
+    alert('Registered Successfully');
   } catch (error) {
     alert(error);
   }
@@ -24,6 +25,7 @@ export const loginUser = (email, password) => async (dispatch) => {
       .auth()
       .signInWithEmailAndPassword(email, password);
     dispatch(gotUser(response.user));
+    alert('Login Successful');
   } catch (error) {
     alert(error);
   }

@@ -21,7 +21,6 @@ function LoginScreen({ navigation, loginUser }) {
 
   const onLoginPress = () => {
     loginUser(email, password);
-    alert('Login Successful');
     navigation.navigate('Home');
   };
 

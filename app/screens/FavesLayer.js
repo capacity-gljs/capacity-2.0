@@ -22,7 +22,7 @@ class FavesLayer extends React.Component {
   render() {
     //console.log("THE PROPS: ", this.props.user.uid);
     const favorites = this.state.favePlaces;
-    console.log("THIS Is THE FAVORITES INFORMATION: ", favorites);
+    // console.log("THIS Is THE FAVORITES INFORMATION: ", favorites);
     return (
       <>
         {/* {favorites.map((place) => {
