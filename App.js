@@ -44,7 +44,6 @@ function DrawerRoutes() {
       initialRouteName="Home"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Getting Started" component={Loader} />
       <Drawer.Screen
         name="Home"
         component={HomeScreen}
