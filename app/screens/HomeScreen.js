@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRoute } from "react";
 import {
   Text,
   View,
@@ -6,6 +6,7 @@ import {
   Alert,
   Button,
   TouchableHighlight,
+  ScrollView,
   Animated,
 } from "react-native";
 import Modal from "react-native-modal";
@@ -31,6 +32,7 @@ import { getAllCaps, getCapacity } from "../funcs/placesFuncs";
 import HeatLayer from "./HeatLayer";
 import FavesLayer from "./FavesLayer";
 import { mapStyle } from "./map";
+
 
 // import { MAP_KEY } from '@env'
 
@@ -58,7 +60,7 @@ class HomeScreen extends React.Component {
     };
     this.setData = this.setData.bind(this);
     this.getSingleCap = this.getSingleCap.bind(this);
-    this.isDarkMode = this.isDarkMode.bind(this);
+   
   }
 
   async componentDidMount() {
@@ -90,7 +92,8 @@ class HomeScreen extends React.Component {
   }
 
   isDarkMode() {
-    if (this.props.route.params.color.text === "rgb(229, 229, 231)") {
+    const color = this.props.route.params;
+    if (color.text === "rgb(229, 229, 231)") {
       return mapStyle;
     }
   }
@@ -103,10 +106,17 @@ class HomeScreen extends React.Component {
     const type = locData.types || "";
     const state = locData.terms || "";
     const cap = this.state.capacity || "";
-    const colors = this.props.route.params.color;
+    const colors = this.props.route.params;
+
+    console.log(colors);
 
     return (
-      <SafeAreaView style={homeStyleSheet.safeArea}>
+      <SafeAreaView
+        style={[
+          homeStyleSheet.safeArea,
+          { backgroundColor: colors.background },
+        ]}
+      >
         <Modal
           animationType="slide"
           visible={modalVisible}
@@ -115,7 +125,7 @@ class HomeScreen extends React.Component {
           <View
             style={[
               homeStyleSheet.modalView,
-              { backgroundColor: colors.background },
+              { color: colors.text, backgroundColor: colors.background },
             ]}
           >
             <Text style={[homeStyleSheet.modalName, { color: colors.text }]}>
@@ -240,7 +250,6 @@ class HomeScreen extends React.Component {
                 placeLat: details.geometry.location.lat,
                 placeLng: details.geometry.location.lng,
               });
-
               this.map.animateCamera({
                 center: {
                   latitude: details.geometry.location.lat,

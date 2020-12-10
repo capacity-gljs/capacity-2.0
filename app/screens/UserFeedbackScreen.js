@@ -6,6 +6,7 @@ import {
   TextInput,
   Picker,
   TouchableOpacity,
+  ScrollView,
   View,
   Switch,
   SafeAreaView,
@@ -21,16 +22,19 @@ import RadioForm, {
 import { addFeedback } from "../funcs/userFuncs";
 import Slider from "@react-native-community/slider";
 
-function UserFeedbackScreen({ navigation, route }) {
+function UserFeedbackScreen({ navigation, route, navigate }) {
   const [experience, setExperience] = useState(1);
   const [boostOrPromote, setBoostOrPromote] = useState(false);
   const colors = route.params.color;
   let experienceText;
-  if (experience === 1) experienceText = "Abort";
-  else if (experience === 2) experienceText = "Chill";
-  else if (experience === 3) experienceText = "Stressful";
+  if (experience === 1) experienceText = "Stressful";
+  else if (experience === 2) experienceText = "OK";
+  else if (experience === 3) experienceText = "Chill";
+  else if (experience === 4) experienceText = "Great";
+
   return (
     <SafeAreaView>
+      <ScrollView>
       <View style={{ alignItems: "center", color: colors.text }}>
         <Text style={[UserFeedback.titleStyle, { color: colors.text }]}>
           How was your experience?
@@ -40,7 +44,7 @@ function UserFeedbackScreen({ navigation, route }) {
         <Slider
           style={{ width: "50%", height: 40 }}
           minimumValue={1}
-          maximumValue={3}
+          maximumValue={4}
           minimumTrackTintColor="#FFFFFF"
           maximumTrackTintColor="#000000"
           onValueChange={(val) => {
@@ -61,12 +65,14 @@ function UserFeedbackScreen({ navigation, route }) {
         <Button
           title="Submit"
           onPress={async () => {
-            console.log(route.params.placeId);
+            //console.log(route.params.placeId);
             await addFeedback(route.params.placeId, experience, boostOrPromote);
             alert("Thanks for leaving feedback!");
+            navigation.navigate("Home");
           }}
         />
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

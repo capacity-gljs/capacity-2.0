@@ -5,6 +5,7 @@ import {
   View,
   SafeAreaView,
   TextInput,
+  ScrollView,
   Button,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -23,7 +24,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { getOrAddPlace, addCapacity } from "../funcs/placesFuncs";
 
 import { addFave, updateFave, removeFave, getFave } from "../funcs/userFuncs";
-import { ColorAndroid } from "react-native/Libraries/StyleSheet/PlatformColorValueTypesAndroid";
 
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
@@ -76,110 +76,113 @@ class SinglePlaceScreen extends React.Component {
     this.state.capacities.color = colors.text;
     return (
       <SafeAreaView style={singlePlace.safeArea}>
-        <View>
-          <Ionicons
-            style={[singlePlace.starIcon, { color: colors.text }]}
-            name={this.state.favorited ? "ios-star" : "ios-star-outline"}
-            size={32}
-            onPress={() => {
-              if (this.props.user.email) {
-                if (this.state.favorited) {
-                  removeFave(this.props.user.uid, this.props.route.params.id);
+        <ScrollView>
+          <View>
+            <Ionicons
+              style={[singlePlace.starIcon, { color: colors.text }]}
+              name={this.state.favorited ? "ios-star" : "ios-star-outline"}
+              size={32}
+              onPress={() => {
+                if (this.props.user.email) {
+                  if (this.state.favorited) {
+                    removeFave(this.props.user.uid, this.props.route.params.id);
+                  } else {
+                    addFave(
+                      this.props.user.uid,
+                      this.props.route.params.id,
+                      this.props.route.params.name,
+                      this.props.route.params.placeLat,
+                      this.props.route.params.placeLng
+                    );
+                    console.log("THIS IS FAVORITE");
+                    getFave(this.props.user.uid);
+                  }
+                  this.setState({ favorited: !this.state.favorited });
                 } else {
-                  addFave(
-                    this.props.user.uid,
-                    this.props.route.params.id,
-                    this.props.route.params.name,
-                    this.props.route.params.placeLat,
-                    this.props.route.params.placeLng
-                  );
-                  //getFave(this.props.user.uid);
+                  alert("create account to favorite");
+                  this.props.navigation.navigate("SignUp");
                 }
-                this.setState({ favorited: !this.state.favorited });
-              } else {
-                alert("create account to favorite");
-                this.props.navigation.navigate("SignUp");
-              }
-            }}
-          />
-          <Text style={[singlePlace.title, { color: colors.text }]}>
-            {this.props.route.params.name}
-          </Text>
-          <Text style={[singlePlace.subtitle, { color: colors.text }]}>
-            This location is at {this.props.route.params.capacity}% capacity
-          </Text>
-        </View>
-        <View>
-          <Text>
-            {Array(this.state.capacityPercent)
-              .fill()
-              .map((_, index) => (
-                <React.Fragment key={index}>
-                  <Ionicons
-                    key={index}
-                    style={[singlePlace.icon, { color: colors.text }]}
-                    name="md-person"
-                    size={32}
-                    color="black"
-                  />
-                  {"  "}
-                </React.Fragment>
-              ))}
-            {Array(100 - this.state.capacityPercent)
-              .fill()
-              .map((_, index) => (
-                <React.Fragment key={index}>
-                  <Ionicons
-                    key={index}
-                    style={singlePlace.icon}
-                    name="md-person"
-                    size={32}
-                    color="grey"
-                  />
-                  {"  "}
-                </React.Fragment>
-              ))}
-          </Text>
-        </View>
-        <Button
-          title="Leave Feedback"
-          onPress={() =>
-            this.props.navigation.navigate("UserFeedback", {
-              placeId: this.props.route.params.id,
-              color: colors,
-            })
-          }
-        />
-        <View style={{ alignItems: "center" }}>
-          <TouchableOpacity
-            style={homeStyleSheet.button}
-            onPress={() => this.props.navigation.navigate("Camera")} //open the camera component
-          >
-            <Text style={[homeStyleSheet.buttonText, { color: colors.text }]}>
-              Take a Live Photo
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        {this.props.route.params.isHere && (
-          <View style={[{ alignItems: "center", color: colors.text }]}>
-            <Text style={[singlePlace.subtitle, { color: colors.text }]}>
-              How Crowded Was It?
-            </Text>
-            <RadioForm
-              labelColor={colors.text}
-              key={this.state.formLabel}
-              radio_props={this.state.capacities}
-              radio_propsstyle={{ color: colors.text }}
-              initial={this.state.initialRadioPos}
-              onPress={this.handleChange}
-              formHorizontal={true}
-              labelHorizontal={false}
-              style={{ textAlign: "center" }}
+              }}
             />
-            <Button title="Submit" onPress={this.handleSubmit} />
+            <Text style={[singlePlace.title, { color: colors.text }]}>
+              {this.props.route.params.name}
+            </Text>
+            <Text style={[singlePlace.subtitle, { color: colors.text }]}>
+              This location is at {this.props.route.params.capacity}
+            </Text>
           </View>
-        )}
+          <View>
+            <Text>
+              {Array(this.state.capacityPercent)
+                .fill()
+                .map((_, index) => (
+                  <React.Fragment key={index}>
+                    <Ionicons
+                      key={index}
+                      style={(singlePlace.icon, { color: colors.text })}
+                      name="md-person"
+                      size={32}
+                      color="black"
+                    />
+                    {"  "}
+                  </React.Fragment>
+                ))}
+              {Array(100 - this.state.capacityPercent)
+                .fill()
+                .map((_, index) => (
+                  <React.Fragment key={index}>
+                    <Ionicons
+                      key={index}
+                      style={singlePlace.icon}
+                      name="md-person"
+                      size={32}
+                      color="grey"
+                    />
+                    {"  "}
+                  </React.Fragment>
+                ))}
+            </Text>
+          </View>
+          <Button
+            title="Leave Feedback"
+            onPress={() =>
+              this.props.navigation.navigate("UserFeedback", {
+                placeId: this.props.route.params.id,
+              })
+            }
+          />
+
+          <View style={{ alignItems: "center" }}>
+            <TouchableOpacity
+              style={homeStyleSheet.button}
+              onPress={() => this.props.navigation.navigate("Camera")} //open the camera component
+            >
+              <Text style={[homeStyleSheet.buttonText, { color: colors.text }]}>
+                Take a Live Photo
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {this.props.route.params.isHere && (
+            <View style={[{ alignItems: "center", color: colors.text }]}>
+              <Text style={[singlePlace.subtitle, { color: colors.text }]}>
+                How Crowded Was It?
+              </Text>
+              <RadioForm
+                labelColor={colors.text}
+                key={this.state.formLabel}
+                radio_props={this.state.capacities}
+                radio_propsstyle={{ color: colors.text }}
+                initial={this.state.initialRadioPos}
+                onPress={this.handleChange}
+                formHorizontal={true}
+                labelHorizontal={false}
+                style={{ textAlign: "center" }}
+              />
+              <Button title="Submit" onPress={this.handleSubmit} />
+            </View>
+          )}
+        </ScrollView>
       </SafeAreaView>
     );
   }
