@@ -148,6 +148,7 @@ class SinglePlaceScreen extends React.Component {
             onPress={() =>
               this.props.navigation.navigate("UserFeedback", {
                 placeId: this.props.route.params.id,
+                color: colors,
               })
             }
           />

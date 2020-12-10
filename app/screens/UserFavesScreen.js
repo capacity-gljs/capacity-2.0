@@ -54,16 +54,17 @@ class UserFavesScreen extends React.Component {
   async handleSubmit(evt) {}
 
   render() {
+   
     const userFavorites = this.state.favorites || [];
     let counter = 0;
-    console.log("THESE ARE THE USERS FAVORITE PLACES:", userFavorites);
-    console.log("THESE ARE THE USERS FAVORITE PLACES:", userFavorites);
+    // console.log("THESE ARE THE USERS FAVORITE PLACES:", userFavorites);
+    // console.log("THESE ARE THE USERS FAVORITE PLACES:", userFavorites);
     if (this.props.user.uid && userFavorites.length) {
       return (
         <SafeAreaView style={singlePlace.safeArea}>
           <ScrollView>
             <View>
-              <Text style={singlePlace.subtitle}>
+              <Text style={[singlePlace.subtitle]}>
                 These are your favorite locations {userFavorites.length}
               </Text>
             </View>
@@ -84,7 +85,7 @@ class UserFavesScreen extends React.Component {
     } else {
       return (
         <SafeAreaView style={singlePlace.safeArea}>
-          <Text style={singlePlace.subtitle}>Login to see your favorites</Text>
+          <Text style={[singlePlace.subtitle]}>Login to see your favorites</Text>
         </SafeAreaView>
       );
     }

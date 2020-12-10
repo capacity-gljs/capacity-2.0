@@ -33,7 +33,6 @@ import HeatLayer from "./HeatLayer";
 import FavesLayer from "./FavesLayer";
 import { mapStyle } from "./map";
 
-
 // import { MAP_KEY } from '@env'
 
 class HomeScreen extends React.Component {
@@ -60,7 +59,6 @@ class HomeScreen extends React.Component {
     };
     this.setData = this.setData.bind(this);
     this.getSingleCap = this.getSingleCap.bind(this);
-   
   }
 
   async componentDidMount() {
@@ -107,8 +105,6 @@ class HomeScreen extends React.Component {
     const state = locData.terms || "";
     const cap = this.state.capacity || "";
     const colors = this.props.route.params;
-
-    console.log(colors);
 
     return (
       <SafeAreaView
@@ -232,6 +228,17 @@ class HomeScreen extends React.Component {
           <GooglePlacesAutocomplete
             ref={(instance) => (this.GooglePlacesAutocompleteRef = instance)}
             style={homeStyleSheet.input}
+            styles ={{
+              textInputContainer: {
+                color: colors.text
+              },
+              row: {
+                backgroundColor: colors.text
+              },
+              poweredContainer: {
+                backgroundColor: colors.text
+              }
+            }}
             placeholder="search"
             minLength={2}
             fetchDetails={true}

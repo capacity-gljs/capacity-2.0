@@ -50,7 +50,10 @@ function DrawerRoutes() {
         component={HomeScreen}
         initialParams={colors}
       />
-      <Drawer.Screen name="Favorites" component={UserFavesScreen} />
+      <Drawer.Screen
+        name="Favorites"
+        component={UserFavesScreen}
+      />
       <Drawer.Screen name="Camera" component={CameraScreen} />
       <Drawer.Screen name="Sign up" component={SignUpScreen} />
       <Drawer.Screen name="Log in" component={LoginScreen} />
@@ -60,7 +63,7 @@ function DrawerRoutes() {
 
 export default function App() {
   const scheme = useColorScheme();
-
+  const { colors } = useTheme();
   return (
     <Provider store={store}>
       <AppearanceProvider>
@@ -81,7 +84,7 @@ export default function App() {
                   <Ionicons
                     name="md-menu"
                     size={24}
-                    color="black"
+                    color={colors.background}
                     style={{ margin: 10 }}
                     onPress={() =>
                       navigation.dispatch(DrawerActions.toggleDrawer())
@@ -106,7 +109,7 @@ export default function App() {
                   <Ionicons
                     name="md-menu"
                     size={24}
-                    color="black"
+                    color={colors.background}
                     style={{ margin: 10 }}
                     onPress={() =>
                       navigation.dispatch(DrawerActions.toggleDrawer())
@@ -124,7 +127,7 @@ export default function App() {
                   <Ionicons
                     name="md-menu"
                     size={24}
-                    color="black"
+                    color={colors.background}
                     style={{ margin: 10 }}
                     onPress={() =>
                       navigation.dispatch(DrawerActions.toggleDrawer())
@@ -142,7 +145,7 @@ export default function App() {
                   <Ionicons
                     name="md-menu"
                     size={24}
-                    color="black"
+                    color={colors.background}
                     style={{ margin: 10 }}
                     onPress={() =>
                       navigation.dispatch(DrawerActions.toggleDrawer())
