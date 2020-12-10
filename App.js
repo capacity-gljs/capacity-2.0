@@ -15,14 +15,23 @@ import { Button } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Loader from "./app/screens/loader";
 import {logoutUser} from "./app/funcs/userFuncs"
+import { DefaultTheme, DarkTheme } from '@react-navigation/native'
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance'
+
 
 const Stack = createStackNavigator();
 
-export default class App extends React.Component {
-  render() {
+
+export default function App (){
+  
+  const scheme = useColorScheme();
+  
+   
     return (
+      
       <Provider store={store}>
-        <NavigationContainer>
+        <AppearanceProvider>
+        <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack.Navigator
             initialRouteName="Loader"
           >
@@ -95,7 +104,8 @@ export default class App extends React.Component {
             />
           </Stack.Navigator>
         </NavigationContainer>
+        </AppearanceProvider>
       </Provider>
     );
   }
-}
+

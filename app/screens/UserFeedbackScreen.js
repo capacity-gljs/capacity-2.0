@@ -24,16 +24,19 @@ import Slider from "@react-native-community/slider";
 function UserFeedbackScreen({ navigation, route }) {
   const [experience, setExperience] = useState(1);
   const [boostOrPromote, setBoostOrPromote] = useState(false);
+  const colors = route.params.color;
   let experienceText;
   if (experience === 1) experienceText = "Abort";
   else if (experience === 2) experienceText = "Chill";
   else if (experience === 3) experienceText = "Stressful";
   return (
     <SafeAreaView>
-      <View style={{ alignItems: "center" }}>
-        <Text style={UserFeedback.titleStyle}>How was your experience?</Text>
+      <View style={{ alignItems: "center", color: colors.text }}>
+        <Text style={[UserFeedback.titleStyle, { color: colors.text }]}>
+          How was your experience?
+        </Text>
 
-        <Text>{experienceText}</Text>
+        <Text style={{ color: colors.text }}>{experienceText}</Text>
         <Slider
           style={{ width: "50%", height: 40 }}
           minimumValue={1}
@@ -45,7 +48,9 @@ function UserFeedbackScreen({ navigation, route }) {
           }}
           step={1}
         />
-        <Text style={UserFeedback.titleStyle}>Boost?</Text>
+        <Text style={[UserFeedback.titleStyle, { color: colors.text }]}>
+          Boost?
+        </Text>
 
         <Switch
           onValueChange={() => {

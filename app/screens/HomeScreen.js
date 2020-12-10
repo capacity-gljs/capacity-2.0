@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import {
   Text,
   View,
@@ -21,6 +21,7 @@ import {
   getType,
   dollarSign,
   getGuidelines,
+  isDarkMode,
 } from "../funcs/homeFuncs";
 import { homeStyleSheet } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -29,6 +30,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { getAllCaps, getCapacity } from "../funcs/placesFuncs";
 import HeatLayer from "./HeatLayer";
 import FavesLayer from "./FavesLayer";
+import { mapStyle } from "./map";
 
 // import { MAP_KEY } from '@env'
 
@@ -56,6 +58,7 @@ class HomeScreen extends React.Component {
     };
     this.setData = this.setData.bind(this);
     this.getSingleCap = this.getSingleCap.bind(this);
+    this.isDarkMode = this.isDarkMode.bind(this);
   }
 
   async componentDidMount() {
@@ -86,6 +89,12 @@ class HomeScreen extends React.Component {
     // console.log('SET DATA', this.state)
   }
 
+  isDarkMode() {
+    if (this.props.route.params.color.text === "rgb(229, 229, 231)") {
+      return mapStyle;
+    }
+  }
+
   render() {
     const modalVisible = this.state.modalVisible;
     const locDescription = this.state.modalDetails || "";
@@ -94,6 +103,7 @@ class HomeScreen extends React.Component {
     const type = locData.types || "";
     const state = locData.terms || "";
     const cap = this.state.capacity || "";
+    const colors = this.props.route.params.color;
 
     return (
       <SafeAreaView style={homeStyleSheet.safeArea}>
@@ -102,12 +112,19 @@ class HomeScreen extends React.Component {
           visible={modalVisible}
           onBackdropPress={() => this.closeModal(!modalVisible)}
         >
-          <View style={homeStyleSheet.modalView}>
-            <Text style={homeStyleSheet.modalName}>{locDescription.name}</Text>
-            <Text style={homeStyleSheet.modalText}>
+          <View
+            style={[
+              homeStyleSheet.modalView,
+              { backgroundColor: colors.background },
+            ]}
+          >
+            <Text style={[homeStyleSheet.modalName, { color: colors.text }]}>
+              {[locDescription.name]}
+            </Text>
+            <Text style={[homeStyleSheet.modalText, { color: colors.text }]}>
               {locDescription.rating} ({locDescription.user_ratings_total})
             </Text>
-            <Text style={homeStyleSheet.modalType}>
+            <Text style={[homeStyleSheet.modalType, { color: colors.text }]}>
               {" "}
               {getType(type)} {dollarSign(locDescription.price_level)}
             </Text>
@@ -131,22 +148,7 @@ class HomeScreen extends React.Component {
             >
               <Text style={homeStyleSheet.textStyle}> X </Text>
             </TouchableHighlight>
-            <Text>{cap}</Text>
-            {/* <Button
-              title="I'm here now"
-              onPress={() => {
-                this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
-                this.closeModal(!modalVisible);
-                this.props.navigation.navigate("SinglePlace", {
-                  // PASS PROPS TO SINGLE PLACE HERE
-                  name: this.state.selectedName,
-                  id: this.state.id,
-                  placeLat: this.state.placeLat,
-                  placeLng: this.state.placeLng,
-                  isHere: true,
-                });
-              }}
-            /> */}
+            <Text style={{ color: colors.text }}>{cap}</Text>
             <View
               style={{
                 display: "flex",
@@ -167,7 +169,8 @@ class HomeScreen extends React.Component {
                     placeLat: this.state.placeLat,
                     placeLng: this.state.placeLng,
                     isHere: true,
-                    capacity: cap
+                    capacity: cap,
+                    color: colors,
                   });
                 }}
               >
@@ -186,6 +189,7 @@ class HomeScreen extends React.Component {
                     placeLat: this.state.placeLat,
                     placeLng: this.state.placeLng,
                     isHere: false,
+                    color: colors,
                   });
                 }}
               >
@@ -210,6 +214,7 @@ class HomeScreen extends React.Component {
           provider={PROVIDER_GOOGLE}
           showsUserLocation
           initialRegion={this.state.initialRegion}
+          customMapStyle={this.isDarkMode(colors)}
         >
           <HeatLayer />
           <FavesLayer />
@@ -221,7 +226,6 @@ class HomeScreen extends React.Component {
             minLength={2}
             fetchDetails={true}
             onPress={(data, details = null) => {
-              // console.log("LOCDETAILS => " ,details)
               this.getSingleCap(data.description);
               this.setData(data, details, true);
               this.setState({
@@ -236,9 +240,6 @@ class HomeScreen extends React.Component {
                 placeLat: details.geometry.location.lat,
                 placeLng: details.geometry.location.lng,
               });
-
-              // console.log for state
-              // console.log('STATE IN AUTO COMPLETE', this.state)
 
               this.map.animateCamera({
                 center: {
