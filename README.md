@@ -44,5 +44,9 @@ Note: testing this app requires downloading 'expo client' on an iOS  product.
 
 ## The App
 
-
+![Loader](assets/appImages/Loader.PNG)
+![Home](assets/appImages/Heatmap.PNG)
+![Modal](assets/appImages/Modal.PNG)
+![Feedback](assets/appImages/Feedback.PNG)
+![Menu](assets/appImages/Menu.PNG)
 
