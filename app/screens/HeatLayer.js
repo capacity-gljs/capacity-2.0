@@ -22,8 +22,8 @@ export default class HeatLayer extends React.Component {
       <Heatmap
         points={this.state.places}
         opacity={1}
-        gradient={{colors: ["#EC3254", "#F58FA2"], startPoints: [0.1, 0.25], colorMapSize: 256}}
-        radius={100}
+        gradient={{colors: ["#F58FA2", "#788eec", ], startPoints: [0.1, 0.25], colorMapSize: 256}}
+        radius={25}
         maxIntensity={100}
       />
     );
