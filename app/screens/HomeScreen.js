@@ -57,6 +57,7 @@ class HomeScreen extends React.Component {
       ratings: {},
       capacity: null,
       capacityNum: null,
+      marker: null
     };
     this.setData = this.setData.bind(this);
     this.getSingleCap = this.getSingleCap.bind(this);
@@ -241,7 +242,16 @@ class HomeScreen extends React.Component {
           showsUserLocation
           initialRegion={this.state.initialRegion}
           customMapStyle={this.isDarkMode(colors)}
+          // testing clicks
+          // onPress={() => Alert.alert('onPress')}
+          // onLongPress={() => Alert.alert('longPress')}
+          // onPoiClick={() => Alert.alert('onPoiClick')}
+          onPoiClick={(evt) => this.setState({ marker: evt.nativeEvent.coordinate })}
         >
+          {
+            this.state.marker &&
+            <MapView.Marker coordinate={this.state.marker} />
+          }
           {/* Added Map Layers */}
           <HeatLayer />
           <FavesLayer />
