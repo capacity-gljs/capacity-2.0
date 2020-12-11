@@ -246,30 +246,40 @@ class HomeScreen extends React.Component {
           // onPress={() => Alert.alert('onPress')}
           // onLongPress={() => Alert.alert('longPress')}
           // onPoiClick={() => Alert.alert('onPoiClick')}
-          onPoiClick={(evt) =>
-            this.setState({ marker: evt.nativeEvent.coordinate })
-          }
+          onPoiClick={(evt) =>{
+            // console.log('ON POI CLICK', evt.nativeEvent)
+
+            this.setState({ 
+              // creates a marker at the POI
+
+              marker: evt.nativeEvent.coordinate,
+
+              // SETTING STATE FOR MODAL
+              coordinates: evt.nativeEvent.coordinate,
+              selectedName: evt.nativeEvent.name,
+              id: evt.nativeEvent.placeId,
+              placeLat: evt.nativeEvent.coordinate.latitude,
+              placeLng: evt.nativeEvent.coordinate.longitude,
+
+              // DOES THIS FUNCTION JUST TAKE THE PLACE NAME, OR DOES IT NEED THE ID?
+              capacity: this.getSingleCap(evt.nativeEvent.name),
+
+              // WHAT ARE THE EXPECTATIONS FOR modalData AND modalDetails?
+              modalData: evt.nativeEvent,
+              modalDetails: evt.nativeEvent,
+            })
+          }}
         >
 
           {/* CLICKING ON POI */}
           {this.state.marker && (
-            <Marker
+            <Marker 
               coordinate={this.state.marker}
-              // set the state for all the info in the modal
-              onPress={(evt) => {
-                // console.log('MARKER PRESSED', evt.nativeEvent)
-                // this.setState({
-                //   coordinates: this.state.marker,
-                //   selectedName: this.state.selectedName,
-  
-                //   // SETTING STATES FOR PASSING DOWN PROPS HERE
-                //   id: this.state.place_id,
-                //   placeLat: this.state.placeLat,
-                //   placeLng: this.state.placeLng,
-                // });
-                this.setData(this.state.modalData, this.state.modalDetails, this.state.modalVisible = true)
+              // TRIGGER FOR MODAL, MUST BE CALLED HERE BECAUSE STATE IS NULL IN POI PRESS
+              onPress={() => {
+                // console.log('STATE IN MARKER', this.state)
+                this.setData(this.state.modalData, this.state.modalDetails, true);
               }}
-              
             />
           )}
           {/* Added Map Layers */}
@@ -295,6 +305,8 @@ class HomeScreen extends React.Component {
             minLength={2}
             fetchDetails={true}
             onPress={(data, details = null) => {
+              // console.log('AUTOCOMPLETE DATA', data.description)
+              // console.log('AUTOCOMPLETE DETAILS', details)
               this.getSingleCap(data.description);
               this.setData(data, details, true);
               this.setState({
