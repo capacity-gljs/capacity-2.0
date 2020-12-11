@@ -50,10 +50,14 @@ class SinglePlaceScreen extends React.Component {
   }
 
   render() {
-    const colors = this.props.route.params.color;   
+    const colors = this.props.route.params.color;
+
+    // let capacityNum = Math.floor(this.props.route.params.capacityNum);
+   
 
     if (Number.isNaN(this.state.capacityNum)) this.state.capacityNum = 0
   
+
     let capacityMessage = "";
 
     if (this.state.capacityRating === -1) capacityMessage = "";
