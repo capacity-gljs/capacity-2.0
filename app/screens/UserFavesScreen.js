@@ -56,8 +56,6 @@ class UserFavesScreen extends React.Component {
   render() {
     const userFavorites = this.state.favorites || [];
     let counter = 0;
-    console.log("THESE ARE THE USERS FAVORITE PLACES:", userFavorites);
-    console.log("THESE ARE THE USERS FAVORITE PLACES:", userFavorites);
     if (this.props.user.uid && userFavorites.length) {
       return (
         <SafeAreaView style={singlePlace.safeArea}>
