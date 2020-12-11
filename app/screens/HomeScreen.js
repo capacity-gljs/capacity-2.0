@@ -243,7 +243,6 @@ class HomeScreen extends React.Component {
           customMapStyle={this.isDarkMode(colors)}
           /* CLICKING ON POI */
           onPoiClick={(evt) =>{
-            console.log('ON POI CLICK', evt.nativeEvent)
             this.setState({ 
               // creates a marker at the POI
               marker: evt.nativeEvent.coordinate,
