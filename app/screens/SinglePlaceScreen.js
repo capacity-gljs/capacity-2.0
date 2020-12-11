@@ -50,17 +50,16 @@ class SinglePlaceScreen extends React.Component {
       this.props.route.params.name
     );
     alert("Thanks for rating!");
-    console.log("place created");
     addCapacity(this.props.route.params.id, this.state.capacityRating);
   }
 
   render() {
     const colors = this.props.route.params.color;
     let capacityNum = Math.floor(this.props.route.params.capacityNum);
-    console.log("CAPNUM: ", capacityNum)
+   
 
     if (Number.isNaN(capacityNum)) capacityNum = 0
-    console.log("CAPNUM: ", capacityNum)
+  
 
     let capacityMessage = "";
     if (this.state.capacityRating === -1) capacityMessage = "";
@@ -92,7 +91,6 @@ class SinglePlaceScreen extends React.Component {
                       this.props.route.params.placeLat,
                       this.props.route.params.placeLng
                     );
-                    console.log("THIS IS FAVORITE");
                     getFave(this.props.user.uid);
                   }
                   this.setState({ favorited: !this.state.favorited });
