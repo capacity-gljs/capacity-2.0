@@ -15,7 +15,7 @@ import RadioForm, {
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
 import { connect } from "react-redux";
-import { singlePlace } from "./styles";
+import { userFave } from "./styles";
 import { homeStyleSheet } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 //import { useNavigation } from "@react-navigation/native";
@@ -24,6 +24,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { getOrAddPlace, addCapacity } from "../funcs/placesFuncs";
 
 import { addFave, updateFave, removeFave, getFave } from "../funcs/userFuncs";
+import CapacityCircle from "./CapacityCircle";
 
 class UserFavesScreen extends React.Component {
   constructor(props) {
@@ -43,9 +44,9 @@ class UserFavesScreen extends React.Component {
   }
 
   async componentDidUpdate() {
-    const favorited = await getFave(this.props.user.uid);
-    //console.log("THESE ARE THE USERS FAVORITE PLACES:", favorited);
-    this.setState({ favorites: favorited });
+    // const favorited = await getFave(this.props.user.uid);
+    // //console.log("THESE ARE THE USERS FAVORITE PLACES:", favorited);
+    // this.setState({ favorites: favorited });
   }
 
   handleChange(capacityPercent) {}
@@ -55,37 +56,39 @@ class UserFavesScreen extends React.Component {
 
   render() {
     // const colors = this.props.route.params;
-  
+
     const userFavorites = this.state.favorites || [];
     let counter = 0;
 
     if (this.props.user.uid && userFavorites.length) {
       return (
-        <SafeAreaView style={[singlePlace.safeArea,]}>
+        <SafeAreaView style={userFave.safeArea}>
           <ScrollView>
             <View>
-              <Text style={[singlePlace.subtitle, ]}>
-                These are your favorite locations {userFavorites.length}
+              <Text style={userFave.subtitle}>
+                These are Your Favorite Locations
               </Text>
             </View>
 
-          {userFavorites.map((place) => {
-            return (
-              <View key={counter++}>
-                <Text>
-                  {Object.keys(place)} : {Object.values(place)}
-                </Text>
-                {/* <Text>{Object.values(place)}</Text> */}
-              </View>
-            );
-          })}
+            {userFavorites.map((place) => {
+              return (
+                <View key={counter++} style={userFave.place}>
+                  <Text style={userFave.text}>{Object.keys(place)}</Text>
+                  <View style={userFave.capacityCircle}>
+                    {CapacityCircle(
+                      Math.floor(Number(Object.values(place)[0]))
+                    )}
+                  </View>
+                </View>
+              );
+            })}
           </ScrollView>
         </SafeAreaView>
       );
     } else {
       return (
-        <SafeAreaView style={singlePlace.safeArea}>
-          <Text style={[singlePlace.subtitle, ]}>Login to see your favorites</Text>
+        <SafeAreaView style={userFave.safeArea}>
+          <Text style={userFave.subtitle}>Login to see your favorites</Text>
         </SafeAreaView>
       );
     }

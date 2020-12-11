@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { useTheme }from 'react'
+import { useTheme } from "react";
 
 const { width: winWidth, height: winHeight } = Dimensions.get("window");
 const screen = Dimensions.get("screen");
@@ -115,7 +115,7 @@ export const singlePlace = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     width: "90%",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   title: {
     textAlign: "center",
@@ -263,5 +263,52 @@ export const UserFeedback = StyleSheet.create({
     fontWeight: "500",
     margin: 20,
     paddingTop: 20,
+  },
+});
+
+export const userFave = StyleSheet.create({
+  safeArea: {
+    height: winHeight,
+    width: winWidth,
+    flex: 1,
+    // backgroundColor: "white",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  title: {
+    textAlign: "center",
+    fontSize: 25,
+    marginBottom: 20,
+    width: "100%",
+    backgroundColor: "#788eec",
+  },
+  subtitle: {
+    color: "white",
+    alignItems: "center",
+    fontWeight: "bold",
+    height: 50,
+    textAlign: "center",
+    fontSize: 20,
+    width: "100%",
+    backgroundColor: "#3498db",
+  },
+  text: {
+    color: "gray",
+    margin: 20,
+    textAlign: "left",
+    fontSize: 15,
+    width: "75%",
+  },
+  button: {
+    margin: 20,
+  },
+  place: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+  },
+  capacityCircle: {
+    margin: 20,
+    justifyContent: "center",
   },
 });
