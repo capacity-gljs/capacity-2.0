@@ -255,7 +255,11 @@ class HomeScreen extends React.Component {
           {this.state.marker && (
             <Marker
               coordinate={this.state.marker}
-              onPress={(evt) => console.log('MARKER PRESSED', evt.nativeEvent)}
+              onPress={() => {
+                // console.log('MARKER PRESSED', evt.nativeEvent)
+                this.setData(this.state.modalData, this.state.modalDetails, this.state.modalVisible = true)
+              }}
+              
             />
           )}
           {/* Added Map Layers */}
