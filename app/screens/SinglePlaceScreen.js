@@ -1,10 +1,8 @@
 import React from "react";
 import {
-  StyleSheet,
   Text,
   View,
   SafeAreaView,
-  TextInput,
   ScrollView,
   Button,
 } from "react-native";
@@ -13,14 +11,8 @@ import { connect } from "react-redux";
 import { singlePlace, homeStyleSheet, screenWidth } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Slider from "@react-native-community/slider";
-
-//import { useNavigation } from "@react-navigation/native";
-
-// importing fbFuncs
 import { getOrAddPlace, addCapacity } from "../funcs/placesFuncs";
-
 import { addFave, updateFave, removeFave, getFave } from "../funcs/userFuncs";
-import Slider from '@react-native-community/slider'
 
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
