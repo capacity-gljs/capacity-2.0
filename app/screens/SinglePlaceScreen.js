@@ -23,7 +23,9 @@ class SinglePlaceScreen extends React.Component {
       favorited: false,
     };
 
-
+    this.state = {
+      capacityNum: Math.floor(this.props.route.params.capacityNum)
+    }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -50,10 +52,10 @@ class SinglePlaceScreen extends React.Component {
   render() {
     const colors = this.props.route.params.color;
 
-    let capacityNum = Math.floor(this.props.route.params.capacityNum);
+    // let capacityNum = Math.floor(this.props.route.params.capacityNum);
    
 
-    if (Number.isNaN(capacityNum)) capacityNum = 0
+    if (Number.isNaN(this.state.capacityNum)) this.state.capacityNum = 0
   
 
     let capacityMessage = "";
@@ -103,7 +105,7 @@ class SinglePlaceScreen extends React.Component {
           </View>
           <View>
             <Text>
-              {Array(capacityNum)
+              {Array(this.state.capacityNum)
                 .fill()
                 .map((_, index) => (
                   <React.Fragment key={index}>
@@ -117,7 +119,7 @@ class SinglePlaceScreen extends React.Component {
                     {"  "}
                   </React.Fragment>
                 ))}
-              {Array(100 - capacityNum)
+              {Array(100 - this.state.capacityNum)
                 .fill()
                 .map((_, index) => (
                   <React.Fragment key={index}>
@@ -169,7 +171,7 @@ class SinglePlaceScreen extends React.Component {
                 minimumTrackTintColor="#FFFFFF"
                 maximumTrackTintColor="#000000"
                 onValueChange={(val) => {
-                  this.setState({ capacityRating: val });
+                  this.setState({ capacityRating: val, capacityNum: val });
                 }}
                 step={25}
               />
