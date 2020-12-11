@@ -3,11 +3,7 @@ import {
   Text,
   View,
   SafeAreaView,
-  Alert,
-  Button,
   TouchableHighlight,
-  ScrollView,
-  Animated,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -129,7 +125,7 @@ class HomeScreen extends React.Component {
             {/* Container for Place Name and X */}
             <View style={{ justifyContent: 'space-between' }}>
               <Text style={[homeStyleSheet.modalName, { color: colors.text }]}>
-                {[locDescription.name]}
+                {this.state.selectedName}
               </Text>
 
               <TouchableHighlight
@@ -243,26 +239,15 @@ class HomeScreen extends React.Component {
           initialRegion={this.state.initialRegion}
           customMapStyle={this.isDarkMode(colors)}
           onPoiClick={(evt) =>{
-            // console.log('ON POI CLICK', evt.nativeEvent)
 
             this.setState({ 
               // creates a marker at the POI
-
               marker: evt.nativeEvent.coordinate,
 
-              // SETTING STATE FOR MODAL
-              coordinates: evt.nativeEvent.coordinate,
+              // // SETTING STATE FOR MODAL
               selectedName: evt.nativeEvent.name,
               id: evt.nativeEvent.placeId,
-              placeLat: evt.nativeEvent.coordinate.latitude,
-              placeLng: evt.nativeEvent.coordinate.longitude,
-
-              // DOES THIS FUNCTION JUST TAKE THE PLACE NAME, OR DOES IT NEED THE ID?
               capacity: this.getSingleCap(evt.nativeEvent.name),
-
-              // WHAT ARE THE EXPECTATIONS FOR modalData AND modalDetails?
-              modalData: evt.nativeEvent,
-              modalDetails: evt.nativeEvent,
             })
           }}
         >
@@ -271,10 +256,11 @@ class HomeScreen extends React.Component {
           {this.state.marker && (
             <Marker 
               coordinate={this.state.marker}
-              // TRIGGER FOR MODAL, MUST BE CALLED HERE BECAUSE STATE IS NULL IN POI PRESS
-              onPress={() => {
-                // console.log('STATE IN MARKER', this.state)
-                this.setData(this.state.modalData, this.state.modalDetails, true);
+              onPress={(evt) => {
+                const name = this.state.selectedName || ''
+                const capacity = this.state.capacity || ''
+                console.log('MARKER NAME', name)
+                this.setData(null, {name, id}, true);
               }}
             />
           )}
@@ -301,8 +287,6 @@ class HomeScreen extends React.Component {
             minLength={2}
             fetchDetails={true}
             onPress={(data, details = null) => {
-              // console.log('AUTOCOMPLETE DATA', data.description)
-              // console.log('AUTOCOMPLETE DETAILS', details)
               this.getSingleCap(data.description);
               this.setData(data, details, true);
               this.setState({
