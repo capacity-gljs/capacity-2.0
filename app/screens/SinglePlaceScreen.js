@@ -9,14 +9,11 @@ import {
   Button,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from "react-native-simple-radio-button";
 import { connect } from "react-redux";
 import { singlePlace, homeStyleSheet, screenWidth } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Slider from "@react-native-community/slider";
+
 //import { useNavigation } from "@react-navigation/native";
 
 // importing fbFuncs
@@ -28,20 +25,11 @@ class SinglePlaceScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      capacityPercent: 0,
-      capacities: [
-        { label: "Empty", value: 0 },
-        { label: "A Few People", value: 25 },
-        { label: "Half Full", value: 50 },
-        { label: "Full", value: 75 },
-        { label: "Crowded", value: 100 },
-      ],
-      initialRadioPos: -1,
+      capacityRating: 0,
       formLabel: 0,
       favorited: false,
     };
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -51,10 +39,6 @@ class SinglePlaceScreen extends React.Component {
       this.props.route.params.id
     );
     this.setState({ favorited });
-  }
-
-  handleChange(capacityPercent) {
-    this.setState({ capacityPercent });
   }
 
   // grab capacity and write to the db
@@ -67,12 +51,27 @@ class SinglePlaceScreen extends React.Component {
     );
     alert("Thanks for rating!");
     console.log("place created");
-    addCapacity(this.props.route.params.id, this.state.capacityPercent);
+    addCapacity(this.props.route.params.id, this.state.capacityRating);
   }
 
   render() {
     const colors = this.props.route.params.color;
-    this.state.capacities.color = colors.text;
+    let capacityNum = Math.floor(this.props.route.params.capacityNum);
+    console.log("CAPNUM: ", capacityNum)
+
+    if (Number.isNaN(capacityNum)) capacityNum = 0
+    console.log("CAPNUM: ", capacityNum)
+
+    let capacityMessage = "";
+    if (this.state.capacityRating === -1) capacityMessage = "";
+    else if (this.state.capacityRating < 25) capacityMessage = "Empty";
+    else if (this.state.capacityRating < 50) capacityMessage = "A Few People";
+    else if (this.state.capacityRating < 75) capacityMessage = "Half Full";
+    else if (this.state.capacityRating < 100) capacityMessage = "Crowded";
+    else if (this.state.capacityRating === 100) capacityMessage = "Super Crowded";
+
+
+    // this.state.capacities.color = colors.text;
     return (
       <SafeAreaView style={singlePlace.safeArea}>
         <ScrollView>
@@ -112,7 +111,7 @@ class SinglePlaceScreen extends React.Component {
           </View>
           <View>
             <Text>
-              {Array(this.state.capacityPercent)
+              {Array(capacityNum)
                 .fill()
                 .map((_, index) => (
                   <React.Fragment key={index}>
@@ -126,7 +125,7 @@ class SinglePlaceScreen extends React.Component {
                     {"  "}
                   </React.Fragment>
                 ))}
-              {Array(100 - this.state.capacityPercent)
+              {Array(100 - capacityNum)
                 .fill()
                 .map((_, index) => (
                   <React.Fragment key={index}>
@@ -167,16 +166,17 @@ class SinglePlaceScreen extends React.Component {
               <Text style={[singlePlace.subtitle, { color: colors.text }]}>
                 How Crowded Was It?
               </Text>
-              <RadioForm
-                labelColor={colors.text}
-                key={this.state.formLabel}
-                radio_props={this.state.capacities}
-                radio_propsstyle={{ color: colors.text }}
-                initial={this.state.initialRadioPos}
-                onPress={this.handleChange}
-                formHorizontal={true}
-                labelHorizontal={false}
-                style={{ textAlign: "center" }}
+              <Text style={{ color: colors.text }}>{capacityMessage}</Text>
+              <Slider
+                style={{ width: "50%", height: 40 }}
+                minimumValue={0}
+                maximumValue={100}
+                minimumTrackTintColor="#FFFFFF"
+                maximumTrackTintColor="#000000"
+                onValueChange={(val) => {
+                  this.setState({ capacityRating: val });
+                }}
+                step={25}
               />
               <Button title="Submit" onPress={this.handleSubmit} />
             </View>
