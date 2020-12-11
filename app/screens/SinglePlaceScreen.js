@@ -20,6 +20,7 @@ import Slider from "@react-native-community/slider";
 import { getOrAddPlace, addCapacity } from "../funcs/placesFuncs";
 
 import { addFave, updateFave, removeFave, getFave } from "../funcs/userFuncs";
+import Slider from '@react-native-community/slider'
 
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class SinglePlaceScreen extends React.Component {
       formLabel: 0,
       favorited: false,
     };
+
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -55,6 +57,7 @@ class SinglePlaceScreen extends React.Component {
 
   render() {
     const colors = this.props.route.params.color;
+
     let capacityNum = Math.floor(this.props.route.params.capacityNum);
    
 
@@ -62,6 +65,7 @@ class SinglePlaceScreen extends React.Component {
   
 
     let capacityMessage = "";
+
     if (this.state.capacityRating === -1) capacityMessage = "";
     else if (this.state.capacityRating < 25) capacityMessage = "Empty";
     else if (this.state.capacityRating < 50) capacityMessage = "A Few People";
@@ -69,8 +73,6 @@ class SinglePlaceScreen extends React.Component {
     else if (this.state.capacityRating < 100) capacityMessage = "Crowded";
     else if (this.state.capacityRating === 100) capacityMessage = "Super Crowded";
 
-
-    // this.state.capacities.color = colors.text;
     return (
       <SafeAreaView style={singlePlace.safeArea}>
         <ScrollView>
@@ -144,6 +146,7 @@ class SinglePlaceScreen extends React.Component {
             onPress={() =>
               this.props.navigation.navigate("UserFeedback", {
                 placeId: this.props.route.params.id,
+                color: colors,
               })
             }
           />
@@ -166,7 +169,9 @@ class SinglePlaceScreen extends React.Component {
               </Text>
               <Text style={{ color: colors.text }}>{capacityMessage}</Text>
               <Slider
-                style={{ width: "50%", height: 40 }}
+
+                style={{ width: "50%", height: 40}}
+
                 minimumValue={0}
                 maximumValue={100}
                 minimumTrackTintColor="#FFFFFF"
@@ -176,6 +181,7 @@ class SinglePlaceScreen extends React.Component {
                 }}
                 step={25}
               />
+           
               <Button title="Submit" onPress={this.handleSubmit} />
             </View>
           )}

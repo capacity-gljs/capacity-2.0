@@ -4,10 +4,9 @@ import { WaveIndicator } from "react-native-indicators";
 import { FadeInView } from "./fader";
 import { useTheme } from "@react-navigation/native";
 
-export const Loader = ({...props}) => {
+export const Loader = ({ ...props }) => {
   const { colors } = useTheme();
-  
-  
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <WaveIndicator
@@ -23,8 +22,7 @@ export const Loader = ({...props}) => {
           alignSelf: "flexend",
         }}
         onPress={() => {
-          props.navigation.navigate("Home", {color: colors});
-         
+          props.navigation.navigate("Home", { color: colors });
         }}
       />
 
@@ -47,4 +45,4 @@ export const Loader = ({...props}) => {
       </View>
     </View>
   );
-}
+};

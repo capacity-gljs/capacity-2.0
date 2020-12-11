@@ -250,6 +250,17 @@ class HomeScreen extends React.Component {
           <GooglePlacesAutocomplete
             ref={(instance) => (this.GooglePlacesAutocompleteRef = instance)}
             style={homeStyleSheet.input}
+            styles ={{
+              textInputContainer: {
+                color: colors.text
+              },
+              row: {
+                backgroundColor: colors.text
+              },
+              poweredContainer: {
+                backgroundColor: colors.text
+              }
+            }}
             placeholder="search"
             minLength={2}
             fetchDetails={true}
