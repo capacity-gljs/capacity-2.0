@@ -169,6 +169,7 @@ class HomeScreen extends React.Component {
             <Text style={{ color: colors.text }}>{cap}</Text>
 
             {/* Modal Buttons for User Feedback */}
+
             <View
               style={{
                 display: 'flex',
@@ -240,7 +241,9 @@ class HomeScreen extends React.Component {
           showsUserLocation
           initialRegion={this.state.initialRegion}
           customMapStyle={this.isDarkMode(colors)}
+          /* CLICKING ON POI */
           onPoiClick={(evt) =>{
+            console.log('ON POI CLICK', evt.nativeEvent)
             this.setState({ 
               // creates a marker at the POI
               marker: evt.nativeEvent.coordinate,
@@ -249,13 +252,18 @@ class HomeScreen extends React.Component {
               selectedName: evt.nativeEvent.name,
               id: evt.nativeEvent.placeId,
 
+              // SETTING STATE TO SEND TO THE DB
+              name: evt.nativeEvent.name,
+              placeLat: evt.nativeEvent.coordinate.latitude,
+              placeLng: evt.nativeEvent.coordinate.longitude,
+
               // // DOES THIS FUNCTION JUST TAKE THE PLACE NAME, OR DOES IT NEED THE ID?
               capacity: this.getSingleCap(evt.nativeEvent.name),
             })
           }}
         >
 
-          {/* CLICKING ON POI */}
+          {/* POI MARKER */}
           {this.state.marker && (
             <Marker 
               coordinate={this.state.marker}
@@ -263,7 +271,6 @@ class HomeScreen extends React.Component {
                 const name = this.state.selectedName || ''
                 const capacity = this.state.capacity || ''
                 const id = this.state.id || ''
-                console.log('MARKER NAME', name)
                 this.setData(null, {name, id}, true);
               }}
             />
