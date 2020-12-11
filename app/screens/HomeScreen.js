@@ -1,4 +1,4 @@
-import React, { useRoute } from 'react';
+import React, { useRoute } from "react";
 import {
   Text,
   View,
@@ -8,11 +8,11 @@ import {
   TouchableHighlight,
   ScrollView,
   Animated,
-} from 'react-native';
-import Modal from 'react-native-modal';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import { connect } from 'react-redux';
+} from "react-native";
+import Modal from "react-native-modal";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import { connect } from "react-redux";
 
 // IMPORT FUNCS
 import {
@@ -23,24 +23,22 @@ import {
   dollarSign,
   getGuidelines,
   isDarkMode,
-} from '../funcs/homeFuncs';
-import { homeStyleSheet } from './styles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+} from "../funcs/homeFuncs";
+import { homeStyleSheet } from "./styles";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 // IMPORT FIREBASE FUNCS
-import { getAllCaps, getCapacity } from '../funcs/placesFuncs';
-import HeatLayer from './HeatLayer';
-import FavesLayer from './FavesLayer';
-import { mapStyle } from './map';
-
-// import { MAP_KEY } from '@env'
+import { getAllCaps, getCapacity } from "../funcs/placesFuncs";
+import HeatLayer from "./HeatLayer";
+import FavesLayer from "./FavesLayer";
+import { mapStyle } from "./map";
 
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       // grabbing places info to pass down
-      id: '',
+      id: "",
       placeLat: null,
       placeLng: null,
       // state for homescreen
@@ -50,7 +48,7 @@ class HomeScreen extends React.Component {
         latitude: null,
         longitude: null,
       },
-      selectedName: '',
+      selectedName: "",
       modalVisible: false,
       modalData: null,
       modalDetails: null,
@@ -243,32 +241,16 @@ class HomeScreen extends React.Component {
           initialRegion={this.state.initialRegion}
           customMapStyle={this.isDarkMode(colors)}
           onPoiClick={(evt) =>{
-            // console.log('ON POI CLICK', Object.keys(evt), evt.target)
-            // console.log('ON POI CLICK TARGET', evt.target)
-            // console.log('EVT NATIVE NAME', evt.nativeEvent)
-            // return (
-            //   <GooglePlacesAutocomplete
-                
-            //   />
-            // )
             this.setState({ 
               // creates a marker at the POI
-
               marker: evt.nativeEvent.coordinate,
 
               // // SETTING STATE FOR MODAL
-              // coordinates: evt.nativeEvent.coordinate,
               selectedName: evt.nativeEvent.name,
               id: evt.nativeEvent.placeId,
-              // placeLat: evt.nativeEvent.coordinate.latitude,
-              // placeLng: evt.nativeEvent.coordinate.longitude,
 
               // // DOES THIS FUNCTION JUST TAKE THE PLACE NAME, OR DOES IT NEED THE ID?
               capacity: this.getSingleCap(evt.nativeEvent.name),
-
-              // // WHAT ARE THE EXPECTATIONS FOR modalData AND modalDetails?
-              // modalData: evt.nativeEvent,
-              // modalDetails: evt.nativeEvent,
             })
           }}
         >
@@ -277,17 +259,16 @@ class HomeScreen extends React.Component {
           {this.state.marker && (
             <Marker 
               coordinate={this.state.marker}
-              // TRIGGER FOR MODAL, MUST BE CALLED HERE BECAUSE STATE IS NULL IN POI PRESS
               onPress={(evt) => {
                 const name = this.state.selectedName || ''
                 const capacity = this.state.capacity || ''
+                const id = this.state.id || ''
                 console.log('MARKER NAME', name)
-                // console.log('STATE IN MARKER', this.state)
-                // console.log('STATE IN MARKER', this.state)
                 this.setData(null, {name, id}, true);
               }}
             />
           )}
+
           {/* Added Map Layers */}
           <HeatLayer />
           <FavesLayer />
@@ -311,8 +292,6 @@ class HomeScreen extends React.Component {
             minLength={2}
             fetchDetails={true}
             onPress={(data, details = null) => {
-              // console.log('AUTOCOMPLETE DATA', data.description)
-              // console.log('AUTOCOMPLETE DETAILS', details)
               this.getSingleCap(data.description);
               this.setData(data, details, true);
               this.setState({
