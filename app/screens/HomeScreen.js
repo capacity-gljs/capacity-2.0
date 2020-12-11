@@ -1,4 +1,4 @@
-import React, { useRoute } from "react";
+import React, { useRoute } from 'react';
 import {
   Text,
   View,
@@ -8,11 +8,11 @@ import {
   TouchableHighlight,
   ScrollView,
   Animated,
-} from "react-native";
-import Modal from "react-native-modal";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
-import { connect } from "react-redux";
+} from 'react-native';
+import Modal from 'react-native-modal';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { connect } from 'react-redux';
 
 // IMPORT FUNCS
 import {
@@ -23,15 +23,15 @@ import {
   dollarSign,
   getGuidelines,
   isDarkMode,
-} from "../funcs/homeFuncs";
-import { homeStyleSheet } from "./styles";
-import { TouchableOpacity } from "react-native-gesture-handler";
+} from '../funcs/homeFuncs';
+import { homeStyleSheet } from './styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 // IMPORT FIREBASE FUNCS
-import { getAllCaps, getCapacity } from "../funcs/placesFuncs";
-import HeatLayer from "./HeatLayer";
-import FavesLayer from "./FavesLayer";
-import { mapStyle } from "./map";
+import { getAllCaps, getCapacity } from '../funcs/placesFuncs';
+import HeatLayer from './HeatLayer';
+import FavesLayer from './FavesLayer';
+import { mapStyle } from './map';
 
 // import { MAP_KEY } from '@env'
 
@@ -40,7 +40,7 @@ class HomeScreen extends React.Component {
     super(props);
     this.state = {
       // grabbing places info to pass down
-      id: "",
+      id: '',
       placeLat: null,
       placeLng: null,
       // state for homescreen
@@ -50,7 +50,7 @@ class HomeScreen extends React.Component {
         latitude: null,
         longitude: null,
       },
-      selectedName: "",
+      selectedName: '',
       modalVisible: false,
       modalData: null,
       modalDetails: null,
@@ -91,19 +91,19 @@ class HomeScreen extends React.Component {
 
   isDarkMode() {
     const color = this.props.route.params;
-    if (color.text === "rgb(229, 229, 231)") {
+    if (color.text === 'rgb(229, 229, 231)') {
       return mapStyle;
     }
   }
 
   render() {
     const modalVisible = this.state.modalVisible;
-    const locDescription = this.state.modalDetails || "";
-    const locData = this.state.modalData || "";
-    const hours = locDescription.opening_hours || "";
-    const type = locData.types || "";
-    const state = locData.terms || "";
-    const cap = this.state.capacity || "";
+    const locDescription = this.state.modalDetails || '';
+    const locData = this.state.modalData || '';
+    const hours = locDescription.opening_hours || '';
+    const type = locData.types || '';
+    const state = locData.terms || '';
+    const cap = this.state.capacity || '';
     const colors = this.props.route.params;
 
     return (
@@ -124,16 +124,37 @@ class HomeScreen extends React.Component {
               { color: colors.text, backgroundColor: colors.background },
             ]}
           >
-            <Text style={[homeStyleSheet.modalName, { color: colors.text }]}>
-              {[locDescription.name]}
-            </Text>
+            {/* Container for Place Name and X */}
+            <View style={{justifyContent: "space-between"}} >
+              <Text style={[homeStyleSheet.modalName, { color: colors.text }]}>
+                {[locDescription.name]}
+              </Text>
+
+              <TouchableHighlight
+                style={{
+                  ...homeStyleSheet.openButton,
+                  backgroundColor: '#2196F3',
+                }}
+                onPress={() => {
+                  this.closeModal(!modalVisible);
+                }}
+              >
+                <Text style={homeStyleSheet.textStyle}> X </Text>
+              </TouchableHighlight>
+            </View>
+
+            {/* Modal Rating */}
             <Text style={[homeStyleSheet.modalText, { color: colors.text }]}>
               {locDescription.rating} ({locDescription.user_ratings_total})
             </Text>
+
+            {/* Modal Rating */}
             <Text style={[homeStyleSheet.modalType, { color: colors.text }]}>
-              {" "}
+              {' '}
               {getType(type)} {dollarSign(locDescription.price_level)}
             </Text>
+
+            {/* Modal is Open */}
             <Text
               style={{
                 marginBottom: 5,
@@ -143,32 +164,25 @@ class HomeScreen extends React.Component {
             >
               {isOpen(hours)}
             </Text>
-            <TouchableHighlight
-              style={{
-                ...homeStyleSheet.openButton,
-                backgroundColor: "#2196F3",
-              }}
-              onPress={() => {
-                this.closeModal(!modalVisible);
-              }}
-            >
-              <Text style={homeStyleSheet.textStyle}> X </Text>
-            </TouchableHighlight>
+
+            {/* Modal Capacity */}
             <Text style={{ color: colors.text }}>{cap}</Text>
+
+            {/* Modal Buttons for User Feedback */}
             <View
               style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-evenly",
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
               }}
             >
               <TouchableOpacity
                 style={homeStyleSheet.buttonSideBySide}
                 //title="I'm thinking of going"
                 onPress={() => {
-                  this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
+                  this.GooglePlacesAutocompleteRef.setAddressText(''); //clears the searchbar
                   this.closeModal(!modalVisible);
-                  this.props.navigation.navigate("SinglePlace", {
+                  this.props.navigation.navigate('SinglePlace', {
                     // PASS PROPS TO SINGLE PLACE HERE
                     name: this.state.selectedName,
                     id: this.state.id,
@@ -182,13 +196,14 @@ class HomeScreen extends React.Component {
               >
                 <Text style={homeStyleSheet.buttonText}>I'm here now</Text>
               </TouchableOpacity>
+
               <TouchableOpacity
                 style={homeStyleSheet.buttonSideBySide}
                 //title="I'm thinking of going"
                 onPress={() => {
-                  this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
+                  this.GooglePlacesAutocompleteRef.setAddressText(''); //clears the searchbar
                   this.closeModal(!modalVisible);
-                  this.props.navigation.navigate("SinglePlace", {
+                  this.props.navigation.navigate('SinglePlace', {
                     // PASS PROPS TO SINGLE PLACE HERE
                     name: this.state.selectedName,
                     id: this.state.id,
@@ -205,6 +220,7 @@ class HomeScreen extends React.Component {
               </TouchableOpacity>
             </View>
 
+            {/* State Guidelines Button */}
             <TouchableOpacity
               style={homeStyleSheet.button}
               onPress={() => getGuidelines(state)}
@@ -214,6 +230,7 @@ class HomeScreen extends React.Component {
           </View>
         </Modal>
 
+        {/* MAP */}
         <MapView
           ref={(map) => (this.map = map)}
           style={homeStyleSheet.container}
@@ -222,9 +239,12 @@ class HomeScreen extends React.Component {
           initialRegion={this.state.initialRegion}
           customMapStyle={this.isDarkMode(colors)}
         >
+
+          {/* Added Map Layers */}
           <HeatLayer />
           <FavesLayer />
 
+          {/* Search Bar/ AutoComplete */}
           <GooglePlacesAutocomplete
             ref={(instance) => (this.GooglePlacesAutocompleteRef = instance)}
             style={homeStyleSheet.input}
@@ -268,8 +288,8 @@ class HomeScreen extends React.Component {
               ); //shortensname in searchbar
             }}
             query={{
-              key: "AIzaSyCukq40uCr0mkfwu4JlZaO6yQ6P0K5D7Bc",
-              language: "en",
+              key: 'AIzaSyCukq40uCr0mkfwu4JlZaO6yQ6P0K5D7Bc',
+              language: 'en',
             }}
             nearbyPlacesAPI="GooglePlacesSearch"
             debounce={200}

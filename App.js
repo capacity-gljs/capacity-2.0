@@ -52,6 +52,7 @@ function DrawerRoutes() {
       <Drawer.Screen
         name="Favorites"
         component={UserFavesScreen}
+        initialParams={colors}
       />
       <Drawer.Screen name="Camera" component={CameraScreen} />
       <Drawer.Screen name="Sign up" component={SignUpScreen} />

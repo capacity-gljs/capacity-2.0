@@ -15,8 +15,7 @@ import RadioForm, {
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
 import { connect } from "react-redux";
-import { singlePlace } from "./styles";
-import { homeStyleSheet } from "./styles";
+import { singlePlace, homeStyleSheet, screenWidth } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 //import { useNavigation } from "@react-navigation/native";
 
