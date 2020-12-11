@@ -255,8 +255,18 @@ class HomeScreen extends React.Component {
           {this.state.marker && (
             <Marker
               coordinate={this.state.marker}
-              onPress={() => {
+              // set the state for all the info in the modal
+              onPress={(evt) => {
                 // console.log('MARKER PRESSED', evt.nativeEvent)
+                // this.setState({
+                //   coordinates: this.state.marker,
+                //   selectedName: this.state.selectedName,
+  
+                //   // SETTING STATES FOR PASSING DOWN PROPS HERE
+                //   id: this.state.place_id,
+                //   placeLat: this.state.placeLat,
+                //   placeLng: this.state.placeLng,
+                // });
                 this.setData(this.state.modalData, this.state.modalDetails, this.state.modalVisible = true)
               }}
               
