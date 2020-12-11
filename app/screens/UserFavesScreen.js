@@ -55,8 +55,7 @@ class UserFavesScreen extends React.Component {
   async handleSubmit(evt) {}
 
   render() {
-    // const colors = this.props.route.params;
-
+    const colors = this.props.route.params;
     const userFavorites = this.state.favorites || [];
     let counter = 0;
 
@@ -65,7 +64,7 @@ class UserFavesScreen extends React.Component {
         <SafeAreaView style={userFave.safeArea}>
           <ScrollView>
             <View>
-              <Text style={userFave.subtitle}>
+              <Text style={[userFave.subtitle, {color: colors.text, background: colors.background}]}>
                 These are Your Favorite Locations
               </Text>
             </View>
@@ -73,8 +72,8 @@ class UserFavesScreen extends React.Component {
             {userFavorites.map((place) => {
               return (
                 <View key={counter++} style={userFave.place}>
-                  <Text style={userFave.text}>{Object.keys(place)}</Text>
-                  <View style={userFave.capacityCircle}>
+                  <Text style={[userFave.text, {color: colors.text}]}>{Object.keys(place)}</Text>
+                  <View style={[userFave.capacityCircle]}>
                     {CapacityCircle(
                       Math.floor(Number(Object.values(place)[0]))
                     )}
@@ -88,7 +87,7 @@ class UserFavesScreen extends React.Component {
     } else {
       return (
         <SafeAreaView style={userFave.safeArea}>
-          <Text style={userFave.subtitle}>Login to see your favorites</Text>
+          <Text style={[userFave.subtitle, {color: colors.text}]}>Login to see your favorites</Text>
         </SafeAreaView>
       );
     }
