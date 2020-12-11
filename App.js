@@ -1,28 +1,34 @@
-import React from "react";
-import "react-native-gesture-handler";
-import { NavigationContainer, DrawerActions } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { Provider } from "react-redux";
-import HomeScreen from "./app/screens/HomeScreen";
-import SinglePlaceScreen from "./app/screens/SinglePlaceScreen";
-import SignUpScreen from "./app/screens/SignUpScreen";
-import LoginScreen from "./app/screens/LoginScreen";
-import UserFeedbackScreen from "./app/screens/UserFeedbackScreen";
-import store from "./app/store";
-import CameraScreen from "./app/screens/CameraScreen";
-import UserFavesScreen from "./app/screens/UserFavesScreen";
-import { Loader } from "./app/screens/loader";
-import { logoutUser } from "./app/funcs/userFuncs";
-import { Ionicons } from "@expo/vector-icons";
+import React from 'react';
+import { View } from 'react-native';
+import 'react-native-gesture-handler';
+import { NavigationContainer, DrawerActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Provider } from 'react-redux';
+import HomeScreen from './app/screens/HomeScreen';
+import SinglePlaceScreen from './app/screens/SinglePlaceScreen';
+import SignUpScreen from './app/screens/SignUpScreen';
+import LoginScreen from './app/screens/LoginScreen';
+import UserFeedbackScreen from './app/screens/UserFeedbackScreen';
+import store from './app/store';
+import CameraScreen from './app/screens/CameraScreen';
+import UserFavesScreen from './app/screens/UserFavesScreen';
+import { Loader } from './app/screens/loader';
+import { logoutUser } from './app/funcs/userFuncs';
+import { DrawerStyle } from './app/screens/styles';
+import { Ionicons } from '@expo/vector-icons';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
-} from "@react-navigation/drawer";
-import { DefaultTheme, DarkTheme } from "@react-navigation/native";
-import { AppearanceProvider, useColorScheme } from "react-native-appearance";
-import { useTheme } from "@react-navigation/native";
+} from '@react-navigation/drawer';
+import { DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
+import { useTheme } from '@react-navigation/native';
+import * as Linking from 'expo-linking';
+import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -32,6 +38,43 @@ function CustomDrawerContent(props) {
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
       <DrawerItem label="Log out" onPress={() => logoutUser()} />
+      <View style={DrawerStyle.bottomDrawerSection}>
+        <DrawerItem label="Creators" labelStyle={{ fontSize: 13 }} />
+        <DrawerItem
+          label="Samantha Jardanowski"
+          labelStyle={DrawerStyle.labelStyle}
+          icon={() => (
+            <AntDesign name="linkedin-square" size={20} color="black" />
+          )}
+          onPress={() =>
+            Linking.openURL('https://www.linkedin.com/in/samantha-jardanowski/')
+          }
+        />
+        <DrawerItem
+          label="Laura Maranto"
+          labelStyle={DrawerStyle.labelStyle}
+          icon={() => (
+            <FontAwesome name="github" size={24} color="black" />
+          )}
+          onPress={() => Linking.openURL('https://github.com/lwmaranto')}
+        />
+        <DrawerItem
+          label="Jennifer Rafael"
+          labelStyle={DrawerStyle.labelStyle}
+          icon={() => (
+            <FontAwesome name="github" size={24} color="black" />
+          )}
+          onPress={() => Linking.openURL('https://github.com/JenniferR326')}
+        />
+        <DrawerItem
+          label="Groana Melendez"
+          labelStyle={DrawerStyle.labelStyle}
+          icon={() => (
+            <AntDesign name="linkedin-square" size={20} color="black" />
+          )}
+          onPress={() => Linking.openURL('https://www.linkedin.com/in/groana/')}
+        />
+      </View>
     </DrawerContentScrollView>
   );
 }
@@ -68,7 +111,7 @@ export default function App() {
     <Provider store={store}>
       <AppearanceProvider>
         <NavigationContainer
-          theme={scheme === "dark" ? DarkTheme : DefaultTheme}
+          theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
         >
           <Stack.Navigator initialRouteName="Getting Started">
             <Stack.Screen
@@ -97,14 +140,14 @@ export default function App() {
               name="SinglePlace"
               component={SinglePlaceScreen}
               options={({ navigation, route }) => ({
-                title: "Location Details",
+                title: 'Location Details',
               })}
             />
             <Stack.Screen
               name="SignUp"
               component={SignUpScreen}
               options={({ navigation, route }) => ({
-                title: "Sign Up",
+                title: 'Sign Up',
                 headerLeft: () => (
                   <Ionicons
                     name="md-menu"
@@ -122,7 +165,7 @@ export default function App() {
               name="Login"
               component={LoginScreen}
               options={({ navigation, route }) => ({
-                title: "Log in",
+                title: 'Log in',
                 headerLeft: () => (
                   <Ionicons
                     name="md-menu"
@@ -140,7 +183,7 @@ export default function App() {
               name="Camera"
               component={CameraScreen}
               options={({ navigation, route }) => ({
-                title: "Add a Photo",
+                title: 'Add a Photo',
                 headerLeft: () => (
                   <Ionicons
                     name="md-menu"
@@ -158,7 +201,7 @@ export default function App() {
               name="UserFeedback"
               component={UserFeedbackScreen}
               options={({ navigation, route }) => ({
-                title: "Leave Feedback",
+                title: 'Leave Feedback',
               })}
             />
           </Stack.Navigator>
