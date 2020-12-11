@@ -11,7 +11,7 @@ import UserFeedbackScreen from "./app/screens/UserFeedbackScreen";
 import store from "./app/store";
 import CameraScreen from "./app/screens/CameraScreen";
 import UserFavesScreen from "./app/screens/UserFavesScreen";
-import Loader from "./app/screens/loader";
+import { Loader } from "./app/screens/loader";
 import { logoutUser } from "./app/funcs/userFuncs";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -20,6 +20,9 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
+import { DefaultTheme, DarkTheme } from "@react-navigation/native";
+import { AppearanceProvider, useColorScheme } from "react-native-appearance";
+import { useTheme } from "@react-navigation/native";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -34,13 +37,23 @@ function CustomDrawerContent(props) {
 }
 
 function DrawerRoutes() {
+  const { colors } = useTheme();
+
   return (
     <Drawer.Navigator
       initialRouteName="Home"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Favorites" component={UserFavesScreen} />
+      <Drawer.Screen
+        name="Home"
+        component={HomeScreen}
+        initialParams={colors}
+      />
+      <Drawer.Screen
+        name="Favorites"
+        component={UserFavesScreen}
+        initialParams={colors}
+      />
       <Drawer.Screen name="Camera" component={CameraScreen} />
       <Drawer.Screen name="Sign up" component={SignUpScreen} />
       <Drawer.Screen name="Log in" component={LoginScreen} />
@@ -48,11 +61,15 @@ function DrawerRoutes() {
   );
 }
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <NavigationContainer>
+export default function App() {
+  const scheme = useColorScheme();
+  const { colors } = useTheme();
+  return (
+    <Provider store={store}>
+      <AppearanceProvider>
+        <NavigationContainer
+          theme={scheme === "dark" ? DarkTheme : DefaultTheme}
+        >
           <Stack.Navigator initialRouteName="Getting Started">
             <Stack.Screen
               name="Getting Started"
@@ -67,7 +84,7 @@ export default class App extends React.Component {
                   <Ionicons
                     name="md-menu"
                     size={24}
-                    color="black"
+                    color={colors.background}
                     style={{ margin: 10 }}
                     onPress={() =>
                       navigation.dispatch(DrawerActions.toggleDrawer())
@@ -92,7 +109,7 @@ export default class App extends React.Component {
                   <Ionicons
                     name="md-menu"
                     size={24}
-                    color="black"
+                    color={colors.background}
                     style={{ margin: 10 }}
                     onPress={() =>
                       navigation.dispatch(DrawerActions.toggleDrawer())
@@ -110,7 +127,7 @@ export default class App extends React.Component {
                   <Ionicons
                     name="md-menu"
                     size={24}
-                    color="black"
+                    color={colors.background}
                     style={{ margin: 10 }}
                     onPress={() =>
                       navigation.dispatch(DrawerActions.toggleDrawer())
@@ -128,7 +145,7 @@ export default class App extends React.Component {
                   <Ionicons
                     name="md-menu"
                     size={24}
-                    color="black"
+                    color={colors.background}
                     style={{ margin: 10 }}
                     onPress={() =>
                       navigation.dispatch(DrawerActions.toggleDrawer())
@@ -146,7 +163,7 @@ export default class App extends React.Component {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </Provider>
-    );
-  }
+      </AppearanceProvider>
+    </Provider>
+  );
 }

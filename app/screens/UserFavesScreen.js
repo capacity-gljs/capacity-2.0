@@ -55,10 +55,11 @@ class UserFavesScreen extends React.Component {
   async handleSubmit(evt) {}
 
   render() {
+    // const colors = this.props.route.params;
+
     const userFavorites = this.state.favorites || [];
     let counter = 0;
-    console.log("THESE ARE THE USERS FAVORITE PLACES:", userFavorites);
-    console.log("THESE ARE THE USERS FAVORITE PLACES:", userFavorites);
+
     if (this.props.user.uid && userFavorites.length) {
       return (
         <SafeAreaView style={userFave.safeArea}>

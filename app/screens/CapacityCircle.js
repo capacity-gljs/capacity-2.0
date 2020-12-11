@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     //transform: [{ rotateZ: "-135deg" }],
   },
   display: {
+    color: "gray",
     position: "absolute",
     fontSize: 10,
     fontWeight: "bold",
