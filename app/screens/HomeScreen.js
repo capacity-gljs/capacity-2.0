@@ -242,10 +242,6 @@ class HomeScreen extends React.Component {
           showsUserLocation
           initialRegion={this.state.initialRegion}
           customMapStyle={this.isDarkMode(colors)}
-          // testing clicks
-          // onPress={() => Alert.alert('onPress')}
-          // onLongPress={() => Alert.alert('longPress')}
-          // onPoiClick={() => Alert.alert('onPoiClick')}
           onPoiClick={(evt) =>{
             // console.log('ON POI CLICK', evt.nativeEvent)
 

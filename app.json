@@ -18,7 +18,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "userInterfaceStyle" : "automatic"
+      "userInterfaceStyle": "automatic"
     },
     "android": {
       "adaptiveIcon": {
