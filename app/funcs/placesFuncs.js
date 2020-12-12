@@ -100,7 +100,8 @@ export const getCapacity = async (name) => {
     const places = await getAllCaps();
     const cap = [];
     places.filter((place) => {
-      if (place["placeName"] === name) {
+      // if (place["placeName"] === name) {
+      if (place["placeName"].includes(name)) {
         cap.push(place["avgCapacity"]);
       }
     });

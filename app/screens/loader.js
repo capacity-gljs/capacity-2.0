@@ -22,7 +22,7 @@ export const Loader = ({ ...props }) => {
           alignSelf: "flexend",
         }}
         onPress={() => {
-          props.navigation.navigate("Home", { color: colors });
+          props.navigation.navigate("Capacity", { color: colors });
         }}
       />
 

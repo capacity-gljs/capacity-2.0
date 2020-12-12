@@ -314,3 +314,18 @@ export const userFave = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+
+export const DrawerStyle = StyleSheet.create({
+  bottomDrawerSection: {
+      borderTopColor: '#f4f4f4',
+      borderTopWidth: 1,
+      marginTop: 100,
+  },
+  labelStyle: {
+    fontSize: 12,
+    margin: 0,
+    padding: 0,
+    left: -20
+  }
+});

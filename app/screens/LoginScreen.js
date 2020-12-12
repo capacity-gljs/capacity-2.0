@@ -21,7 +21,7 @@ function LoginScreen({ navigation, loginUser }) {
 
   const onLoginPress = () => {
     loginUser(email, password);
-    navigation.navigate("Home");
+    navigation.navigate('Capacity');
   };
 
   return (

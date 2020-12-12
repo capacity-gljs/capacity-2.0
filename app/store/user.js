@@ -31,6 +31,16 @@ export const loginUser = (email, password) => async (dispatch) => {
   }
 };
 
+export const logoutUser = () => async (dispatch) => {
+  try {
+    const response = await firebase.auth().signOut();
+    alert("You are now logged out");
+    dispatch(gotUser({}))
+  } catch (error) {
+    alert(error);
+  }
+};
+
 export default (state = {}, action) => {
   switch (action.type) {
     case GOT_USER:

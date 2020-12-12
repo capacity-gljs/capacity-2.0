@@ -1,5 +1,12 @@
 import React from "react";
-import { Text, View, SafeAreaView, ScrollView, Button } from "react-native";
+import {
+  Text,
+  View,
+  SafeAreaView,
+  ScrollView,
+  Button,
+  Alert,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { singlePlace, homeStyleSheet, screenWidth } from "./styles";
@@ -7,6 +14,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import Slider from "@react-native-community/slider";
 import { getOrAddPlace, addCapacity } from "../funcs/placesFuncs";
 import { addFave, updateFave, removeFave, getFave } from "../funcs/userFuncs";
+import * as ImagePicker from "expo-image-picker";
+import * as firebase from "firebase";
 
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
@@ -21,6 +30,8 @@ class SinglePlaceScreen extends React.Component {
       capacityNum: Math.floor(this.props.route.params.capacityNum),
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onChooseImagePress = this.onChooseImagePress.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
   }
 
   async componentDidMount() {
@@ -29,6 +40,33 @@ class SinglePlaceScreen extends React.Component {
       this.props.route.params.id
     );
     this.setState({ favorited });
+  }
+
+  async onChooseImagePress() {
+    let result = await ImagePicker.launchCameraAsync();
+
+    if (!result.cancelled) {
+      this.uploadImage(result.uri, this.props.route.params.id);
+      // .then(() => {
+      //   Alert.alert("success");
+      // })
+      // .catch((error) => {
+      //   Alert.alert(error);
+      // });
+    }
+  }
+
+  async uploadImage(uri, imageName) {
+    const response = await fetch(uri);
+    console.log("THE RESPONSE FROM UPLOADIMAGE: ", response);
+    const blob = await response.blob();
+
+    let ref = firebase
+      .storage()
+      .ref()
+      .child("images/" + imageName);
+    console.log("THIS IS THE REF: ", ref);
+    return ref.put(blob);
   }
 
   // grab capacity and write to the db
@@ -45,8 +83,6 @@ class SinglePlaceScreen extends React.Component {
 
   render() {
     const colors = this.props.route.params.color;
-
-    // let capacityNum = Math.floor(this.props.route.params.capacityNum);
 
     if (Number.isNaN(this.state.capacityNum)) this.state.capacityNum = 0;
 
@@ -139,17 +175,20 @@ class SinglePlaceScreen extends React.Component {
           />
 
           <View style={{ alignItems: "center" }}>
-            <TouchableOpacity
-              style={[
-                homeStyleSheet.button,
-                { backgroundColor: "rgb(92,220,184)" },
-              ]}
+            <Button
+              title="Take a Live Photo"
+              style={homeStyleSheet.button}
+              onPress={() => this.onChooseImagePress()}
+            />
+
+            {/* <TouchableOpacity
+              style={homeStyleSheet.button}
               onPress={() => this.props.navigation.navigate("Camera")} //open the camera component
             >
               <Text style={[homeStyleSheet.buttonText, { color: colors.text }]}>
                 Take a Live Photo
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           {this.props.route.params.isHere && (

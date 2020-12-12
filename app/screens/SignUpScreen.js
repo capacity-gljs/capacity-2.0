@@ -22,7 +22,7 @@ function SignUpScreen({ navigation, signUp }) {
 
   const onRegisterPress = () => {
     signUp(email, password);
-    navigation.navigate("Home");
+    navigation.navigate('Capacity');
   };
 
   return (
