@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Text,
-  View,
-  SafeAreaView,
-  ScrollView,
-  Button,
-} from "react-native";
+import { Text, View, SafeAreaView, ScrollView, Button } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { singlePlace, homeStyleSheet, screenWidth } from "./styles";
@@ -24,8 +18,8 @@ class SinglePlaceScreen extends React.Component {
     };
 
     this.state = {
-      capacityNum: Math.floor(this.props.route.params.capacityNum)
-    }
+      capacityNum: Math.floor(this.props.route.params.capacityNum),
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -53,10 +47,8 @@ class SinglePlaceScreen extends React.Component {
     const colors = this.props.route.params.color;
 
     // let capacityNum = Math.floor(this.props.route.params.capacityNum);
-   
 
-    if (Number.isNaN(this.state.capacityNum)) this.state.capacityNum = 0
-  
+    if (Number.isNaN(this.state.capacityNum)) this.state.capacityNum = 0;
 
     let capacityMessage = "";
 
@@ -65,7 +57,8 @@ class SinglePlaceScreen extends React.Component {
     else if (this.state.capacityRating < 50) capacityMessage = "A Few People";
     else if (this.state.capacityRating < 75) capacityMessage = "Half Full";
     else if (this.state.capacityRating < 100) capacityMessage = "Crowded";
-    else if (this.state.capacityRating === 100) capacityMessage = "Super Crowded";
+    else if (this.state.capacityRating === 100)
+      capacityMessage = "Super Crowded";
 
     return (
       <SafeAreaView style={singlePlace.safeArea}>
@@ -147,7 +140,10 @@ class SinglePlaceScreen extends React.Component {
 
           <View style={{ alignItems: "center" }}>
             <TouchableOpacity
-              style={homeStyleSheet.button}
+              style={[
+                homeStyleSheet.button,
+                { backgroundColor: "rgb(92,220,184)" },
+              ]}
               onPress={() => this.props.navigation.navigate("Camera")} //open the camera component
             >
               <Text style={[homeStyleSheet.buttonText, { color: colors.text }]}>
@@ -163,9 +159,7 @@ class SinglePlaceScreen extends React.Component {
               </Text>
               <Text style={{ color: colors.text }}>{capacityMessage}</Text>
               <Slider
-
-                style={{ width: "50%", height: 40}}
-
+                style={{ width: "50%", height: 40 }}
                 minimumValue={0}
                 maximumValue={100}
                 minimumTrackTintColor="#FFFFFF"
@@ -175,7 +169,7 @@ class SinglePlaceScreen extends React.Component {
                 }}
                 step={25}
               />
-           
+
               <Button title="Submit" onPress={this.handleSubmit} />
             </View>
           )}

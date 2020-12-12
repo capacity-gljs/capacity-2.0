@@ -64,6 +64,7 @@ function DrawerRoutes() {
 export default function App() {
   const scheme = useColorScheme();
   const { colors } = useTheme();
+
   return (
     <Provider store={store}>
       <AppearanceProvider>
@@ -84,7 +85,7 @@ export default function App() {
                   <Ionicons
                     name="md-menu"
                     size={24}
-                    color={colors.background}
+                    color="rgb(92,220,184)"
                     style={{ margin: 10 }}
                     onPress={() =>
                       navigation.dispatch(DrawerActions.toggleDrawer())
@@ -109,7 +110,7 @@ export default function App() {
                   <Ionicons
                     name="md-menu"
                     size={24}
-                    color={colors.background}
+                    color="rgb(92,220,184)"
                     style={{ margin: 10 }}
                     onPress={() =>
                       navigation.dispatch(DrawerActions.toggleDrawer())
@@ -127,7 +128,7 @@ export default function App() {
                   <Ionicons
                     name="md-menu"
                     size={24}
-                    color={colors.background}
+                    color="rgb(92,220,184)"
                     style={{ margin: 10 }}
                     onPress={() =>
                       navigation.dispatch(DrawerActions.toggleDrawer())
@@ -145,7 +146,7 @@ export default function App() {
                   <Ionicons
                     name="md-menu"
                     size={24}
-                    color={colors.background}
+                    color="rgb(92,220,184)"
                     style={{ margin: 10 }}
                     onPress={() =>
                       navigation.dispatch(DrawerActions.toggleDrawer())

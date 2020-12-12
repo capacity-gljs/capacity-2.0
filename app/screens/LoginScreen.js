@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Image,
   Text,
@@ -6,28 +6,28 @@ import {
   TouchableOpacity,
   View,
   SafeAreaView,
-} from 'react-native';
-import { SignUpLogin } from './styles';
-import { connect } from 'react-redux';
-import { loginUser } from '../store/user';
+} from "react-native";
+import { SignUpLogin } from "./styles";
+import { connect } from "react-redux";
+import { loginUser } from "../store/user";
 
 function LoginScreen({ navigation, loginUser }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const onFooterLinkPress = () => {
-    navigation.navigate('SignUp');
+    navigation.navigate("SignUp");
   };
 
   const onLoginPress = () => {
     loginUser(email, password);
-    navigation.navigate('Home');
+    navigation.navigate("Home");
   };
 
   return (
     <SafeAreaView>
       <View
-        style={{ flex: 1, width: '100%' }}
+        style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
         <TextInput
@@ -49,12 +49,15 @@ function LoginScreen({ navigation, loginUser }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TouchableOpacity style={SignUpLogin.button} onPress={() => onLoginPress()}>
+        <TouchableOpacity
+          style={[SignUpLogin.button]}
+          onPress={() => onLoginPress()}
+        >
           <Text>Log in</Text>
         </TouchableOpacity>
         <View>
           <Text style={SignUpLogin.footerText}>
-            No account?{' '}
+            No account?{" "}
             <Text onPress={onFooterLinkPress} style={SignUpLogin.footerLink}>
               Sign up!
             </Text>

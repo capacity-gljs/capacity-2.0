@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Image,
   Text,
@@ -6,29 +6,29 @@ import {
   TouchableOpacity,
   View,
   SafeAreaView,
-} from 'react-native';
-import { SignUpLogin } from './styles';
-import { connect } from 'react-redux';
-import { signUp } from '../store/user';
+} from "react-native";
+import { SignUpLogin } from "./styles";
+import { connect } from "react-redux";
+import { signUp } from "../store/user";
 
 function SignUpScreen({ navigation, signUp }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const onFooterLinkPress = () => {
-    navigation.navigate('Login');
+    navigation.navigate("Login");
   };
 
   const onRegisterPress = () => {
     signUp(email, password);
-    navigation.navigate('Home');
+    navigation.navigate("Home");
   };
 
   return (
     <SafeAreaView>
       <View
-        style={{ flex: 1, width: '100%' }}
+        style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
         <TextInput
@@ -61,13 +61,13 @@ function SignUpScreen({ navigation, signUp }) {
           autoCapitalize="none"
         />
         <TouchableOpacity
-          style={SignUpLogin.button}
+          style={[SignUpLogin.button, { backgroundColor: "rgb(92,220,184)" }]}
           onPress={() => onRegisterPress()}
         >
           <Text>Create account</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={SignUpLogin.button}
+          style={[SignUpLogin.button, { backgroundColor: "rgb(92,220,184)" }]}
           onPress={() => onFooterLinkPress()}
         >
           <Text>Log in</Text>

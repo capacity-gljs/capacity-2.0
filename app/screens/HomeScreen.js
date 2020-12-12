@@ -134,7 +134,7 @@ class HomeScreen extends React.Component {
               <TouchableHighlight
                 style={{
                   ...homeStyleSheet.openButton,
-                  backgroundColor: "#2196F3",
+                  
                 }}
                 onPress={() => {
                   this.closeModal(!modalVisible);
@@ -250,16 +250,16 @@ class HomeScreen extends React.Component {
           <GooglePlacesAutocomplete
             ref={(instance) => (this.GooglePlacesAutocompleteRef = instance)}
             style={homeStyleSheet.input}
-            styles ={{
+            styles={{
               textInputContainer: {
-                color: colors.text
+                color: colors.text,
               },
               row: {
-                backgroundColor: colors.text
+                backgroundColor: colors.text,
               },
               poweredContainer: {
-                backgroundColor: colors.text
-              }
+                backgroundColor: colors.text,
+              },
             }}
             placeholder="search"
             minLength={2}
