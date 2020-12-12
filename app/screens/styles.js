@@ -323,5 +323,10 @@ export const DrawerStyle = StyleSheet.create({
   labelStyle: {
     fontSize: 12,
     margin: 0,
+    padding: 0,
+    left: -20
   },
+  mainLabel: {
+    left: -20
+  }
 });

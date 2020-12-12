@@ -25,14 +25,15 @@ import {
 import * as Linking from 'expo-linking';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
-
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContentDisconnected(props) {
   const { state, ...rest } = props;
   const newState = { ...state };
-  newState.routes = newState.routes.filter((item) => item.name !== "SinglePlace" && item.name !== "UserFeedback" )
+  newState.routes = newState.routes.filter(
+    (item) => item.name !== 'SinglePlace' && item.name !== 'UserFeedback'
+  );
 
   return (
     <DrawerContentScrollView {...props}>
@@ -76,8 +77,8 @@ function CustomDrawerContentDisconnected(props) {
 }
 
 const CustomDrawerContent = connect(null, (dispatch) => ({
-  logoutUser: () => dispatch(logoutUser())
-}))(CustomDrawerContentDisconnected)
+  logoutUser: () => dispatch(logoutUser()),
+}))(CustomDrawerContentDisconnected);
 
 function DrawerRoutes() {
   const { colors } = useTheme();
@@ -85,12 +86,19 @@ function DrawerRoutes() {
   return (
     <Drawer.Navigator
       initialRouteName="Capacity"
+      // this goes into Drawer Items List, expect with what we're filtering (state)
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen
         name="Capacity"
         component={HomeScreen}
         initialParams={colors}
+        options={{
+          // drawerIcon: (config) => (
+          //   <AntDesign name="linkedin-square" size={20} color="black" />
+          // ),
+          drawerLabel: "Home",
+        }}
       />
       <Drawer.Screen
         name="Favorites"
@@ -107,8 +115,8 @@ function DrawerRoutes() {
 }
 
 function RoutesUnconnected({ user }) {
-  const scheme = useColorScheme();
   const { colors } = useTheme();
+
   return (
     <Stack.Navigator initialRouteName="Getting Started">
       <Stack.Screen
@@ -131,7 +139,9 @@ function RoutesUnconnected({ user }) {
           ),
           headerRight: () => (
             <View>
-              {user.uid && <AntDesign name="user" size={24} color="black" />}
+              {user.uid && (
+                <AntDesign name="user" size={24} color={colors.background} style={{ margin: 10 }} />
+              )}
             </View>
           ),
         })}
@@ -179,4 +189,4 @@ const mapState = (state) => ({
   user: state.user,
 });
 
-export const Routes = connect(mapState)(RoutesUnconnected);
+export default connect(mapState)(RoutesUnconnected);
