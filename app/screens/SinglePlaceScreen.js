@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   ScrollView,
   Button,
+  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
@@ -13,6 +14,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import Slider from "@react-native-community/slider";
 import { getOrAddPlace, addCapacity } from "../funcs/placesFuncs";
 import { addFave, updateFave, removeFave, getFave } from "../funcs/userFuncs";
+import * as ImagePicker from "expo-image-picker";
+import * as firebase from "firebase";
 
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
@@ -24,9 +27,11 @@ class SinglePlaceScreen extends React.Component {
     };
 
     this.state = {
-      capacityNum: Math.floor(this.props.route.params.capacityNum)
-    }
+      capacityNum: Math.floor(this.props.route.params.capacityNum),
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onChooseImagePress = this.onChooseImagePress.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
   }
 
   async componentDidMount() {
@@ -35,6 +40,33 @@ class SinglePlaceScreen extends React.Component {
       this.props.route.params.id
     );
     this.setState({ favorited });
+  }
+
+  async onChooseImagePress() {
+    let result = await ImagePicker.launchCameraAsync();
+
+    if (!result.cancelled) {
+      this.uploadImage(result.uri, this.props.route.params.id);
+      // .then(() => {
+      //   Alert.alert("success");
+      // })
+      // .catch((error) => {
+      //   Alert.alert(error);
+      // });
+    }
+  }
+
+  async uploadImage(uri, imageName) {
+    const response = await fetch(uri);
+    console.log("THE RESPONSE FROM UPLOADIMAGE: ", response);
+    const blob = await response.blob();
+
+    let ref = firebase
+      .storage()
+      .ref()
+      .child("images/" + imageName);
+    console.log("THIS IS THE REF: ", ref);
+    return ref.put(blob);
   }
 
   // grab capacity and write to the db
@@ -50,9 +82,9 @@ class SinglePlaceScreen extends React.Component {
   }
 
   render() {
-    const colors = this.props.route.params.color;   
+    const colors = this.props.route.params.color;
 
-    if (Number.isNaN(this.state.capacityNum)) this.state.capacityNum = 0
+    if (Number.isNaN(this.state.capacityNum)) this.state.capacityNum = 0;
 
     let capacityMessage = "";
 
@@ -61,7 +93,8 @@ class SinglePlaceScreen extends React.Component {
     else if (this.state.capacityRating < 50) capacityMessage = "A Few People";
     else if (this.state.capacityRating < 75) capacityMessage = "Half Full";
     else if (this.state.capacityRating < 100) capacityMessage = "Crowded";
-    else if (this.state.capacityRating === 100) capacityMessage = "Super Crowded";
+    else if (this.state.capacityRating === 100)
+      capacityMessage = "Super Crowded";
 
     return (
       <SafeAreaView style={singlePlace.safeArea}>
@@ -142,14 +175,20 @@ class SinglePlaceScreen extends React.Component {
           />
 
           <View style={{ alignItems: "center" }}>
-            <TouchableOpacity
+            <Button
+              title="Take a Live Photo"
+              style={homeStyleSheet.button}
+              onPress={() => this.onChooseImagePress()}
+            />
+
+            {/* <TouchableOpacity
               style={homeStyleSheet.button}
               onPress={() => this.props.navigation.navigate("Camera")} //open the camera component
             >
               <Text style={[homeStyleSheet.buttonText, { color: colors.text }]}>
                 Take a Live Photo
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           {this.props.route.params.isHere && (
@@ -159,9 +198,7 @@ class SinglePlaceScreen extends React.Component {
               </Text>
               <Text style={{ color: colors.text }}>{capacityMessage}</Text>
               <Slider
-
-                style={{ width: "50%", height: 40}}
-
+                style={{ width: "50%", height: 40 }}
                 minimumValue={0}
                 maximumValue={100}
                 minimumTrackTintColor="#FFFFFF"
@@ -171,7 +208,7 @@ class SinglePlaceScreen extends React.Component {
                 }}
                 step={25}
               />
-           
+
               <Button title="Submit" onPress={this.handleSubmit} />
             </View>
           )}
