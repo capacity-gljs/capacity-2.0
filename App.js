@@ -14,7 +14,7 @@ import store from './app/store';
 import CameraScreen from './app/screens/CameraScreen';
 import UserFavesScreen from './app/screens/UserFavesScreen';
 import { Loader } from './app/screens/loader';
-import { logoutUser } from './app/funcs/userFuncs';
+import { logoutUser } from './app/store/user';
 import { DrawerStyle } from './app/screens/styles';
 import { Ionicons } from '@expo/vector-icons';
 import {
@@ -32,11 +32,15 @@ import { AntDesign, FontAwesome } from '@expo/vector-icons';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-function CustomDrawerContent(props) {
+function CustomDrawerContentDisconnected(props) {
+  const { state, ...rest } = props;
+  const newState = { ...state };
+  newState.routes = newState.routes.filter((item) => item.name !== "SinglePlace" && item.name !== "UserFeedback" )
+
   return (
     <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <DrawerItem label="Log out" onPress={() => logoutUser()} />
+      <DrawerItemList {...rest} state={newState} />
+      <DrawerItem label="Log out" onPress={() => props.logoutUser()} />
       <View style={DrawerStyle.bottomDrawerSection}>
         <DrawerItem label="Creators" labelStyle={{ fontSize: 13 }} />
         <DrawerItem
@@ -74,16 +78,20 @@ function CustomDrawerContent(props) {
   );
 }
 
+const CustomDrawerContent = connect(null, (dispatch) => ({
+  logoutUser: () => dispatch(logoutUser())
+}))(CustomDrawerContentDisconnected)
+
 function DrawerRoutes() {
   const { colors } = useTheme();
 
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
+      initialRouteName="Capacity"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen
-        name="Home"
+        name="Capacity"
         component={HomeScreen}
         initialParams={colors}
       />
@@ -96,6 +104,7 @@ function DrawerRoutes() {
       <Drawer.Screen name="Sign up" component={SignUpScreen} />
       <Drawer.Screen name="Log in" component={LoginScreen} />
       <Drawer.Screen name="SinglePlace" component={SinglePlaceScreen} />
+      <Drawer.Screen name="UserFeedback" component={UserFeedbackScreen} />
     </Drawer.Navigator>
   );
 }
@@ -103,7 +112,6 @@ function DrawerRoutes() {
 function RoutesUnconnected({ user }) {
   const scheme = useColorScheme();
   const { colors } = useTheme();
-  console.log(user);
   return (
     <Stack.Navigator initialRouteName="Getting Started">
       <Stack.Screen
@@ -112,7 +120,7 @@ function RoutesUnconnected({ user }) {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Home"
+        name="Capacity"
         component={DrawerRoutes}
         options={({ navigation, route }) => ({
           headerLeft: () => (
@@ -143,7 +151,6 @@ function RoutesUnconnected({ user }) {
               color={colors.background}
               style={{ margin: 10 }}
               onPress={() => {
-                console.log(DrawerActions.toggleDrawer(), navigation)
                 navigation.dispatch(DrawerActions.toggleDrawer());
               }}
             />

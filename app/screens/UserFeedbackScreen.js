@@ -68,7 +68,7 @@ function UserFeedbackScreen({ navigation, route, navigate }) {
             //console.log(route.params.placeId);
             await addFeedback(route.params.placeId, experience, boostOrPromote);
             alert("Thanks for leaving feedback!");
-            navigation.navigate("Home");
+            navigation.navigate("Capacity");
           }}
         />
       </View>
