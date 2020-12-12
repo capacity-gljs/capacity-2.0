@@ -62,7 +62,12 @@ function SignUpScreen({ navigation, signUp }) {
         />
         <TouchableOpacity
           style={[SignUpLogin.button, { backgroundColor: "rgb(92,220,184)" }]}
-          onPress={() => onRegisterPress()}
+          onPress={() => {
+            onRegisterPress()
+            setEmail('')
+            setPassword('')
+            setConfirmPassword('')
+          }}
         >
           <Text>Create account</Text>
         </TouchableOpacity>

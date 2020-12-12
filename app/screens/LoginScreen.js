@@ -51,7 +51,11 @@ function LoginScreen({ navigation, loginUser }) {
         />
         <TouchableOpacity
           style={[SignUpLogin.button]}
-          onPress={() => onLoginPress()}
+          onPress={() => {
+            onLoginPress()
+            setEmail('')
+            setPassword('')
+          }}
         >
           <Text>Log in</Text>
         </TouchableOpacity>
