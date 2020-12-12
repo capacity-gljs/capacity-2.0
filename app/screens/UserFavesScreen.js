@@ -91,7 +91,7 @@ class UserFavesScreen extends React.Component {
               <Text
                 style={[
                   userFave.subtitle,
-                  { color: colors.text, background: colors.background },
+                  { color: colors.text },
                 ]}
               >
                 These are Your Favorite Locations
