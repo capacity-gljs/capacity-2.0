@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import { connect } from 'react-redux';
 import 'react-native-gesture-handler';
 import { NavigationContainer, DrawerActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -51,17 +52,13 @@ function CustomDrawerContent(props) {
         <DrawerItem
           label="Laura Maranto"
           labelStyle={DrawerStyle.labelStyle}
-          icon={() => (
-            <FontAwesome name="github" size={24} color="black" />
-          )}
+          icon={() => <FontAwesome name="github" size={24} color="black" />}
           onPress={() => Linking.openURL('https://github.com/lwmaranto')}
         />
         <DrawerItem
           label="Jennifer Rafael"
           labelStyle={DrawerStyle.labelStyle}
-          icon={() => (
-            <FontAwesome name="github" size={24} color="black" />
-          )}
+          icon={() => <FontAwesome name="github" size={24} color="black" />}
           onPress={() => Linking.openURL('https://github.com/JenniferR326')}
         />
         <DrawerItem
@@ -98,9 +95,125 @@ function DrawerRoutes() {
       <Drawer.Screen name="Camera" component={CameraScreen} />
       <Drawer.Screen name="Sign up" component={SignUpScreen} />
       <Drawer.Screen name="Log in" component={LoginScreen} />
+      <Drawer.Screen name="SinglePlace" component={SinglePlaceScreen} />
     </Drawer.Navigator>
   );
 }
+
+function RoutesUnconnected({ user }) {
+  const scheme = useColorScheme();
+  const { colors } = useTheme();
+  console.log(user);
+  return (
+    <Stack.Navigator initialRouteName="Getting Started">
+      <Stack.Screen
+        name="Getting Started"
+        component={Loader}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={DrawerRoutes}
+        options={({ navigation, route }) => ({
+          headerLeft: () => (
+            <Ionicons
+              name="md-menu"
+              size={24}
+              color={colors.background}
+              style={{ margin: 10 }}
+              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+            />
+          ),
+          headerRight: () => (
+            <View>
+              {user.uid && <AntDesign name="user" size={24} color="black" />}
+            </View>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="SinglePlace"
+        component={SinglePlaceScreen}
+        options={({ navigation, route }) => ({
+          title: 'Location Details',
+          headerLeft: () => (
+            <Ionicons
+              name="md-menu"
+              size={24}
+              color={colors.background}
+              style={{ margin: 10 }}
+              onPress={() => {
+                console.log(DrawerActions.toggleDrawer(), navigation)
+                navigation.dispatch(DrawerActions.toggleDrawer());
+              }}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUpScreen}
+        options={({ navigation, route }) => ({
+          title: 'Sign Up',
+          headerLeft: () => (
+            <Ionicons
+              name="md-menu"
+              size={24}
+              color={colors.background}
+              style={{ margin: 10 }}
+              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={({ navigation, route }) => ({
+          title: 'Log in',
+          headerLeft: () => (
+            <Ionicons
+              name="md-menu"
+              size={24}
+              color={colors.background}
+              style={{ margin: 10 }}
+              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="Camera"
+        component={CameraScreen}
+        options={({ navigation, route }) => ({
+          title: 'Add a Photo',
+          headerLeft: () => (
+            <Ionicons
+              name="md-menu"
+              size={24}
+              color={colors.background}
+              style={{ margin: 10 }}
+              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="UserFeedback"
+        component={UserFeedbackScreen}
+        options={({ navigation, route }) => ({
+          title: 'Leave Feedback',
+        })}
+      />
+    </Stack.Navigator>
+  );
+}
+
+const mapState = (state) => ({
+  user: state.user,
+});
+
+const Routes = connect(mapState)(RoutesUnconnected);
 
 export default function App() {
   const scheme = useColorScheme();
@@ -111,98 +224,7 @@ export default function App() {
         <NavigationContainer
           theme={scheme === 'dark' ? DarkTheme : DefaultTheme}
         >
-          <Stack.Navigator initialRouteName="Getting Started">
-            <Stack.Screen
-              name="Getting Started"
-              component={Loader}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Home"
-              component={DrawerRoutes}
-              options={({ navigation, route }) => ({
-                headerLeft: () => (
-                  <Ionicons
-                    name="md-menu"
-                    size={24}
-                    color={colors.background}
-                    style={{ margin: 10 }}
-                    onPress={() =>
-                      navigation.dispatch(DrawerActions.toggleDrawer())
-                    }
-                  />
-                ),
-              })}
-            />
-            <Stack.Screen
-              name="SinglePlace"
-              component={SinglePlaceScreen}
-              options={({ navigation, route }) => ({
-                title: 'Location Details',
-              })}
-            />
-            <Stack.Screen
-              name="SignUp"
-              component={SignUpScreen}
-              options={({ navigation, route }) => ({
-                title: 'Sign Up',
-                headerLeft: () => (
-                  <Ionicons
-                    name="md-menu"
-                    size={24}
-                    color={colors.background}
-                    style={{ margin: 10 }}
-                    onPress={() =>
-                      navigation.dispatch(DrawerActions.toggleDrawer())
-                    }
-                  />
-                ),
-              })}
-            />
-            <Stack.Screen
-              name="Login"
-              component={LoginScreen}
-              options={({ navigation, route }) => ({
-                title: 'Log in',
-                headerLeft: () => (
-                  <Ionicons
-                    name="md-menu"
-                    size={24}
-                    color={colors.background}
-                    style={{ margin: 10 }}
-                    onPress={() =>
-                      navigation.dispatch(DrawerActions.toggleDrawer())
-                    }
-                  />
-                ),
-              })}
-            />
-            <Stack.Screen
-              name="Camera"
-              component={CameraScreen}
-              options={({ navigation, route }) => ({
-                title: 'Add a Photo',
-                headerLeft: () => (
-                  <Ionicons
-                    name="md-menu"
-                    size={24}
-                    color={colors.background}
-                    style={{ margin: 10 }}
-                    onPress={() =>
-                      navigation.dispatch(DrawerActions.toggleDrawer())
-                    }
-                  />
-                ),
-              })}
-            />
-            <Stack.Screen
-              name="UserFeedback"
-              component={UserFeedbackScreen}
-              options={({ navigation, route }) => ({
-                title: 'Leave Feedback',
-              })}
-            />
-          </Stack.Navigator>
+          <Routes />
         </NavigationContainer>
       </AppearanceProvider>
     </Provider>
