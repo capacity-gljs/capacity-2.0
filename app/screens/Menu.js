@@ -15,7 +15,14 @@ import UserFavesScreen from './UserFavesScreen';
 import { logoutUser } from '../store/user';
 import { DrawerStyle } from './styles';
 import { Loader } from './loader';
-import { Ionicons } from '@expo/vector-icons';
+import {
+  Ionicons,
+  AntDesign,
+  FontAwesome,
+  Feather,
+  SimpleLineIcons,
+  MaterialIcons,
+} from '@expo/vector-icons';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -23,7 +30,6 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import * as Linking from 'expo-linking';
-import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -38,7 +44,11 @@ function CustomDrawerContentDisconnected(props) {
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...rest} state={newState} />
-      <DrawerItem label="Log out" onPress={() => props.logoutUser()} />
+      <DrawerItem
+        label="Log out"
+        onPress={() => props.logoutUser()}
+        icon={() => <Ionicons name="ios-log-out" size={24} color="black" />}
+      />
       <View style={DrawerStyle.bottomDrawerSection}>
         <DrawerItem label="Creators" labelStyle={{ fontSize: 13 }} />
         <DrawerItem
@@ -94,20 +104,49 @@ function DrawerRoutes() {
         component={HomeScreen}
         initialParams={colors}
         options={{
-          // drawerIcon: (config) => (
-          //   <AntDesign name="linkedin-square" size={20} color="black" />
-          // ),
-          drawerLabel: "Home",
+          drawerLabel: 'Home',
+          drawerIcon: (config) => (
+            <Feather name="map" size={24} color="black" />
+          ),
         }}
       />
       <Drawer.Screen
         name="Favorites"
         component={UserFavesScreen}
         initialParams={colors}
+        options={{
+          drawerIcon: (config) => (
+            <MaterialIcons name="favorite-border" size={24} color="black" />
+          ),
+        }}
       />
-      <Drawer.Screen name="Camera" component={CameraScreen} />
-      <Drawer.Screen name="Sign up" component={SignUpScreen} />
-      <Drawer.Screen name="Log in" component={LoginScreen} />
+      <Drawer.Screen
+        name="Camera"
+        component={CameraScreen}
+        options={{
+          drawerIcon: (config) => (
+            <AntDesign name="camerao" size={24} color="black" />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Sign up"
+        component={SignUpScreen}
+        options={{
+          drawerIcon: (config) => (
+            <SimpleLineIcons name="pencil" size={24} color="black" />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Log in"
+        component={LoginScreen}
+        options={{
+          drawerIcon: (config) => (
+            <Ionicons name="ios-log-in" size={24} color="black" />
+          ),
+        }}
+      />
       <Drawer.Screen name="SinglePlace" component={SinglePlaceScreen} />
       <Drawer.Screen name="UserFeedback" component={UserFeedbackScreen} />
     </Drawer.Navigator>
@@ -140,7 +179,12 @@ function RoutesUnconnected({ user }) {
           headerRight: () => (
             <View>
               {user.uid && (
-                <AntDesign name="user" size={24} color={colors.background} style={{ margin: 10 }} />
+                <AntDesign
+                  name="user"
+                  size={24}
+                  color={colors.background}
+                  style={{ margin: 10 }}
+                />
               )}
             </View>
           ),

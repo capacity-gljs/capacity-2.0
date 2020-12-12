@@ -126,11 +126,3 @@ export const addFeedback = async (placeId, experience, boostOrPromote) => {
   }
 };
 
-// export const logoutUser = async () => {
-//   try {
-//     const response = await firebase.auth().signOut();
-//     alert("You are now logged out");
-//   } catch (error) {
-//     alert(error);
-//   }
-// };
