@@ -183,7 +183,7 @@ function RoutesUnconnected({ user }) {
                 <AntDesign
                   name="user"
                   size={24}
-                  color={colors.background}
+                  color="rgb(92,220,184)"
                   style={{ margin: 10 }}
                 />
               )}
