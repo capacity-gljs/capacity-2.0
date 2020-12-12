@@ -133,7 +133,7 @@ class HomeScreen extends React.Component {
               <TouchableHighlight
                 style={{
                   ...homeStyleSheet.openButton,
-                  backgroundColor: '#2196F3',
+                  
                 }}
                 onPress={() => {
                   this.closeModal(!modalVisible);

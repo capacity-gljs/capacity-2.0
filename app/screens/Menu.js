@@ -37,6 +37,7 @@ const Drawer = createDrawerNavigator();
 function CustomDrawerContentDisconnected(props) {
   const { state, ...rest } = props;
   const newState = { ...state };
+  const { colors } = useTheme();
   newState.routes = newState.routes.filter(
     (item) => item.name !== 'SinglePlace' && item.name !== 'UserFeedback'
   );
@@ -47,7 +48,7 @@ function CustomDrawerContentDisconnected(props) {
       <DrawerItem
         label="Log out"
         onPress={() => props.logoutUser()}
-        icon={() => <Ionicons name="ios-log-out" size={24} color="black" />}
+        icon={() => <Ionicons name="ios-log-out" size={24} color="rgb(92,220,184)" />}
       />
       <View style={DrawerStyle.bottomDrawerSection}>
         <DrawerItem label="Creators" labelStyle={{ fontSize: 13 }} />
@@ -55,7 +56,7 @@ function CustomDrawerContentDisconnected(props) {
           label="Samantha Jardanowski"
           labelStyle={DrawerStyle.labelStyle}
           icon={() => (
-            <AntDesign name="linkedin-square" size={20} color="black" />
+            <AntDesign name="linkedin-square" size={20} color="rgb(92,220,184)" />
           )}
           onPress={() =>
             Linking.openURL('https://www.linkedin.com/in/samantha-jardanowski/')
@@ -64,20 +65,20 @@ function CustomDrawerContentDisconnected(props) {
         <DrawerItem
           label="Laura Maranto"
           labelStyle={DrawerStyle.labelStyle}
-          icon={() => <FontAwesome name="github" size={24} color="black" />}
+          icon={() => <FontAwesome name="github" size={24} color="rgb(92,220,184)" />}
           onPress={() => Linking.openURL('https://github.com/lwmaranto')}
         />
         <DrawerItem
           label="Jennifer Rafael"
           labelStyle={DrawerStyle.labelStyle}
-          icon={() => <FontAwesome name="github" size={24} color="black" />}
+          icon={() => <FontAwesome name="github" size={24} color="rgb(92,220,184)"/>}
           onPress={() => Linking.openURL('https://github.com/JenniferR326')}
         />
         <DrawerItem
           label="Groana Melendez"
           labelStyle={DrawerStyle.labelStyle}
           icon={() => (
-            <AntDesign name="linkedin-square" size={20} color="black" />
+            <AntDesign name="linkedin-square" size={20} color="rgb(92,220,184)" />
           )}
           onPress={() => Linking.openURL('https://www.linkedin.com/in/groana/')}
         />
@@ -106,7 +107,7 @@ function DrawerRoutes() {
         options={{
           drawerLabel: 'Home',
           drawerIcon: (config) => (
-            <Feather name="map" size={24} color="black" />
+            <Feather name="map" size={24} color="rgb(92,220,184)"/>
           ),
         }}
       />
@@ -116,7 +117,7 @@ function DrawerRoutes() {
         initialParams={colors}
         options={{
           drawerIcon: (config) => (
-            <MaterialIcons name="favorite-border" size={24} color="black" />
+            <MaterialIcons name="favorite-border" size={24} color="rgb(92,220,184)" />
           ),
         }}
       />
@@ -125,7 +126,7 @@ function DrawerRoutes() {
         component={CameraScreen}
         options={{
           drawerIcon: (config) => (
-            <AntDesign name="camerao" size={24} color="black" />
+            <AntDesign name="camerao" size={24} color="rgb(92,220,184)"/>
           ),
         }}
       />
@@ -134,7 +135,7 @@ function DrawerRoutes() {
         component={SignUpScreen}
         options={{
           drawerIcon: (config) => (
-            <SimpleLineIcons name="pencil" size={24} color="black" />
+            <SimpleLineIcons name="pencil" size={24} color="rgb(92,220,184)" />
           ),
         }}
       />
@@ -143,7 +144,7 @@ function DrawerRoutes() {
         component={LoginScreen}
         options={{
           drawerIcon: (config) => (
-            <Ionicons name="ios-log-in" size={24} color="black" />
+            <Ionicons name="ios-log-in" size={24} color="rgb(92,220,184)" />
           ),
         }}
       />
@@ -171,7 +172,7 @@ function RoutesUnconnected({ user }) {
             <Ionicons
               name="md-menu"
               size={24}
-              color={colors.background}
+              color="rgb(92,220,184)"
               style={{ margin: 10 }}
               onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
             />
@@ -182,7 +183,7 @@ function RoutesUnconnected({ user }) {
                 <AntDesign
                   name="user"
                   size={24}
-                  color={colors.background}
+                  color="rgb(92,220,184)"
                   style={{ margin: 10 }}
                 />
               )}
