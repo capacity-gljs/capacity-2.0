@@ -124,139 +124,143 @@ class HomeScreen extends React.Component {
               { color: colors.text, backgroundColor: colors.background },
             ]}
           >
-            {/* Container for Place Name and X */}
-            <View style={{ justifyContent: 'space-between' }}>
-              <Text style={[homeStyleSheet.modalName, { color: colors.text }]}>
-                {this.state.selectedName}
+            <ScrollView>
+              {/* Container for Place Name and X */}
+              <View style={{ justifyContent: 'space-between' }}>
+                <Text
+                  style={[homeStyleSheet.modalName, { color: colors.text }]}
+                >
+                  {this.state.selectedName}
+                </Text>
+
+                <TouchableHighlight
+                  style={{
+                    ...homeStyleSheet.openButton,
+                  }}
+                  onPress={() => {
+                    this.closeModal(!modalVisible);
+                  }}
+                >
+                  <Text style={homeStyleSheet.textStyle}> X </Text>
+                </TouchableHighlight>
+              </View>
+
+              {/* Modal Rating */}
+
+              <View>
+                {this.state.modalData === '' || !this.state.modalData ? (
+                  <Text>
+                    {'\n'}
+                    {'\n'}
+                    Use the searchbar for more info.
+                    {'\n'}
+                  </Text>
+                ) : (
+                  <View>
+                    <Text
+                      style={[homeStyleSheet.modalText, { color: colors.text }]}
+                    >
+                      {locDescription.rating} (
+                      {locDescription.user_ratings_total})
+                    </Text>
+
+                    {/* Modal Rating */}
+                    <Text
+                      style={[homeStyleSheet.modalType, { color: colors.text }]}
+                    >
+                      {' '}
+                      {getType(type)} {dollarSign(locDescription.price_level)}
+                    </Text>
+
+                    {/* Modal is Open */}
+                    <Text
+                      style={{
+                        marginBottom: 5,
+                        fontSize: 15,
+                        color: getColor(hours),
+                      }}
+                    >
+                      {isOpen(hours)}
+                    </Text>
+                  </View>
+                )}
+              </View>
+
+              {/* Modal Capacity */}
+              <Text style={{ color: colors.text }}>
+                {cap === 'NaN% Capacity' ? '\n' : cap}
+                {'\n'}
               </Text>
 
-              <TouchableHighlight
+              {/* Modal Buttons for User Feedback */}
+
+              <View
                 style={{
-                  ...homeStyleSheet.openButton,
-                }}
-                onPress={() => {
-                  this.closeModal(!modalVisible);
-                }}
-              >
-                <Text style={homeStyleSheet.textStyle}> X </Text>
-              </TouchableHighlight>
-            </View>
-
-            {/* Modal Rating */}
-
-            <View>
-              {this.state.modalData === '' || !this.state.modalData ? (
-                <Text>
-                  {'\n'}
-                  {'\n'}
-                  Use the searchbar for more info.
-                  {'\n'}
-                </Text>
-              ) : (
-                <View>
-                  <Text
-                    style={[homeStyleSheet.modalText, { color: colors.text }]}
-                  >
-                    {locDescription.rating} ({locDescription.user_ratings_total}
-                    )
-                  </Text>
-
-                  {/* Modal Rating */}
-                  <Text
-                    style={[homeStyleSheet.modalType, { color: colors.text }]}
-                  >
-                    {' '}
-                    {getType(type)} {dollarSign(locDescription.price_level)}
-                  </Text>
-
-                  {/* Modal is Open */}
-                  <Text
-                    style={{
-                      marginBottom: 5,
-                      fontSize: 15,
-                      color: getColor(hours),
-                    }}
-                  >
-                    {isOpen(hours)}
-                  </Text>
-                </View>
-              )}
-            </View>
-
-            {/* Modal Capacity */}
-            <Text style={{ color: colors.text }}>
-              {cap === 'NaN% Capacity' ? '\n' : cap}
-              {'\n'}
-            </Text>
-
-            {/* Modal Buttons for User Feedback */}
-
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-              }}
-            >
-              <TouchableOpacity
-                style={homeStyleSheet.buttonSideBySide}
-                //title="I'm thinking of going"
-                onPress={() => {
-                  this.GooglePlacesAutocompleteRef.setAddressText(''); //clears the searchbar
-                  this.closeModal(!modalVisible);
-                  this.props.navigation.navigate('SinglePlace', {
-                    // PASS PROPS TO SINGLE PLACE HERE
-                    name: this.state.selectedName,
-                    id: this.state.id,
-                    placeLat: this.state.placeLat,
-                    placeLng: this.state.placeLng,
-                    isHere: true,
-                    capacity: cap,
-                    color: colors,
-                    capacityNum: this.state.capacityNum,
-                  });
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
                 }}
               >
-                <Text style={homeStyleSheet.buttonText}>I'm here now</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={homeStyleSheet.buttonSideBySide}
-                onPress={() => {
-                  this.GooglePlacesAutocompleteRef.setAddressText(''); //clears the searchbar
-                  this.closeModal(!modalVisible);
-                  this.props.navigation.navigate('SinglePlace', {
-                    // PASS PROPS TO SINGLE PLACE HERE
-                    name: this.state.selectedName,
-                    id: this.state.id,
-                    placeLat: this.state.placeLat,
-                    placeLng: this.state.placeLng,
-                    isHere: false,
-                    capacity: cap,
-                    color: colors,
-                    capacityNum: this.state.capacityNum,
-                  });
-                }}
-              >
-                <Text style={homeStyleSheet.buttonText}>
-                  I'm thinking of going
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            {/* State Guidelines Button */}
-            <View>
-              {!(this.state.modalData === '' || !this.state.modalData) && (
                 <TouchableOpacity
-                  style={homeStyleSheet.button}
-                  onPress={() => getGuidelines(state)}
+                  style={homeStyleSheet.buttonSideBySide}
+                  //title="I'm thinking of going"
+                  onPress={() => {
+                    this.GooglePlacesAutocompleteRef.setAddressText(''); //clears the searchbar
+                    this.closeModal(!modalVisible);
+                    this.props.navigation.navigate('SinglePlace', {
+                      // PASS PROPS TO SINGLE PLACE HERE
+                      name: this.state.selectedName,
+                      id: this.state.id,
+                      placeLat: this.state.placeLat,
+                      placeLng: this.state.placeLng,
+                      isHere: true,
+                      capacity: cap,
+                      color: colors,
+                      capacityNum: this.state.capacityNum,
+                    });
+                  }}
+                >
+                  <Text style={homeStyleSheet.buttonText}>I'm here now</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={homeStyleSheet.buttonSideBySide}
+                  onPress={() => {
+                    this.GooglePlacesAutocompleteRef.setAddressText(''); //clears the searchbar
+                    this.closeModal(!modalVisible);
+                    this.props.navigation.navigate('SinglePlace', {
+                      // PASS PROPS TO SINGLE PLACE HERE
+                      name: this.state.selectedName,
+                      id: this.state.id,
+                      placeLat: this.state.placeLat,
+                      placeLng: this.state.placeLng,
+                      isHere: false,
+                      capacity: cap,
+                      color: colors,
+                      capacityNum: this.state.capacityNum,
+                    });
+                  }}
                 >
                   <Text style={homeStyleSheet.buttonText}>
-                    State Guidelines
+                    I'm thinking of going
                   </Text>
                 </TouchableOpacity>
-              )}
-            </View>
+              </View>
+
+              {/* State Guidelines Button */}
+              <View>
+                {!(this.state.modalData === '' || !this.state.modalData) && (
+                  <TouchableOpacity
+                    style={homeStyleSheet.button}
+                    onPress={() => getGuidelines(state)}
+                  >
+                    <Text style={homeStyleSheet.buttonText}>
+                      State Guidelines
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </ScrollView>
           </View>
         </Modal>
 

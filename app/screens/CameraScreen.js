@@ -2,18 +2,9 @@ import React from "react";
 import { View, Text } from "react-native";
 import { Camera } from "expo-camera";
 import * as Permissions from "expo-permissions";
-//import CameraToolbar from "./CameraToolbar";
 import { CameraScreenSheet } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Alert } from "react-native";
-
-/*const takePicture = async () => {
-  //if (!camera) return;
-  Alert.alert("PICTURE TAKEN");
-  console.log("THE BUTTON PRESSED");
-  const photo = await camera.takePictureAsync();
-  console.log("THIS IS THE PICTURE OBJECT: ", photo);
-};*/
 
 export default class CameraScreen extends React.Component {
   constructor(props) {

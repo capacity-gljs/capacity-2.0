@@ -28,8 +28,6 @@ renderThirdLayer = (percent) => {
 };
 
 const CapacityCircle = (percent) => {
-  //let percent = Number(percentStr);
-  //console.log("THIS IS THE CAPACITY CIRCLE PERCENT: ", percent);
   let firstProgressLayerStyle;
   if (percent > 50) {
     firstProgressLayerStyle = propStyle(50, -135);
