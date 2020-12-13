@@ -226,7 +226,7 @@ class SinglePlaceScreen extends React.Component {
               <Text style={{ color: colors.text }}>{capacityMessage}</Text>
               <Slider
                 style={{ width: "50%", height: 40 }}
-                minimumValue={0}
+                minimumValue={1}
                 maximumValue={100}
                 minimumTrackTintColor="#FFFFFF"
                 maximumTrackTintColor="#000000"
