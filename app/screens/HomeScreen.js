@@ -1,4 +1,4 @@
-import React, { useRoute } from "react";
+import React, { useRoute } from 'react';
 import {
   Text,
   View,
@@ -8,11 +8,11 @@ import {
   TouchableHighlight,
   ScrollView,
   Animated,
-} from "react-native";
-import Modal from "react-native-modal";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
-import { connect } from "react-redux";
+} from 'react-native';
+import Modal from 'react-native-modal';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { connect } from 'react-redux';
 
 // IMPORT FUNCS
 import {
@@ -23,22 +23,22 @@ import {
   dollarSign,
   getGuidelines,
   isDarkMode,
-} from "../funcs/homeFuncs";
-import { homeStyleSheet } from "./styles";
-import { TouchableOpacity } from "react-native-gesture-handler";
+} from '../funcs/homeFuncs';
+import { homeStyleSheet } from './styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 // IMPORT FIREBASE FUNCS
-import { getAllCaps, getCapacity } from "../funcs/placesFuncs";
-import HeatLayer from "./HeatLayer";
-import FavesLayer from "./FavesLayer";
-import { mapStyle } from "./map";
+import { getAllCaps, getCapacity } from '../funcs/placesFuncs';
+import HeatLayer from './HeatLayer';
+import FavesLayer from './FavesLayer';
+import { mapStyle } from './map';
 
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       // grabbing places info to pass down
-      id: "",
+      id: '',
       placeLat: null,
       placeLng: null,
       // state for homescreen
@@ -48,7 +48,7 @@ class HomeScreen extends React.Component {
         latitude: null,
         longitude: null,
       },
-      selectedName: "",
+      selectedName: '',
       modalVisible: false,
       modalData: null,
       modalDetails: null,
@@ -133,7 +133,6 @@ class HomeScreen extends React.Component {
               <TouchableHighlight
                 style={{
                   ...homeStyleSheet.openButton,
-                  backgroundColor: '#2196F3',
                 }}
                 onPress={() => {
                   this.closeModal(!modalVisible);
@@ -144,29 +143,51 @@ class HomeScreen extends React.Component {
             </View>
 
             {/* Modal Rating */}
-            <Text style={[homeStyleSheet.modalText, { color: colors.text }]}>
-              {locDescription.rating} ({locDescription.user_ratings_total})
-            </Text>
 
-            {/* Modal Rating */}
-            <Text style={[homeStyleSheet.modalType, { color: colors.text }]}>
-              {' '}
-              {getType(type)} {dollarSign(locDescription.price_level)}
-            </Text>
+            <View>
+              {this.state.modalData === '' || !this.state.modalData ? (
+                <Text>
+                  {'\n'}
+                  {'\n'}
+                  Use the searchbar for more info.
+                  {'\n'}
+                </Text>
+              ) : (
+                <View>
+                  <Text
+                    style={[homeStyleSheet.modalText, { color: colors.text }]}
+                  >
+                    {locDescription.rating} ({locDescription.user_ratings_total}
+                    )
+                  </Text>
 
-            {/* Modal is Open */}
-            <Text
-              style={{
-                marginBottom: 5,
-                fontSize: 15,
-                color: getColor(hours),
-              }}
-            >
-              {isOpen(hours)}
-            </Text>
+                  {/* Modal Rating */}
+                  <Text
+                    style={[homeStyleSheet.modalType, { color: colors.text }]}
+                  >
+                    {' '}
+                    {getType(type)} {dollarSign(locDescription.price_level)}
+                  </Text>
+
+                  {/* Modal is Open */}
+                  <Text
+                    style={{
+                      marginBottom: 5,
+                      fontSize: 15,
+                      color: getColor(hours),
+                    }}
+                  >
+                    {isOpen(hours)}
+                  </Text>
+                </View>
+              )}
+            </View>
 
             {/* Modal Capacity */}
-            <Text style={{ color: colors.text }}>{cap}</Text>
+            <Text style={{ color: colors.text }}>
+              {cap === 'NaN% Capacity' ? '\n' : cap}
+              {'\n'}
+            </Text>
 
             {/* Modal Buttons for User Feedback */}
 
@@ -224,12 +245,18 @@ class HomeScreen extends React.Component {
             </View>
 
             {/* State Guidelines Button */}
-            <TouchableOpacity
-              style={homeStyleSheet.button}
-              onPress={() => getGuidelines(state)}
-            >
-              <Text style={homeStyleSheet.buttonText}>State Guidelines</Text>
-            </TouchableOpacity>
+            <View>
+              {!(this.state.modalData === '' || !this.state.modalData) && (
+                <TouchableOpacity
+                  style={homeStyleSheet.button}
+                  onPress={() => getGuidelines(state)}
+                >
+                  <Text style={homeStyleSheet.buttonText}>
+                    State Guidelines
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
         </Modal>
 
@@ -242,8 +269,8 @@ class HomeScreen extends React.Component {
           initialRegion={this.state.initialRegion}
           customMapStyle={this.isDarkMode(colors)}
           /* CLICKING ON POI */
-          onPoiClick={(evt) =>{
-            this.setState({ 
+          onPoiClick={(evt) => {
+            this.setState({
               // creates a marker at the POI
               marker: evt.nativeEvent.coordinate,
 
@@ -258,19 +285,18 @@ class HomeScreen extends React.Component {
 
               // // DOES THIS FUNCTION JUST TAKE THE PLACE NAME, OR DOES IT NEED THE ID?
               capacity: this.getSingleCap(evt.nativeEvent.name),
-            })
+            });
           }}
         >
-
           {/* POI MARKER */}
           {this.state.marker && (
-            <Marker 
+            <Marker
               coordinate={this.state.marker}
               onPress={(evt) => {
-                const name = this.state.selectedName || ''
-                const capacity = this.state.capacity || ''
-                const id = this.state.id || ''
-                this.setData(null, {name, id}, true);
+                const name = this.state.selectedName || '';
+                const capacity = this.state.capacity || '';
+                const id = this.state.id || '';
+                this.setData(null, { name, id }, true);
               }}
             />
           )}

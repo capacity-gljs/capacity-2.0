@@ -88,12 +88,7 @@ class UserFavesScreen extends React.Component {
         <SafeAreaView style={userFave.safeArea}>
           <ScrollView refreshControl={this.refreshControl()}>
             <View>
-              <Text
-                style={[
-                  userFave.subtitle,
-                  { color: colors.text, background: colors.background },
-                ]}
-              >
+              <Text style={[userFave.subtitle, ]}>
                 These are Your Favorite Locations
               </Text>
             </View>
@@ -118,7 +113,7 @@ class UserFavesScreen extends React.Component {
     } else {
       return (
         <SafeAreaView style={userFave.safeArea}>
-          <Text style={[userFave.subtitle, { color: colors.text }]}>
+          <Text style={userFave.subtitle}>
             Login to see your favorites
           </Text>
         </SafeAreaView>

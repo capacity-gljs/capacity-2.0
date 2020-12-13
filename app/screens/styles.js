@@ -36,6 +36,7 @@ export const homeStyleSheet = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+   
   },
   openButton: {
     alignSelf: "flex-end",
@@ -43,12 +44,13 @@ export const homeStyleSheet = StyleSheet.create({
     marginTop: 10,
     width: 22,
     height: 22,
-    backgroundColor: "#F194FF",
+    backgroundColor: "#64779e",
     borderRadius: 50,
     elevation: 2,
+    backgroundColor: "rgb(92,220,184)"
   },
   textStyle: {
-    color: "white",
+    color: "black",
     fontWeight: "bold",
     textAlign: "center",
     marginRight: 3,
@@ -69,7 +71,7 @@ export const homeStyleSheet = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    backgroundColor: "#2196F3",
+    backgroundColor: "rgb(92,220,184)",
     padding: 10,
     borderRadius: 10,
     marginTop: 15,
@@ -77,7 +79,7 @@ export const homeStyleSheet = StyleSheet.create({
   },
   buttonSideBySide: {
     alignItems: "center",
-    backgroundColor: "#2196F3",
+    backgroundColor: "rgb(92,220,184)",
     padding: 10,
     borderRadius: 10,
     marginTop: 15,
@@ -85,7 +87,7 @@ export const homeStyleSheet = StyleSheet.create({
     marginBottom: 10,
   },
   buttonText: {
-    color: "white",
+    color: "black",
   },
 
   buttonStyle: {
@@ -163,7 +165,7 @@ export const SignUpLogin = StyleSheet.create({
     paddingLeft: 16,
   },
   button: {
-    backgroundColor: "#788eec",
+    backgroundColor: "rgb(92,220,184)",
     marginLeft: 30,
     marginRight: 30,
     marginTop: 20,
@@ -283,14 +285,14 @@ export const userFave = StyleSheet.create({
     backgroundColor: "#788eec",
   },
   subtitle: {
-    color: "white",
+    color: "black",
     alignItems: "center",
     fontWeight: "bold",
     height: 50,
     textAlign: "center",
     fontSize: 20,
     width: "100%",
-    backgroundColor: "#3498db",
+    backgroundColor: "rgb(92,220,184)"
   },
   text: {
     color: "gray",
@@ -323,5 +325,7 @@ export const DrawerStyle = StyleSheet.create({
   labelStyle: {
     fontSize: 12,
     margin: 0,
-  },
+    padding: 0,
+    left: -20
+  }
 });
