@@ -12,9 +12,10 @@ import { connect } from "react-redux";
 import { singlePlace, homeStyleSheet, screenWidth } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Slider from "@react-native-community/slider";
-import { getOrAddPlace, addCapacity } from "../funcs/placesFuncs";
+import { getOrAddPlace, addCapacity, addPhoto } from "../funcs/placesFuncs";
 import { addFave, updateFave, removeFave, getFave } from "../funcs/userFuncs";
 import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
 import * as firebase from "firebase";
 
 class SinglePlaceScreen extends React.Component {
@@ -24,6 +25,9 @@ class SinglePlaceScreen extends React.Component {
       capacityRating: 0,
       formLabel: 0,
       favorited: false,
+      cameraStatus: "",
+      testmsg: "",
+      refUrl: "",
     };
 
     this.state = {
@@ -43,30 +47,53 @@ class SinglePlaceScreen extends React.Component {
   }
 
   async onChooseImagePress() {
-    let result = await ImagePicker.launchCameraAsync();
+    this.setState({ testmsg: "forcing refresh" });
 
-    if (!result.cancelled) {
-      this.uploadImage(result.uri, this.props.route.params.id);
-      // .then(() => {
-      //   Alert.alert("success");
-      // })
-      // .catch((error) => {
-      //   Alert.alert(error);
-      // });
+    const permissions = Permissions.CAMERA;
+
+    const status = await Permissions.askAsync(permissions);
+
+    this.setState({ cameraStatus: status.status });
+
+    //console.log("Permission =>", permissions);
+    //console.log("Status => ", status);
+
+    if (status.status !== "granted") {
+      //console.log(`[ pickFromCamera ] ${permissions} access: ${status.status}`);
+    } else {
+      let result = await ImagePicker.launchCameraAsync();
+
+      if (!result.cancelled) {
+        await getOrAddPlace(
+          this.props.route.params.id,
+          this.props.route.params.placeLat,
+          this.props.route.params.placeLng,
+          this.props.route.params.name
+        );
+        console.log("THE PLACE WAS CREATED");
+        this.uploadImage(result.uri, this.props.route.params.id);
+      }
     }
   }
 
   async uploadImage(uri, imageName) {
     const response = await fetch(uri);
-    console.log("THE RESPONSE FROM UPLOADIMAGE: ", response);
+
     const blob = await response.blob();
 
     let ref = firebase
       .storage()
       .ref()
       .child("images/" + imageName);
-    console.log("THIS IS THE REF: ", ref);
-    return ref.put(blob);
+
+    await ref.put(blob);
+    const refUrl = await ref.getDownloadURL();
+    console.log("THIS IS THE REFURL: ", refUrl);
+    console.log("THIS IS THE PLACEID: ", this.props.route.params.id);
+    this.setState({ refUrl: refUrl });
+    await addPhoto(this.props.route.params.id, refUrl);
+
+    //return addPhoto;
   }
 
   // grab capacity and write to the db
