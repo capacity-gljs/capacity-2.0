@@ -110,3 +110,17 @@ export const getCapacity = async (name) => {
     console.error(error);
   }
 };
+
+//add photo link from storage to place
+export const addPhoto = async (placeId, photoURL) => {
+  const placeRef = db.collection("places").doc(placeId);
+  const photoRef = placeRef.collection("photo").doc();
+
+  try {
+    const newPhoto = await photoRef.set({
+      Link: photoURL,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
