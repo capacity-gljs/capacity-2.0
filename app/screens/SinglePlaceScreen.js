@@ -6,13 +6,19 @@ import {
   ScrollView,
   Button,
   Alert,
+  Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { singlePlace, homeStyleSheet, screenWidth } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Slider from "@react-native-community/slider";
-import { getOrAddPlace, addCapacity, addPhoto } from "../funcs/placesFuncs";
+import {
+  getOrAddPlace,
+  addCapacity,
+  addPhoto,
+  getPhoto,
+} from "../funcs/placesFuncs";
 import { addFave, updateFave, removeFave, getFave } from "../funcs/userFuncs";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
@@ -28,6 +34,7 @@ class SinglePlaceScreen extends React.Component {
       cameraStatus: "",
       testmsg: "",
       refUrl: "",
+      photoLink: this.props.route.params.photo,
     };
 
     this.state = {
@@ -44,6 +51,9 @@ class SinglePlaceScreen extends React.Component {
       this.props.route.params.id
     );
     this.setState({ favorited });
+    // const photo = await getPhoto(this.props.route.params.id);
+    // this.setState({ photoLink: photo.Link });
+    // console.log("THIS IS THE LINK: ", this.state.photoLink);
   }
 
   async onChooseImagePress() {
@@ -109,6 +119,8 @@ class SinglePlaceScreen extends React.Component {
   }
 
   render() {
+    const link = String(this.state.photoLink);
+    console.log("THIS IS GOING TO BE THE RENDERED LINK: ", link);
     const colors = this.props.route.params.color;
 
     if (Number.isNaN(this.state.capacityNum)) this.state.capacityNum = 0;
@@ -207,15 +219,20 @@ class SinglePlaceScreen extends React.Component {
               style={homeStyleSheet.button}
               onPress={() => this.onChooseImagePress()}
             />
+          </View>
 
-            {/* <TouchableOpacity
-              style={homeStyleSheet.button}
-              onPress={() => this.props.navigation.navigate("Camera")} //open the camera component
-            >
-              <Text style={[homeStyleSheet.buttonText, { color: colors.text }]}>
-                Take a Live Photo
-              </Text>
-            </TouchableOpacity> */}
+          <View style={{ alignItems: "center" }}>
+            <Text style={[singlePlace.subtitle, { color: colors.text }]}>
+              What it looks like now:
+            </Text>
+            <View>
+              <Image
+                style={singlePlace.image}
+                source={{
+                  uri: this.props.route.params.photo,
+                }}
+              />
+            </View>
           </View>
 
           {this.props.route.params.isHere && (
