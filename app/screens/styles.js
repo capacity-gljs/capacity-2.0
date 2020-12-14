@@ -36,7 +36,6 @@ export const homeStyleSheet = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-   
   },
   openButton: {
     alignSelf: "flex-end",
@@ -47,7 +46,7 @@ export const homeStyleSheet = StyleSheet.create({
     backgroundColor: "#64779e",
     borderRadius: 50,
     elevation: 2,
-    backgroundColor: "rgb(92,220,184)"
+    backgroundColor: "rgb(92,220,184)",
   },
   textStyle: {
     color: "black",
@@ -137,6 +136,10 @@ export const singlePlace = StyleSheet.create({
   starIcon: {
     textAlign: "right",
     margin: 10,
+  },
+  image: {
+    width: 400,
+    height: 400,
   },
 });
 
@@ -292,7 +295,7 @@ export const userFave = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     width: "100%",
-    backgroundColor: "rgb(92,220,184)"
+    backgroundColor: "rgb(92,220,184)",
   },
   text: {
     color: "gray",
@@ -315,17 +318,16 @@ export const userFave = StyleSheet.create({
   },
 });
 
-
 export const DrawerStyle = StyleSheet.create({
   bottomDrawerSection: {
-      borderTopColor: '#f4f4f4',
-      borderTopWidth: 1,
-      marginTop: 100,
+    borderTopColor: "#f4f4f4",
+    borderTopWidth: 1,
+    marginTop: 100,
   },
   labelStyle: {
     fontSize: 12,
     margin: 0,
     padding: 0,
-    left: -20
-  }
+    left: -20,
+  },
 });

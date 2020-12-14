@@ -124,3 +124,27 @@ export const addPhoto = async (placeId, photoURL) => {
     console.error(err);
   }
 };
+
+//get photo link saved to places subcollection photos
+export const getPhoto = async (placeId) => {
+  const placeRef = db.collection("places").doc(placeId);
+  const photoRef = placeRef.collection("photo");
+  let photoObj;
+
+  try {
+    const photoLinks = await photoRef.get();
+
+    if (photoLinks.empty) {
+      console.log("No matching documents.");
+      return;
+    }
+
+    photoLinks.forEach((doc) => {
+      photoObj = doc.data();
+    });
+    console.log("THIS IS THE PHOTOOBJ:", photoObj);
+    return photoObj;
+  } catch (err) {
+    console.error(err);
+  }
+};
