@@ -120,7 +120,7 @@ class SinglePlaceScreen extends React.Component {
 
   render() {
     const link = String(this.state.photoLink);
-    console.log("THIS IS GOING TO BE THE RENDERED LINK: ", link);
+    console.log("THESE ARE THE PROPS: ", this.props);
     const colors = this.props.route.params.color;
 
     if (Number.isNaN(this.state.capacityNum)) this.state.capacityNum = 0;
@@ -222,17 +222,23 @@ class SinglePlaceScreen extends React.Component {
           </View>
 
           <View style={{ alignItems: "center" }}>
-            <Text style={[singlePlace.subtitle, { color: colors.text }]}>
-              What it looks like now:
-            </Text>
-            <View>
-              <Image
-                style={singlePlace.image}
-                source={{
-                  uri: this.props.route.params.photo,
-                }}
-              />
-            </View>
+            {!this.props.route.params.photo ? (
+              <Text></Text>
+            ) : (
+              <View>
+                <Text style={[singlePlace.subtitle, { color: colors.text }]}>
+                  What it looks like now:
+                </Text>
+                <View>
+                  <Image
+                    style={singlePlace.image}
+                    source={{
+                      uri: this.props.route.params.photo,
+                    }}
+                  />
+                </View>
+              </View>
+            )}
           </View>
 
           {this.props.route.params.isHere && (

@@ -28,7 +28,7 @@ import { homeStyleSheet } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 // IMPORT FIREBASE FUNCS
-import { getAllCaps, getCapacity } from "../funcs/placesFuncs";
+import { getAllCaps, getCapacity, getPhoto } from "../funcs/placesFuncs";
 import HeatLayer from "./HeatLayer";
 import FavesLayer from "./FavesLayer";
 import { mapStyle } from "./map";
@@ -56,7 +56,7 @@ class HomeScreen extends React.Component {
       capacity: null,
       capacityNum: null,
       marker: null,
-      photo: "",
+      photo: null,
     };
     this.setData = this.setData.bind(this);
     this.getSingleCap = this.getSingleCap.bind(this);
@@ -81,8 +81,14 @@ class HomeScreen extends React.Component {
 
   async getPhotoLink(id) {
     const photo = await getPhoto(id);
-    this.setState({ photo: String(photo.Link) });
-    console.log("THIS IS THE LINK: ", photo.Link);
+    if (!photo) {
+      this.setState({ photo: null });
+    } else {
+      console.log("THIS IS THE PHOTO: ", photo);
+      let pic = photo.Link;
+      this.setState({ photo: `${pic}` });
+      console.log("THIS IS THE LINK: ", pic);
+    }
   }
 
   closeModal(visible) {
