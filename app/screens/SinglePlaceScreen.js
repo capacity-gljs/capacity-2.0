@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Text,
   View,
@@ -7,22 +7,22 @@ import {
   Button,
   Alert,
   Image,
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { connect } from "react-redux";
-import { singlePlace, homeStyleSheet, screenWidth } from "./styles";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import Slider from "@react-native-community/slider";
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
+import { singlePlace, homeStyleSheet, screenWidth } from './styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Slider from '@react-native-community/slider';
 import {
   getOrAddPlace,
   addCapacity,
   addPhoto,
   getPhoto,
-} from "../funcs/placesFuncs";
-import { addFave, updateFave, removeFave, getFave } from "../funcs/userFuncs";
-import * as ImagePicker from "expo-image-picker";
-import * as Permissions from "expo-permissions";
-import * as firebase from "firebase";
+} from '../funcs/placesFuncs';
+import { addFave, updateFave, removeFave, getFave } from '../funcs/userFuncs';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import * as firebase from 'firebase';
 
 class SinglePlaceScreen extends React.Component {
   constructor(props) {
@@ -31,9 +31,9 @@ class SinglePlaceScreen extends React.Component {
       capacityRating: 0,
       formLabel: 0,
       favorited: false,
-      cameraStatus: "",
-      testmsg: "",
-      refUrl: "",
+      cameraStatus: '',
+      testmsg: '',
+      refUrl: '',
       photoLink: this.props.route.params.photo,
     };
 
@@ -57,7 +57,7 @@ class SinglePlaceScreen extends React.Component {
   }
 
   async onChooseImagePress() {
-    this.setState({ testmsg: "forcing refresh" });
+    this.setState({ testmsg: 'forcing refresh' });
 
     const permissions = Permissions.CAMERA;
 
@@ -68,7 +68,7 @@ class SinglePlaceScreen extends React.Component {
     //console.log("Permission =>", permissions);
     //console.log("Status => ", status);
 
-    if (status.status !== "granted") {
+    if (status.status !== 'granted') {
       //console.log(`[ pickFromCamera ] ${permissions} access: ${status.status}`);
     } else {
       let result = await ImagePicker.launchCameraAsync();
@@ -80,7 +80,7 @@ class SinglePlaceScreen extends React.Component {
           this.props.route.params.placeLng,
           this.props.route.params.name
         );
-        console.log("THE PLACE WAS CREATED");
+        console.log('THE PLACE WAS CREATED');
         this.uploadImage(result.uri, this.props.route.params.id);
       }
     }
@@ -94,12 +94,12 @@ class SinglePlaceScreen extends React.Component {
     let ref = firebase
       .storage()
       .ref()
-      .child("images/" + imageName);
+      .child('images/' + imageName);
 
     await ref.put(blob);
     const refUrl = await ref.getDownloadURL();
-    console.log("THIS IS THE REFURL: ", refUrl);
-    console.log("THIS IS THE PLACEID: ", this.props.route.params.id);
+    console.log('THIS IS THE REFURL: ', refUrl);
+    console.log('THIS IS THE PLACEID: ', this.props.route.params.id);
     this.setState({ refUrl: refUrl });
     await addPhoto(this.props.route.params.id, refUrl);
 
@@ -114,26 +114,26 @@ class SinglePlaceScreen extends React.Component {
       this.props.route.params.placeLng,
       this.props.route.params.name
     );
-    alert("Thanks for rating!");
+    alert('Thanks for rating!');
     addCapacity(this.props.route.params.id, this.state.capacityRating);
   }
 
   render() {
     const link = String(this.state.photoLink);
-    console.log("THESE ARE THE PROPS: ", this.props);
+    console.log('THESE ARE THE PROPS: ', this.props);
     const colors = this.props.route.params.color;
 
     if (Number.isNaN(this.state.capacityNum)) this.state.capacityNum = 0;
 
-    let capacityMessage = "";
+    let capacityMessage = '';
 
-    if (this.state.capacityRating === -1) capacityMessage = "";
-    else if (this.state.capacityRating < 25) capacityMessage = "Empty";
-    else if (this.state.capacityRating < 50) capacityMessage = "A Few People";
-    else if (this.state.capacityRating < 75) capacityMessage = "Half Full";
-    else if (this.state.capacityRating < 100) capacityMessage = "Crowded";
+    if (this.state.capacityRating === -1) capacityMessage = '';
+    else if (this.state.capacityRating < 25) capacityMessage = 'Empty';
+    else if (this.state.capacityRating < 50) capacityMessage = 'A Few People';
+    else if (this.state.capacityRating < 75) capacityMessage = 'Half Full';
+    else if (this.state.capacityRating < 100) capacityMessage = 'Crowded';
     else if (this.state.capacityRating === 100)
-      capacityMessage = "Super Crowded";
+      capacityMessage = 'Super Crowded';
 
     return (
       <SafeAreaView style={singlePlace.safeArea}>
@@ -141,7 +141,7 @@ class SinglePlaceScreen extends React.Component {
           <View>
             <Ionicons
               style={[singlePlace.starIcon, { color: colors.text }]}
-              name={this.state.favorited ? "ios-star" : "ios-star-outline"}
+              name={this.state.favorited ? 'ios-star' : 'ios-star-outline'}
               size={32}
               onPress={() => {
                 if (this.props.user.email) {
@@ -159,8 +159,8 @@ class SinglePlaceScreen extends React.Component {
                   }
                   this.setState({ favorited: !this.state.favorited });
                 } else {
-                  alert("create account to favorite");
-                  this.props.navigation.navigate("SignUp");
+                  alert('create account to favorite');
+                  this.props.navigation.navigate('SignUp');
                 }
               }}
             />
@@ -184,7 +184,7 @@ class SinglePlaceScreen extends React.Component {
                       size={32}
                       color="black"
                     />
-                    {"  "}
+                    {'  '}
                   </React.Fragment>
                 ))}
               {Array(100 - this.state.capacityNum)
@@ -198,7 +198,7 @@ class SinglePlaceScreen extends React.Component {
                       size={32}
                       color="grey"
                     />
-                    {"  "}
+                    {'  '}
                   </React.Fragment>
                 ))}
             </Text>
@@ -206,14 +206,14 @@ class SinglePlaceScreen extends React.Component {
           <Button
             title="Leave Feedback"
             onPress={() =>
-              this.props.navigation.navigate("UserFeedback", {
+              this.props.navigation.navigate('UserFeedback', {
                 placeId: this.props.route.params.id,
                 color: colors,
               })
             }
           />
 
-          <View style={{ alignItems: "center" }}>
+          <View style={{ alignItems: 'center' }}>
             <Button
               title="Take a Live Photo"
               style={homeStyleSheet.button}
@@ -221,34 +221,14 @@ class SinglePlaceScreen extends React.Component {
             />
           </View>
 
-          <View style={{ alignItems: "center" }}>
-            {!this.props.route.params.photo ? (
-              <Text></Text>
-            ) : (
-              <View>
-                <Text style={[singlePlace.subtitle, { color: colors.text }]}>
-                  What it looks like now:
-                </Text>
-                <View>
-                  <Image
-                    style={singlePlace.image}
-                    source={{
-                      uri: this.props.route.params.photo,
-                    }}
-                  />
-                </View>
-              </View>
-            )}
-          </View>
-
           {this.props.route.params.isHere && (
-            <View style={[{ alignItems: "center", color: colors.text }]}>
+            <View style={[{ alignItems: 'center', color: colors.text }]}>
               <Text style={[singlePlace.subtitle, { color: colors.text }]}>
                 How Crowded Was It?
               </Text>
               <Text style={{ color: colors.text }}>{capacityMessage}</Text>
               <Slider
-                style={{ width: "50%", height: 40 }}
+                style={{ width: '50%', height: 40 }}
                 minimumValue={1}
                 maximumValue={100}
                 minimumTrackTintColor="#FFFFFF"
@@ -260,6 +240,28 @@ class SinglePlaceScreen extends React.Component {
               />
 
               <Button title="Submit" onPress={this.handleSubmit} />
+
+              <View style={{ alignItems: 'center' }}>
+                {!this.props.route.params.photo ? (
+                  <Text></Text>
+                ) : (
+                  <View>
+                    <Text
+                      style={[singlePlace.subtitle, { color: colors.text }]}
+                    >
+                      What it looks like now:
+                    </Text>
+                    <View>
+                      <Image
+                        style={singlePlace.image}
+                        source={{
+                          uri: this.props.route.params.photo,
+                        }}
+                      />
+                    </View>
+                  </View>
+                )}
+              </View>
             </View>
           )}
         </ScrollView>
