@@ -164,7 +164,7 @@ class HomeScreen extends React.Component {
 
               <View>
                 {this.state.modalData === "" || !this.state.modalData ? (
-                  <Text>
+                  <Text style={{ color: colors.text }} >
                     {"\n"}
                     {"\n"}
                     Use the searchbar for more info.
