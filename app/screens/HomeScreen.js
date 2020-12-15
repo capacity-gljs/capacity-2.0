@@ -333,13 +333,13 @@ class HomeScreen extends React.Component {
             style={homeStyleSheet.input}
             styles={{
               textInputContainer: {
-                color: colors.text,
+                color: "#F8F8F8",
               },
               row: {
-                backgroundColor: colors.text,
+                backgroundColor: "#F8F8F8",
               },
               poweredContainer: {
-                backgroundColor: colors.text,
+                backgroundColor: "#F8F8F8",
               },
             }}
             placeholder="search"
