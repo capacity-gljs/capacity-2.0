@@ -122,15 +122,6 @@ function DrawerRoutes() {
         }}
       />
       <Drawer.Screen
-        name="Camera"
-        component={CameraScreen}
-        options={{
-          drawerIcon: (config) => (
-            <AntDesign name="camerao" size={24} color="rgb(92,220,184)"/>
-          ),
-        }}
-      />
-      <Drawer.Screen
         name="Sign up"
         component={SignUpScreen}
         options={{
