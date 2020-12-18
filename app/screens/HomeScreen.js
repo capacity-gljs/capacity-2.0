@@ -26,7 +26,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 // IMPORT FIREBASE FUNCS
 import { getAllCaps, getCapacity, getPhoto } from "../funcs/placesFuncs";
 import HeatLayer from "./HeatLayer";
-import FavesLayer from "./FavesLayer";
 import { mapStyle } from "./map";
 
 class HomeScreen extends React.Component {
@@ -318,7 +317,6 @@ class HomeScreen extends React.Component {
 
           {/* Added Map Layers */}
           <HeatLayer />
-          <FavesLayer />
 
           {/* Search Bar/ AutoComplete */}
           <GooglePlacesAutocomplete
