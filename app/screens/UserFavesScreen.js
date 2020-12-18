@@ -1,30 +1,15 @@
 import React from "react";
 import {
-  StyleSheet,
   Text,
   View,
   SafeAreaView,
   ScrollView,
   RefreshControl,
-  TextInput,
-  Button,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from "react-native-simple-radio-button";
 import { connect } from "react-redux";
 import { userFave } from "./styles";
-import { homeStyleSheet } from "./styles";
-import { TouchableOpacity } from "react-native-gesture-handler";
-//import { useNavigation } from "@react-navigation/native";
 
-// importing fbFuncs
-import { getOrAddPlace, addCapacity } from "../funcs/placesFuncs";
-
-import { addFave, updateFave, removeFave, getFave } from "../funcs/userFuncs";
+import { getFave } from "../funcs/userFuncs";
 import CapacityCircle from "./CapacityCircle";
 
 class UserFavesScreen extends React.Component {
@@ -44,14 +29,7 @@ class UserFavesScreen extends React.Component {
 
   async componentDidMount() {
     const favorited = await getFave(this.props.user.uid);
-    //console.log("THESE ARE THE USERS FAVORITE PLACES:", favorited);
     this.setState({ favorites: favorited });
-  }
-
-  async componentDidUpdate() {
-    // const favorited = await getFave(this.props.user.uid);
-    // //console.log("THESE ARE THE USERS FAVORITE PLACES:", favorited);
-    // this.setState({ favorites: favorited });
   }
 
   handleChange(capacityPercent) {}
@@ -72,7 +50,6 @@ class UserFavesScreen extends React.Component {
     //Start Rendering Spinner
     this.setState({ refreshing: true });
     const favorited = await getFave(this.props.user.uid);
-    //console.log("THESE ARE THE USERS FAVORITE PLACES:", favorited);
     this.setState({ favorites: favorited });
     //Updating the dataSource with new data
     this.setState({ refreshing: false }); //Stop Rendering Spinner
