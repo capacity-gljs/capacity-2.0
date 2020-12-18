@@ -2,7 +2,6 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { DrawerActions } from '@react-navigation/native';
-import { useColorScheme } from 'react-native-appearance';
 import { useTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './HomeScreen';
@@ -37,7 +36,6 @@ const Drawer = createDrawerNavigator();
 function CustomDrawerContentDisconnected(props) {
   const { state, ...rest } = props;
   const newState = { ...state };
-  const { colors } = useTheme();
   newState.routes = newState.routes.filter(
     (item) => item.name !== 'SinglePlace' && item.name !== 'UserFeedback'
   );

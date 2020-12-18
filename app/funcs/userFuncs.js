@@ -1,4 +1,3 @@
-import firebase from "firebase";
 import { db } from "../../firebase/config";
 
 // USER FAVES
@@ -97,11 +96,9 @@ export const getFave = async (userId) => {
     }
     //check if the user has any favorites
     if (userFaves.empty) {
-      console.log("No matching documents.");
       placeDetails.push("You have no places favorited");
       return placeDetails;
     } else {
-      console.log("THESE ARE THE FAVES PLACES DETAILS: ", placeDetails);
 
       //return array of objects with users favorite place name and capacity as key value pairs
       return placeDetails;

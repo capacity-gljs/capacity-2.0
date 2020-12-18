@@ -1,13 +1,10 @@
-import React, { useRoute } from "react";
+import React from "react";
 import {
   Text,
   View,
   SafeAreaView,
-  Alert,
-  Button,
   TouchableHighlight,
   ScrollView,
-  Animated,
 } from "react-native";
 import Modal from "react-native-modal";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
@@ -22,7 +19,6 @@ import {
   getType,
   dollarSign,
   getGuidelines,
-  isDarkMode,
 } from "../funcs/homeFuncs";
 import { homeStyleSheet } from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -84,10 +80,8 @@ class HomeScreen extends React.Component {
     if (!photo) {
       this.setState({ photo: null });
     } else {
-      console.log("THIS IS THE PHOTO: ", photo);
       let pic = photo.Link;
       this.setState({ photo: `${pic}` });
-      console.log("THIS IS THE LINK: ", pic);
     }
   }
 
@@ -218,7 +212,6 @@ class HomeScreen extends React.Component {
               >
                 <TouchableOpacity
                   style={homeStyleSheet.buttonSideBySide}
-                  //title="I'm thinking of going"
                   onPress={() => {
                     this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
                     this.closeModal(!modalVisible);
