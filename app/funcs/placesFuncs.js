@@ -1,4 +1,3 @@
-import firebase from "firebase";
 import { db } from "../../firebase/config";
 
 export const getOrAddPlace = async (placeId, placeLat, placeLng, placeName) => {
@@ -13,7 +12,6 @@ export const getOrAddPlace = async (placeId, placeLat, placeLng, placeName) => {
       lat: placeLat,
       long: placeLng,
     });
-    //placeRef.set({placeName, avgCapacity: 0, numRatings: 0, placeLat, placeLng, placeName}) // create the document
   } else {
     ("IT THINKS THE PLACE EXISTS");
   }
@@ -100,7 +98,6 @@ export const getCapacity = async (name) => {
     const places = await getAllCaps();
     const cap = [];
     places.filter((place) => {
-      // if (place["placeName"] === name) {
       if (place["placeName"].includes(name)) {
         cap.push(place["avgCapacity"]);
       }
@@ -135,14 +132,12 @@ export const getPhoto = async (placeId) => {
     const photoLinks = await photoRef.get();
 
     if (photoLinks.empty) {
-      console.log("No matching documents.");
       return;
     }
 
     photoLinks.forEach((doc) => {
       photoObj = doc.data();
     });
-    console.log("THIS IS THE PHOTOOBJ:", photoObj);
     return photoObj;
   } catch (err) {
     console.error(err);

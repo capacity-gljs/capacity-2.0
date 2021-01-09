@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "transparent",
     borderRightColor: "#3498db",
     borderTopColor: "#3498db",
-    //transform: [{ rotateZ: "-135deg" }],
   },
   secondProgressLayer: {
     width: 50,
@@ -76,7 +75,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "transparent",
     borderRightColor: "#3498db",
     borderTopColor: "#3498db",
-    //transform: [{ rotateZ: "45deg" }],
   },
   offsetLayer: {
     width: 50,
@@ -88,7 +86,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "transparent",
     borderRightColor: "grey",
     borderTopColor: "grey",
-    //transform: [{ rotateZ: "-135deg" }],
   },
   display: {
     color: "gray",

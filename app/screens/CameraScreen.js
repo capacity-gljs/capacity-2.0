@@ -28,9 +28,7 @@ export default class CameraScreen extends React.Component {
   async takePicture() {
     if (!this.camera) return;
     Alert.alert("PICTURE TAKEN");
-    console.log("THE BUTTON PRESSED");
     const photo = await this.camera.takePictureAsync();
-    console.log("THIS IS THE PICTURE OBJECT: ", photo);
   }
 
   render() {
@@ -63,7 +61,6 @@ export default class CameraScreen extends React.Component {
                 style={{
                   width: 70,
                   height: 70,
-                  //bottom: 0,
                   borderRadius: 50,
                   backgroundColor: "#fff",
                 }}

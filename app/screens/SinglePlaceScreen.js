@@ -5,19 +5,16 @@ import {
   SafeAreaView,
   ScrollView,
   Button,
-  Alert,
   Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { singlePlace, homeStyleSheet, screenWidth } from './styles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import Slider from '@react-native-community/slider';
 import {
   getOrAddPlace,
   addCapacity,
   addPhoto,
-  getPhoto,
 } from '../funcs/placesFuncs';
 import { addFave, updateFave, removeFave, getFave } from '../funcs/userFuncs';
 import * as ImagePicker from 'expo-image-picker';
@@ -51,9 +48,6 @@ class SinglePlaceScreen extends React.Component {
       this.props.route.params.id
     );
     this.setState({ favorited });
-    // const photo = await getPhoto(this.props.route.params.id);
-    // this.setState({ photoLink: photo.Link });
-    // console.log("THIS IS THE LINK: ", this.state.photoLink);
   }
 
   async onChooseImagePress() {
@@ -65,11 +59,7 @@ class SinglePlaceScreen extends React.Component {
 
     this.setState({ cameraStatus: status.status });
 
-    //console.log("Permission =>", permissions);
-    //console.log("Status => ", status);
-
     if (status.status !== 'granted') {
-      //console.log(`[ pickFromCamera ] ${permissions} access: ${status.status}`);
     } else {
       let result = await ImagePicker.launchCameraAsync();
 
@@ -80,7 +70,6 @@ class SinglePlaceScreen extends React.Component {
           this.props.route.params.placeLng,
           this.props.route.params.name
         );
-        console.log('THE PLACE WAS CREATED');
         this.uploadImage(result.uri, this.props.route.params.id);
       }
     }
@@ -98,12 +87,8 @@ class SinglePlaceScreen extends React.Component {
 
     await ref.put(blob);
     const refUrl = await ref.getDownloadURL();
-    console.log('THIS IS THE REFURL: ', refUrl);
-    console.log('THIS IS THE PLACEID: ', this.props.route.params.id);
     this.setState({ refUrl: refUrl });
     await addPhoto(this.props.route.params.id, refUrl);
-
-    //return addPhoto;
   }
 
   // grab capacity and write to the db
@@ -120,7 +105,6 @@ class SinglePlaceScreen extends React.Component {
 
   render() {
     const link = String(this.state.photoLink);
-    console.log('THESE ARE THE PROPS: ', this.props);
     const colors = this.props.route.params.color;
 
     if (Number.isNaN(this.state.capacityNum)) this.state.capacityNum = 0;

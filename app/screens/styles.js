@@ -1,5 +1,4 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { useTheme } from "react";
 
 const { width: winWidth, height: winHeight } = Dimensions.get("window");
 const screen = Dimensions.get("screen");
@@ -25,7 +24,6 @@ export const homeStyleSheet = StyleSheet.create({
     alignSelf: "center",
     position: "absolute",
     bottom: 12,
-    // backgroundColor: "white",
     borderRadius: 20,
     padding: 20,
     shadowColor: "#000",
@@ -105,14 +103,12 @@ export const homeStyleSheet = StyleSheet.create({
   separator: {
     marginVertical: 8,
     borderBottomColor: "#737373",
-    //borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
 
 export const singlePlace = StyleSheet.create({
   safeArea: {
     flex: 1,
-    // backgroundColor: "white",
     flexDirection: "column",
     justifyContent: "space-between",
     width: "90%",
@@ -276,7 +272,6 @@ export const userFave = StyleSheet.create({
     height: winHeight,
     width: winWidth,
     flex: 1,
-    // backgroundColor: "white",
     flexDirection: "column",
     justifyContent: "space-between",
   },

@@ -1,24 +1,14 @@
 import React, { useState } from "react";
 import {
-  Image,
   Button,
   Text,
-  TextInput,
-  Picker,
-  TouchableOpacity,
   ScrollView,
   View,
   Switch,
   SafeAreaView,
 } from "react-native";
-import { singlePlace, UserFeedback } from "./styles";
+import { UserFeedback } from "./styles";
 import { connect } from "react-redux";
-import { signUp } from "../store/user";
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from "react-native-simple-radio-button";
 import { addFeedback } from "../funcs/userFuncs";
 import Slider from "@react-native-community/slider";
 
@@ -65,7 +55,6 @@ function UserFeedbackScreen({ navigation, route, navigate }) {
         <Button
           title="Submit"
           onPress={async () => {
-            //console.log(route.params.placeId);
             await addFeedback(route.params.placeId, experience, boostOrPromote);
             alert("Thanks for leaving feedback!");
             navigation.navigate("Capacity");
