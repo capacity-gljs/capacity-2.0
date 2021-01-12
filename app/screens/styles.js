@@ -134,8 +134,9 @@ export const singlePlace = StyleSheet.create({
     margin: 10,
   },
   image: {
-    width: 400,
-    height: 400,
+    width: 300,
+    height: 300,
+    borderRadius: 300 / 2,
   },
 });
 
@@ -285,19 +286,22 @@ export const userFave = StyleSheet.create({
   subtitle: {
     color: "black",
     alignItems: "center",
+    justifyContent: "center",
     fontWeight: "bold",
     height: 50,
     textAlign: "center",
     fontSize: 20,
     width: "100%",
     backgroundColor: "rgb(92,220,184)",
+    padding: "10%",
   },
   text: {
     color: "gray",
     margin: 20,
     textAlign: "left",
     fontSize: 15,
-    width: "75%",
+    width: "60%",
+    justifyContent: "center",
   },
   button: {
     margin: 20,
@@ -305,11 +309,25 @@ export const userFave = StyleSheet.create({
   place: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderBottomColor: "gray",
+    margin: 10,
   },
   capacityCircle: {
-    margin: 20,
+    color: "rgb(92,220,184)",
+    fontSize: 20,
+    fontWeight: "bold",
+    margin: 10,
+    width: "40%",
     justifyContent: "center",
+  },
+  capacityCircleNo: {
+    color: "gray",
+    margin: 10,
+    justifyContent: "center",
+    width: "40%",
+    fontSize: 15,
   },
 });
 
