@@ -7,9 +7,9 @@ import {
   PROJECT_ID,
   MESSAGE_SENDER_ID,
   APP_ID,
-  MEASURE_ID
- } from '@env'
- 
+  MEASURE_ID,
+} from "../API_KEYS";
+
 const firebaseConfig = {
   apiKey: FIRE_KEY,
   authDomain: AUTH_DOMAIN,

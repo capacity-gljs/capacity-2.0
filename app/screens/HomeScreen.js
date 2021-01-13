@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 import {
   Text,
   View,
   SafeAreaView,
   TouchableHighlight,
   ScrollView,
-} from 'react-native';
-import { MAP_KEY } from '@env';
-import Modal from 'react-native-modal';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import { connect } from 'react-redux';
+} from "react-native";
+import { MAP_KEY } from "../../API_KEYS";
+import Modal from "react-native-modal";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import { connect } from "react-redux";
 
 // IMPORT FUNCS
 import {
@@ -20,21 +20,21 @@ import {
   getType,
   dollarSign,
   getGuidelines,
-} from '../funcs/homeFuncs';
-import { homeStyleSheet } from './styles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+} from "../funcs/homeFuncs";
+import { homeStyleSheet } from "./styles";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 // IMPORT FIREBASE FUNCS
-import { getAllCaps, getCapacity, getPhoto } from '../funcs/placesFuncs';
-import HeatLayer from './HeatLayer';
-import { mapStyle } from './map';
+import { getAllCaps, getCapacity, getPhoto } from "../funcs/placesFuncs";
+import HeatLayer from "./HeatLayer";
+import { mapStyle } from "./map";
 
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       // grabbing places info to pass down
-      id: '',
+      id: "",
       placeLat: null,
       placeLng: null,
       // state for homescreen
@@ -44,7 +44,7 @@ class HomeScreen extends React.Component {
         latitude: null,
         longitude: null,
       },
-      selectedName: '',
+      selectedName: "",
       modalVisible: false,
       modalData: null,
       modalDetails: null,
@@ -99,21 +99,21 @@ class HomeScreen extends React.Component {
 
   isDarkMode() {
     const color = this.props.route.params;
-    if (color.text === 'rgb(229, 229, 231)') {
+    if (color.text === "rgb(229, 229, 231)") {
       return mapStyle;
     }
   }
 
   render() {
     const modalVisible = this.state.modalVisible;
-    const locDescription = this.state.modalDetails || '';
-    const locData = this.state.modalData || '';
-    const hours = locDescription.opening_hours || '';
-    const type = locData.types || '';
-    const state = locData.terms || '';
-    const cap = this.state.capacity || '';
+    const locDescription = this.state.modalDetails || "";
+    const locData = this.state.modalData || "";
+    const hours = locDescription.opening_hours || "";
+    const type = locData.types || "";
+    const state = locData.terms || "";
+    const cap = this.state.capacity || "";
     const colors = this.props.route.params;
-    const pic = this.state.photo || '';
+    const pic = this.state.photo || "";
 
     return (
       <SafeAreaView
@@ -135,7 +135,7 @@ class HomeScreen extends React.Component {
           >
             <ScrollView>
               {/* Container for Place Name and X */}
-              <View style={{ justifyContent: 'space-between' }}>
+              <View style={{ justifyContent: "space-between" }}>
                 <Text
                   style={[homeStyleSheet.modalName, { color: colors.text }]}
                 >
@@ -157,12 +157,12 @@ class HomeScreen extends React.Component {
               {/* Modal Rating */}
 
               <View>
-                {this.state.modalData === '' || !this.state.modalData ? (
+                {this.state.modalData === "" || !this.state.modalData ? (
                   <Text style={{ color: colors.text }}>
-                    {'\n'}
-                    {'\n'}
+                    {"\n"}
+                    {"\n"}
                     Use the searchbar for more info.
-                    {'\n'}
+                    {"\n"}
                   </Text>
                 ) : (
                   <View>
@@ -177,7 +177,7 @@ class HomeScreen extends React.Component {
                     <Text
                       style={[homeStyleSheet.modalType, { color: colors.text }]}
                     >
-                      {' '}
+                      {" "}
                       {getType(type)} {dollarSign(locDescription.price_level)}
                     </Text>
 
@@ -197,25 +197,25 @@ class HomeScreen extends React.Component {
 
               {/* Modal Capacity */}
               <Text style={{ color: colors.text }}>
-                {cap === 'NaN% Capacity' ? '\n' : cap}
-                {'\n'}
+                {cap === "NaN% Capacity" ? "\n" : cap}
+                {"\n"}
               </Text>
 
               {/* Modal Buttons for User Feedback */}
 
               <View
                 style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-evenly',
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
                 }}
               >
                 <TouchableOpacity
                   style={homeStyleSheet.buttonSideBySide}
                   onPress={() => {
-                    this.GooglePlacesAutocompleteRef.setAddressText(''); //clears the searchbar
+                    this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
                     this.closeModal(!modalVisible);
-                    this.props.navigation.navigate('SinglePlace', {
+                    this.props.navigation.navigate("SinglePlace", {
                       // PASS PROPS TO SINGLE PLACE HERE
                       name: this.state.selectedName,
                       id: this.state.id,
@@ -235,9 +235,9 @@ class HomeScreen extends React.Component {
                 <TouchableOpacity
                   style={homeStyleSheet.buttonSideBySide}
                   onPress={() => {
-                    this.GooglePlacesAutocompleteRef.setAddressText(''); //clears the searchbar
+                    this.GooglePlacesAutocompleteRef.setAddressText(""); //clears the searchbar
                     this.closeModal(!modalVisible);
-                    this.props.navigation.navigate('SinglePlace', {
+                    this.props.navigation.navigate("SinglePlace", {
                       // PASS PROPS TO SINGLE PLACE HERE
                       name: this.state.selectedName,
                       id: this.state.id,
@@ -259,7 +259,7 @@ class HomeScreen extends React.Component {
 
               {/* State Guidelines Button */}
               <View>
-                {!(this.state.modalData === '' || !this.state.modalData) && (
+                {!(this.state.modalData === "" || !this.state.modalData) && (
                   <TouchableOpacity
                     style={homeStyleSheet.button}
                     onPress={() => getGuidelines(state)}
@@ -308,9 +308,9 @@ class HomeScreen extends React.Component {
             <Marker
               coordinate={this.state.marker}
               onPress={(evt) => {
-                const name = this.state.selectedName || '';
-                const capacity = this.state.capacity || '';
-                const id = this.state.id || '';
+                const name = this.state.selectedName || "";
+                const capacity = this.state.capacity || "";
+                const id = this.state.id || "";
                 this.setData(null, { name, id }, true);
               }}
             />
@@ -325,13 +325,13 @@ class HomeScreen extends React.Component {
             style={homeStyleSheet.input}
             styles={{
               textInputContainer: {
-                color: '#F8F8F8',
+                color: "#F8F8F8",
               },
               row: {
-                backgroundColor: '#F8F8F8',
+                backgroundColor: "#F8F8F8",
               },
               poweredContainer: {
-                backgroundColor: '#F8F8F8',
+                backgroundColor: "#F8F8F8",
               },
             }}
             placeholder="search"
@@ -365,7 +365,7 @@ class HomeScreen extends React.Component {
             }}
             query={{
               key: MAP_KEY,
-              language: 'en',
+              language: "en",
             }}
             nearbyPlacesAPI="GooglePlacesSearch"
             debounce={200}
