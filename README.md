@@ -10,6 +10,7 @@ Capacity was writtten in React Native powered by Expo-cli. Below is a list of ot
 
    ## Front End 
    - React Native
+   - Redux
    - Google Places API 
 
    ## Back End 
@@ -21,6 +22,9 @@ Capacity was writtten in React Native powered by Expo-cli. Below is a list of ot
 
 - git clone https://github.com/capacity-gljs/capacity-2.0.git
 - cd capacity-2.0 
+- sign up for a google maps API key [here](https://console.cloud.google.com/project/_/apiui/credential?_ga=2.216759187.405750028.1610228273-1449149429.1599663870) (For a full set of instructions visit the [this page](https://developers.google.com/maps/documentation/javascript/get-api-key))
+- create keys for your Firebase config file by creating a Firebase account and creating a project. See instructions [here](https://firebase.google.com/docs/web/setup)
+- create a .env file in the root of your project and replace "VARIABLE_NAME" with the variables for the project and replace "YOUR_API_KEY" with the keys from Google Maps and Firebase you received above `VARIABLE_NAME="YOUR_API_KEY"`
 - npm install 
 - npm start 
 
@@ -47,8 +51,9 @@ Note: testing this app requires downloading 'expo client' on an iOS  product.
 ![Loader](assets/appImages/Loader.PNG)
 ![Home](assets/appImages/MyLocation.png)
 ![Modal](assets/appImages/Modal.PNG)
+![Dark Theme Modal](assets/appImages/Modal_Dark.png)
 ![SinglePlaceScreen](assets/appImages/SinglePlaceScreen.png)
 ![Feedback](assets/appImages/Feedback.PNG)
 ![Menu](assets/appImages/Menu.PNG)
-![Camera](assets/appImages/Camera.png)
+![Dark Theme Menu](assets/appImages/Menu_Dark.png)
 
