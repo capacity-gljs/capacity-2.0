@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { userFave } from "./styles";
 
 import { getFave } from "../funcs/userFuncs";
-import CapacityCircle from "./CapacityCircle";
+//import CapacityCircle from "./CapacityCircle";
 
 class UserFavesScreen extends React.Component {
   constructor(props) {
@@ -65,9 +65,7 @@ class UserFavesScreen extends React.Component {
         <SafeAreaView style={userFave.safeArea}>
           <ScrollView refreshControl={this.refreshControl()}>
             <View>
-              <Text style={[userFave.subtitle, ]}>
-                These are Your Favorite Locations
-              </Text>
+              <Text style={[userFave.subtitle]}>Your Places</Text>
             </View>
 
             {userFavorites.map((place) => {
@@ -76,9 +74,20 @@ class UserFavesScreen extends React.Component {
                   <Text style={[userFave.text, { color: colors.text }]}>
                     {Object.keys(place)}
                   </Text>
-                  <View style={[userFave.capacityCircle]}>
+                  {/* <View style={[userFave.capacityCircle]}>
                     {CapacityCircle(
                       Math.floor(Number(Object.values(place)[0]))
+                    )}
+                  </View> */}
+                  <View style={[userFave.capacityCircle]}>
+                    {Math.floor(Number(Object.values(place)[0])) ? (
+                      <Text style={userFave.capacityCircle}>
+                        {Math.floor(Number(Object.values(place)[0]))} %
+                      </Text>
+                    ) : (
+                      <Text style={userFave.capacityCircleNo}>
+                        No Capacity Info
+                      </Text>
                     )}
                   </View>
                 </View>
@@ -90,9 +99,7 @@ class UserFavesScreen extends React.Component {
     } else {
       return (
         <SafeAreaView style={userFave.safeArea}>
-          <Text style={userFave.subtitle}>
-            Login to see your favorites
-          </Text>
+          <Text style={userFave.subtitle}>Please Login</Text>
         </SafeAreaView>
       );
     }
