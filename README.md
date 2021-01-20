@@ -24,7 +24,22 @@ Capacity was writtten in React Native powered by Expo-cli. Below is a list of ot
 - cd capacity-2.0 
 - sign up for a google maps API key [here](https://console.cloud.google.com/project/_/apiui/credential?_ga=2.216759187.405750028.1610228273-1449149429.1599663870) (For a full set of instructions visit the [this page](https://developers.google.com/maps/documentation/javascript/get-api-key))
 - create keys for your Firebase config file by creating a Firebase account and creating a project. See instructions [here](https://firebase.google.com/docs/web/setup)
-- create a .env file in the root of your project and replace "VARIABLE_NAME" with the variables for the project and replace "YOUR_API_KEY" with the keys from Google Maps and Firebase you received above `VARIABLE_NAME="YOUR_API_KEY"`
+- create a file titled `API_KEYS.JS` in the root of your project
+- copy and paste the following into your file and replace the X's with your api key from Google and the firebase config object from Firebase
+    ```json
+    export const MAP_KEY = "XXXX";
+
+    export const FIRE_CONFIG = {
+        apiKey: "XXXX",
+        authDomain: "XXXX",
+        databaseURL: "XXXX",
+        projectId: "XXXX",
+        storageBucket: "XXXX",
+        messagingSenderId: "XXXX",
+        appId: "XXXX",
+        measurementId: "XXXX",
+    }
+    ```
 - npm install 
 - npm start 
 
