@@ -63,13 +63,16 @@ export const getFave = async (userId) => {
     //query users to get the placesIds of the user's favorite places
     const userRef = db.collection("users").doc(userId).collection("favorites");
     const userFaves = await userRef.where("favorited", "==", true).get();
-    const favorites = [];
+    //const favorites = [];
     const favoritesId = [];
     userFaves.forEach((doc) => {
-      favorites.push(doc.data());
+      //favorites.push(doc.data());
       favoritesId.push(doc.id);
     });
-    const placeDetails = [];
+    //map over the
+    //an array of promises
+    //const placeDetails = [];
+    const combinedUserPlacePromises = [];
     for (let i = 0; i < favoritesId.length; i++) {
       let placeId = favoritesId[i];
 
@@ -79,13 +82,32 @@ export const getFave = async (userId) => {
         .doc(userId)
         .collection("favorites")
         .doc(placeId);
-      const userPlaceSnapshot = await userPlaceRef.get();
-      const userPlaceData = userPlaceSnapshot.data();
-      const placeName = userPlaceData.placeName;
+      const userPlacePromise = userPlaceRef.get();
 
       //query places collection to get the avgCapacity
       const placeRef = db.collection("places").doc(placeId);
-      const placeSnapshot = await placeRef.get();
+      const placePromise = placeRef.get();
+
+      const combinedPromise = Promise.all([userPlacePromise, placePromise]);
+      //each loop adds a combined promise result of place name and place capacity to combinedUserPlacePromises so each index of combinedUserPlacePromises has an array of length 2
+      //
+      combinedUserPlacePromises.push(combinedPromise);
+    }
+
+    const allThePromises = Promise.all(combinedUserPlacePromises);
+    console.log("THESE ARE ALL THE PROMISES", allThePromises);
+    const favoritesResults = await allThePromises;
+
+    console.log("favoritesResults", favoritesResults);
+
+    const placeDetails = [];
+    for (let userAndPlaceResults of favoritesResults) {
+      const userPlaceSnapshot = userAndPlaceResults[0];
+      const placeSnapshot = userAndPlaceResults[1];
+
+      const userPlaceData = userPlaceSnapshot.data();
+      const placeName = userPlaceData.placeName;
+
       const placeData = placeSnapshot.data();
       if (placeData) {
         const avgCapacity = placeData.avgCapacity;
@@ -94,12 +116,12 @@ export const getFave = async (userId) => {
         placeDetails.push({ [placeName]: "No Capacity Information" });
       }
     }
+
     //check if the user has any favorites
     if (userFaves.empty) {
       placeDetails.push("You have no places favorited");
       return placeDetails;
     } else {
-
       //return array of objects with users favorite place name and capacity as key value pairs
       return placeDetails;
     }
@@ -122,4 +144,3 @@ export const addFeedback = async (placeId, experience, boostOrPromote) => {
     console.error(error);
   }
 };
-
